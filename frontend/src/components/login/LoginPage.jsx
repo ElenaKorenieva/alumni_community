@@ -11,10 +11,10 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const resetform = () => {
-  //   setEmail("");
-  //   setPassword("");
-  // };
+  const resetform = () => {
+    setEmail("");
+    setPassword("");
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ const LoginPage = () => {
       console.log("Success");
       navigate("/home");
     }
-    // resetform("");
+    resetform("");
   };
 
   console.log(`Login with email address: ${email} and password: ${password}`);
