@@ -93,8 +93,10 @@ const getCurrentUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  const { _id } = req.user;
-  await User.findByIdAndUpdate(_id, { token: "" });
+  // const { _id } = req.user;
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  await User.findByIdAndUpdate(user._id, { token: "" });
   res.status(204).json({
     message: "Logout success",
   });
