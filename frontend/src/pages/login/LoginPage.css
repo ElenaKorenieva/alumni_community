@@ -1,7 +1,6 @@
 @font-face {
     font-family: 'CamingoMonoBold';
-    src: url('../fonts/CamingoMono-Bold.ttf') format('truetype');
-    font-weight: bold;
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
     font-style: normal;
 }
 
@@ -11,15 +10,12 @@
     box-sizing: border-box;
 }
 
-body {
-    background-image: url('../images/background-mainpage.jpg');
+.login-container {
+    background-image: url('/public/images/background-mainpage.jpg');
     background-size: cover;
     height: 100vh;
     font-family: Arial, sans-serif;
     font-family: 'CamingoMonoBold', monospace;
-}
-
-.login-container {
     display: flex;
     align-items: center;
     text-align: center;
@@ -46,16 +42,26 @@ body {
 .login-box h1 {
     font-size: 35px;
     margin: 20px auto;
+    font-weight: bold;
 }
 
 .login-box h2 {
     color: rgb(2, 2, 34);
     font-size: 20px;
     margin-top: 0;
+    margin-bottom: 10px;
 }
 
 label {
     display: flex !important;
+}
+
+.form-label {
+    font-size: 16px;
+}
+
+.custom-input::placeholder {
+    font-size: 14px; 
 }
 
 .align-items-center {
