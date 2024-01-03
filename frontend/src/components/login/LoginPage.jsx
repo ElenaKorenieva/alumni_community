@@ -24,9 +24,9 @@ const LoginPage = () => {
       console.log(response.payload);
     } else {
       console.log("Success");
-      navigate();
+      navigate("/home");
     }
-    resetform("/home");
+    resetform("");
   };
 
   return (

@@ -7,18 +7,18 @@ const { validateBody, authenticate, upload } = require("../middleware");
 const router = express.Router();
 
 router.post(
-  "/register",
+  "/users/register",
   validateBody(schemas.registerUserSchema, "missing fields"),
   ctrl.registerUser
 );
 
 router.post(
-  "/login",
+  "/users/login",
   validateBody(schemas.loginUserSchema, "missing fields"),
   ctrl.loginUser
 );
 
-router.post("/logout", authenticate, ctrl.logoutUser);
+router.post("/users/logout", authenticate, ctrl.logoutUser);
 
 router.get("/current", authenticate, ctrl.getCurrentUser);
 

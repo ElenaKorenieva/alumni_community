@@ -53,14 +53,8 @@ const loginUser = async (req, res) => {
   }
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
-  await User.findByIdAndUpdate(user._id, { token }, { new: true })
-    // .populate("boards", {
-    //   _id: 1,
-    //   title: 1,
-    //   icon: 1,
-    //   updatedAt: 1,
-    // })
-    .then((user) => {
+  await User.findByIdAndUpdate(user._id, { token }, { new: true }).then(
+    (user) => {
       res.json({
         token: token,
         user: {
@@ -69,7 +63,8 @@ const loginUser = async (req, res) => {
           avatarURL: user.avatarURL,
         },
       });
-    });
+    }
+  );
 };
 
 const getCurrentUser = async (req, res) => {
@@ -93,10 +88,8 @@ const getCurrentUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  // const { _id } = req.user;
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-  await User.findByIdAndUpdate(user._id, { token: "" });
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: "" });
   res.status(204).json({
     message: "Logout success",
   });
