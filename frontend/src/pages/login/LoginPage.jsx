@@ -26,12 +26,12 @@ const LoginPage = () => {
                         <div className="col mt-3">
                             <div className="row">
                                 <div className="col">
-                                    <form>
-                                        <div className="mb-3">
+                                    <form className="form-text">
+                                        <div className="mb-2">
                                             <label htmlFor="email" className="form-label">Email Address:</label>
                                             <input
                                                 type="email"
-                                                className="form-control"
+                                                className="form-control custom-input"
                                                 id="email"
                                                 placeholder='Type Email Address'
                                                 value={email}
@@ -42,7 +42,7 @@ const LoginPage = () => {
                                             <label htmlFor="password" className="form-label">Password:</label>
                                             <input
                                                 type="password"
-                                                className="form-control"
+                                                className="form-control custom-input"
                                                 id="password"
                                                 placeholder='Type Password'
                                                 value={password}
@@ -58,7 +58,7 @@ const LoginPage = () => {
                                         </button>
                                     </form>
                                     <div className="row mt-3">
-                                        <div className="col">Don't have an account? <a href='#'>Sign Up</a></div>
+                                        <div className="col">Don't have an account? <a href='/signup'>Sign Up</a></div>
                                     </div>
                                 </div>
                             </div>
