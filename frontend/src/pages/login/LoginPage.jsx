@@ -1,41 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import "./LoginPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { login } from "../../redux/auth/authOperations";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const resetform = () => {
-    setEmail("");
-    setPassword("");
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    console.log(e);
+  const handleLogin = () => {
     console.log(`Login with email address: ${email} and password: ${password}`); //authentication
-    const currentUser = {
-      email: e.target.elements.email.value,
-      password: e.target.elements.password.value,
-    };
-    console.log(currentUser);
-    const response = await dispatch(login(currentUser));
-    if (response.error) {
-      console.log(response.payload);
-    } else {
-      console.log("Success");
-      navigate("/home");
-    }
-    resetform("");
   };
-
-  console.log(`Login with email address: ${email} and password: ${password}`);
 
   return (
     <div className="login-container">
@@ -57,15 +30,14 @@ const LoginPage = () => {
             <div className="col mt-3">
               <div className="row">
                 <div className="col">
-                  <form onSubmit={(e) => handleLogin(e)}>
-                    <div className="mb-3">
+                  <form className="form-text">
+                    <div className="mb-2">
                       <label htmlFor="email" className="form-label">
                         Email Address:
                       </label>
                       <input
-                        name="email"
                         type="email"
-                        className="form-control"
+                        className="form-control custom-input"
                         id="email"
                         placeholder="Type Email Address"
                         value={email}
@@ -77,22 +49,25 @@ const LoginPage = () => {
                         Password:
                       </label>
                       <input
-                        name="password"
                         type="password"
-                        className="form-control"
+                        className="form-control custom-input"
                         id="password"
                         placeholder="Type Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">
+                    <button
+                      onClick={handleLogin}
+                      type="submit"
+                      className="btn btn-primary w-100"
+                    >
                       Login
                     </button>
                   </form>
                   <div className="row mt-3">
                     <div className="col">
-                      Don't have an account? <a href="#">Sign Up</a>
+                      Don't have an account? <a href="/signup">Sign Up</a>
                     </div>
                   </div>
                 </div>
