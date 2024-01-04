@@ -3,7 +3,7 @@ import LoginPage from "../src/pages/login/LoginPage";
 import PostsPage from "./pages/posts/PostsPage";
 import { useSelector } from "react-redux";
 import { isLogin } from "./redux/auth/authSelectors";
-import { PrivateRoute, RestrictedRoute } from "./components/AuthRoutes";
+import { PrivateRoute } from "./components/AuthRoutes";
 import Home from "./components/Home/Home";
 import SignUpPage from "./pages/signup/SignUpPage";
 
@@ -30,6 +30,7 @@ function App() {
         />
         <Route path="/posts" element={<PostsPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>
   );

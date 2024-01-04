@@ -25,10 +25,10 @@ const PostsPage = () => {
     return (
         <div className="page-body">
             <div className="row">
-                <div className="col-md-2">
+                <div className="col-md-3">
                     <SideBarMenu />
                 </div>
-                <div className="col-md-10">
+                <div className="col-md-9">
                     <h1>About this topic:</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidi Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidi</p>
                     <h3>Write a new post:</h3>

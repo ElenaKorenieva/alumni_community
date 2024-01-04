@@ -1,15 +1,22 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const postsSchema = new Schema({
-    topic:{
+const postSchema = new Schema({
+    topic: {
         type: String,
         require: true,
         maxLength: 40,
         minLength: 1,
     },
-    
-    message:{
+
+    user: {
+        type: String,
+        require: true,
+        maxLength: 40,
+        minLength: 1,
+    },
+
+    message: {
         type: String,
         require: true,
         maxLength: 40,
@@ -18,11 +25,11 @@ const postsSchema = new Schema({
     create_at: {
         type: Date,
         default: Date.now,
-        get: function (createAt){
+        get: function (createAt) {
             moment().format('MMMM Do YYYY, h:mm:ss')
         }
     }
-    
-}, {timestamps:true})
 
-module.exports =mongoose.model('Posts', postsSchema)
+}, { timestamps: true })
+
+module.exports = mongoose.model('Post', postSchema)
