@@ -1,9 +1,10 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./components/login/LoginPage";
 import { useSelector } from "react-redux";
 import { isLogin } from "./redux/auth/authSelectors";
 import { PrivateRoute, RestrictedRoute } from "./components/AuthRoutes";
 import Home from "./components/Home/Home";
+import LoginPage from "./pages/login/LoginPage";
+import SignUpPage from "./pages/signup/SignUpPage";
 
 function App() {
   const isAuth = useSelector(isLogin);
@@ -26,6 +27,8 @@ function App() {
           path="/home"
           element={<PrivateRoute component={Home} redirectTo="/" />}
         />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>
   );
