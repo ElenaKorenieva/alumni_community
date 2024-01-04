@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { isLogin } from "./redux/auth/authSelectors";
 import { PrivateRoute, RestrictedRoute } from "./components/AuthRoutes";
 import Home from "./components/Home/Home";
+import SignUpPage from "./pages/signup/SignUpPage";
 
 function App() {
   const isAuth = useSelector(isLogin);
@@ -28,6 +29,7 @@ function App() {
           element={<PrivateRoute component={Home} redirectTo="/" />}
         />
         <Route path="/posts" element={<PostsPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
     </>
   );

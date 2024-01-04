@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+/* .menu {
+    background-color: #001529;
+    color: #ffffff;
+    font-family: 'CamingoMonoBold', monospace;
+    height: 100%;
+    margin: 0 12px 0 -12px;
+    padding: 0 12px;
+    width: 100%;
+} */
+
+.menu {
+    background-color: #001529;
+    color: #ffffff;
+    font-family: 'CamingoMonoBold', monospace;
+    height: 100%;
+    margin: 0 12px 0 -12px;
+    padding: 0 12px;
+    width: 100%;
+}
+
+.list-group-item {
+    background-color: #001529;
+    color: #ffffff;
+    border: none;
+}
+
+.list-group-item a {
+    color: #ffffff;
+}
+
+.list-group-item a:hover {
+    color: #17a2b8;
+}
+
+.dropdown-item {
+    color:  #001529;
+}
+
+.dropdown-item:hover {
+    background-color:  #001529;
+    color: #ffffff;
+}

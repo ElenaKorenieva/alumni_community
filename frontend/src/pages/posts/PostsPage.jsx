@@ -2,10 +2,10 @@ import './PostsPage.css';
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createPost } from '../../redux/post/postOperations';
+import SideBarMenu from '../../components/side-bar-menu/SideBarMenu';
 
 const PostsPage = () => {
     const dispatch = useDispatch();
-
 
     const handleSendMessage = async (e) => {
         const body = {
@@ -16,16 +16,19 @@ const PostsPage = () => {
 
         const response = await dispatch(createPost(body));
         if (response.error) {
-        console.log(response.payload);
+            console.log(response.payload);
         } else {
-        console.log("Success");
+            console.log("Success");
         }
     };
 
     return (
-        <div className="container">
+        <div className="page-body">
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-2">
+                    <SideBarMenu />
+                </div>
+                <div className="col-md-10">
                     <h1>About this topic:</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidi Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidi</p>
                     <h3>Write a new post:</h3>
@@ -35,9 +38,10 @@ const PostsPage = () => {
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
-                </div>
-                <div className="other-posts">
-                    <h3>Other posts about this topic:</h3>
+
+                    <div className="other-posts">
+                        <h3>Other posts about this topic:</h3>
+                    </div>
                 </div>
             </div>
         </div>
