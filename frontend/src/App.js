@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./components/login/LoginPage";
+import LoginPage from "../src/pages/login/LoginPage";
+import PostsPage from "./pages/posts/PostsPage";
 import { useSelector } from "react-redux";
 import { isLogin } from "./redux/auth/authSelectors";
 import { PrivateRoute, RestrictedRoute } from "./components/AuthRoutes";
@@ -26,6 +27,7 @@ function App() {
           path="/home"
           element={<PrivateRoute component={Home} redirectTo="/" />}
         />
+        <Route path="/posts" element={<PostsPage />} />
       </Routes>
     </>
   );
