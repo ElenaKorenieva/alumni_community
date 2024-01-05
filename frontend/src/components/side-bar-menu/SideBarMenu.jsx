@@ -3,14 +3,14 @@ import './SideBarMenu.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faInfo, faRoad, faCode, faBullseye, faLaptopCode, faRandom, faGithub, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faInfo, faRoad, faCode, faBullseye, faLaptopCode, faRandom, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const SideBarMenu = () => {
     return (
         <div className='menu'>
             <ul className="list-group">
                 <li className="list-group-item">
-                    <Link to="/">
+                    <Link to="/posts/home">
                         <FontAwesomeIcon icon={faHome} className="mr-2" />
                         Home
                     </Link>
@@ -26,7 +26,7 @@ const SideBarMenu = () => {
                     The Road so Far
                     <ul>
                         <li className="list-group-item">
-                            <Link to="/road/presentation">
+                            <Link to="/posts/road-presentation">
                                 Presentation
                             </Link>
                         </li>

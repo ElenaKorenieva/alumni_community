@@ -1,26 +1,53 @@
-import './PostsPage.css';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createPost } from '../../redux/post/postOperations';
+import { createPost, findPostsByTopic } from '../../redux/post/postOperations';
 import SideBarMenu from '../../components/side-bar-menu/SideBarMenu';
+import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const PostsPage = () => {
+    const [posts, setPosts] = useState([]);
     const dispatch = useDispatch();
+    const { topic } = useParams();
+
 
     const handleSendMessage = async (e) => {
+        const topicSelected = topic || 'home';
+
         const body = {
             message: e.target.elements.message.value,
-            user: 'test_user',
-            topic: 'test'
+            topic: topicSelected
         };
 
         const response = await dispatch(createPost(body));
         if (response.error) {
-            console.log(response.payload);
+            console.error(response.error.message);
         } else {
             console.log("Success");
         }
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const topicSelected = topic || 'home';
+                const response = await dispatch(findPostsByTopic({ topic: topicSelected }));
+                if (!response.error) {
+                    const sortedPosts = response.payload ? response.payload : [];
+                    sortedPosts.sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
+                    setPosts(sortedPosts);
+                    console.log("Success");
+                } else {
+                    console.error(response.error.message);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, [dispatch]);
 
     return (
         <div className="page-body">
@@ -41,6 +68,14 @@ const PostsPage = () => {
 
                     <div className="other-posts">
                         <h3>Other posts about this topic:</h3>
+                        {posts.map((post) => (
+                            <div className="posts-box">
+                                <div key={post._id}>
+                                    <p>{post.message}</p>
+                                    <a href="#" className="view-more-link">See more</a>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

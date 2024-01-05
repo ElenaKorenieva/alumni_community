@@ -4,16 +4,6 @@
     font-style: normal;
 }
 
-/* .menu {
-    background-color: #001529;
-    color: #ffffff;
-    font-family: 'CamingoMonoBold', monospace;
-    height: 100%;
-    margin: 0 12px 0 -12px;
-    padding: 0 12px;
-    width: 100%;
-} */
-
 .menu {
     background-color: #001529;
     color: #ffffff;
@@ -22,6 +12,10 @@
     margin: 0 12px 0 -12px;
     padding: 0 12px;
     width: 100%;
+}
+
+.form-control input {
+    width: 70%;
 }
 
 .list-group-item {
@@ -39,10 +33,50 @@
 }
 
 .dropdown-item {
-    color:  #001529;
+    color: #001529;
 }
 
 .dropdown-item:hover {
-    background-color:  #001529;
+    background-color: #001529;
     color: #ffffff;
+}
+
+.other-posts {
+    margin-top: 20px;
+}
+
+.posts-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.posts-box p {
+    margin: 0;
+}
+
+.post-input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.view-more-link {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+    display: block;
+    margin-top: 10px;
+}
+
+.post-section {
+    margin-top: 20px;
+}
+
+.post-input {
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.submit-btn {
+    margin-left: 10px;
 }

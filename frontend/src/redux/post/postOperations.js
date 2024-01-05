@@ -22,3 +22,17 @@ export const createPost = createAsyncThunk(
     }
   }
 );
+
+export const findPostsByTopic = createAsyncThunk(
+  "posts/",
+  async (topic, thunkAPI) => {
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.get(`/posts?topic=${topic.topic}`);
+      console.log(response);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);

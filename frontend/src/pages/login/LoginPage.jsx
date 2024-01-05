@@ -4,12 +4,26 @@ import { useDispatch } from "react-redux";
 import "./LoginPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { login } from "../../redux/auth/authOperations";
+import validation from "./Validation";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [errorAPI, setErrorAPI] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleOnEmailChange = (e) => {
+    setEmail(e.target.value);
+    setErrorAPI("");
+  };
+
+  const handleOnPasswordChange = (e) => {
+    setPassword(e.target.value);
+    setErrorAPI("");
+  };
 
   const resetform = () => {
     setEmail("");
@@ -18,24 +32,25 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(e);
-    console.log(`Login with email address: ${email} and password: ${password}`); //authentication
     const currentUser = {
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
     };
-    console.log(currentUser);
-    const response = await dispatch(login(currentUser));
-    if (response.error) {
-      console.log(response.payload);
-    } else {
-      console.log("Success");
-      navigate("/home");
-    }
-    resetform("");
-  };
 
-  console.log(`Login with email address: ${email} and password: ${password}`);
+    if (Object.values(validation(currentUser)).length !== 0) {
+      setErrorAPI("");
+      setErrors(validation(currentUser));
+    } else {
+      const response = await dispatch(login(currentUser));
+      if (response.error) {
+        setErrors({});
+        setErrorAPI(response.payload);
+      } else {
+        navigate("/home");
+      }
+      resetform("");
+    }
+  };
 
   return (
     <div className="login-container">
@@ -69,8 +84,11 @@ const LoginPage = () => {
                         id="email"
                         placeholder="Type Email Address"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleOnEmailChange}
                       />
+                      {errors.email && email === "" && (
+                        <p className="error">{errors.email}</p>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label htmlFor="password" className="form-label">
@@ -83,9 +101,15 @@ const LoginPage = () => {
                         id="password"
                         placeholder="Type Password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleOnPasswordChange}
                       />
+                      {errors.password && password === "" && (
+                        <p className="error">{errors.password}</p>
+                      )}
                     </div>
+                    {errorAPI && Object.values(errors).length === 0 && (
+                      <p className="error">{errorAPI}</p>
+                    )}
                     <button type="submit" className="btn btn-primary w-100">
                       Login
                     </button>

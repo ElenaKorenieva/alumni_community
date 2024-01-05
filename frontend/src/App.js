@@ -28,7 +28,7 @@ function App() {
           path="/home"
           element={<PrivateRoute component={Home} redirectTo="/" />}
         />
-        <Route path="/posts" element={<PostsPage />} />
+        <Route path="/posts/:topic" element={<PostsPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>

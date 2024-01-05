@@ -1,69 +1,73 @@
 @font-face {
-    font-family: 'CamingoMonoBold';
-    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
-    font-style: normal;
+  font-family: "CamingoMonoBold";
+  src: url("../../components/fonts/CamingoMono-Regular.ttf") format("truetype");
+  font-style: normal;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .login-container {
-    background-image: url('/public/images/background-mainpage.jpg');
-    background-size: cover;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    font-family: 'CamingoMonoBold', monospace;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    min-height: 100vh;
+  background-image: url("/public/images/background-mainpage.jpg");
+  background-size: cover;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  font-family: "CamingoMonoBold", monospace;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .login-box {
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f5f5;
-    color: #001529;
-    text-align: center;
-    width: 50%;
-    height: 70%;
-    border-radius: 25px;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  color: #001529;
+  text-align: center;
+  width: 50%;
+  height: 70%;
+  border-radius: 25px;
 }
 
 .image-logo {
-    width: 100%;
-    margin: 30px auto 0 auto;
+  width: 100%;
+  margin: 30px auto 0 auto;
 }
 
 .login-box h1 {
-    font-size: 35px;
-    margin: 20px auto;
-    font-weight: bold;
+  font-size: 35px;
+  margin: 20px auto;
+  font-weight: bold;
 }
 
 .login-box h2 {
-    color: rgb(2, 2, 34);
-    font-size: 20px;
-    margin-top: 0;
-    margin-bottom: 10px;
+  color: rgb(2, 2, 34);
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 label {
-    display: flex !important;
+  display: flex !important;
 }
 
 .form-label {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .custom-input::placeholder {
-    font-size: 14px; 
+  font-size: 14px;
 }
 
 .align-items-center {
-    align-items: center;
+  align-items: center;
+}
+
+.error {
+  color: red;
 }
