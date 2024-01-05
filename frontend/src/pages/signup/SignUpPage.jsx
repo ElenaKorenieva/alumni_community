@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { register } from "../../redux/auth/authOperations";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import validation from "./Validation";
 
 const SignUpPage = () => {
   const [fullName, setFullName] = useState("");
@@ -11,6 +12,8 @@ const SignUpPage = () => {
   const [github, setGithub] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [errorAPI, setErrorAPI] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,21 +28,41 @@ const SignUpPage = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    let gitHubLink = "";
+    if (e.target.elements.github.value === "") {
+      gitHubLink = "none";
+    } else {
+      gitHubLink = e.target.elements.github.value;
+    }
     const newUser = {
       name: e.target.elements.fullName.value,
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
-      gitHub: e.target.elements.github.value,
+      gitHub: gitHubLink,
     };
-    console.log(newUser);
-    const response = await dispatch(register(newUser));
-    if (response.error) {
-      console.log(response.payload);
+
+    const newUserForValidation = {
+      name: e.target.elements.fullName.value,
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value,
+      gitHub: e.target.elements.github.value,
+      repeatPassword: e.target.elements.repeatPassword.value,
+    };
+
+    if (Object.values(validation(newUserForValidation)).length !== 0) {
+      setErrorAPI("");
+      setErrors(validation(newUserForValidation));
     } else {
-      console.log("Success");
-      navigate("/home");
+      const response = await dispatch(register(newUser));
+      if (response.error) {
+        setErrors({});
+        setErrorAPI(response.payload);
+      } else {
+        navigate("/home");
+      }
+      resetform("");
     }
-    resetform("");
   };
 
   return (
@@ -70,8 +93,14 @@ const SignUpPage = () => {
               name="fullName"
               placeholder="Enter your full name"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={(e) => {
+                setFullName(e.target.value);
+                setErrorAPI("");
+              }}
             />
+            {errors.name && fullName === "" && (
+              <p className="error">{errors.name}</p>
+            )}
           </div>
           <div className="form-group mb-3">
             <label htmlFor="email" className="form-label">
@@ -84,8 +113,14 @@ const SignUpPage = () => {
               name="email"
               placeholder="Enter your email address"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrorAPI("");
+              }}
             />
+            {errors.email && email === "" && (
+              <p className="error">{errors.email}</p>
+            )}
           </div>
           <div className="form-group mb-3">
             <label htmlFor="github" className="form-label">
@@ -98,7 +133,10 @@ const SignUpPage = () => {
               name="github"
               placeholder="Enter your GitHub link"
               value={github}
-              onChange={(e) => setGithub(e.target.value)}
+              onChange={(e) => {
+                setGithub(e.target.value);
+                setErrorAPI("");
+              }}
             />
           </div>
           <div className="form-group mb-3">
@@ -112,8 +150,14 @@ const SignUpPage = () => {
               name="password"
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrorAPI("");
+              }}
             />
+            {errors.password && password === "" && (
+              <p className="error">{errors.password}</p>
+            )}
           </div>
           <div className="form-group mb-3">
             <label htmlFor="repeatPassword" className="form-label">
@@ -126,9 +170,18 @@ const SignUpPage = () => {
               name="repeatPassword"
               placeholder="Repeat your password"
               value={repeatPassword}
-              onChange={(e) => setRepeatPassword(e.target.value)}
+              onChange={(e) => {
+                setRepeatPassword(e.target.value);
+                setErrorAPI("");
+              }}
             />
+            {errors.repeatPassword && repeatPassword === "" && (
+              <p className="error">{errors.repeatPassword}</p>
+            )}
           </div>
+          {errorAPI && Object.values(errors).length === 0 && (
+            <p className="error">{errorAPI}</p>
+          )}
           <button type="submit" className="w-100">
             Sign Up
           </button>
