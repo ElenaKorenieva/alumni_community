@@ -1,0 +1,55 @@
+@font-face {
+  font-family: "CamingoMonoBold";
+  src: url("../../components/fonts/CamingoMono-Regular.ttf") format("truetype");
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #dfd6d6;
+}
+
+.home-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.home-title {
+  text-transform: uppercase;
+  font-size: 40px;
+  font-weight: 800;
+  font-family: "CamingoMonoBold", monospace;
+}
+
+.homeImg-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.homeArticle-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 3rem 0;
+}
+
+.homeArticle-title {
+  font-family: "CamingoMonoBold", monospace;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 1rem;
+}
+
+.homeArticle-desc {
+  font-family: "CamingoMonoBold", monospace;
+  font-size: 20px;
+}

@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "CamingoMonoBold";
+  src: url("../../components/fonts/CamingoMono-Regular.ttf") format("truetype");
+  font-style: normal;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 14px;
+}
+
+.avatar {
+  position: relative;
+  cursor: pointer;
+}
+
+.icon-avatar {
+  width: 45px;
+  height: 45px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  fill: #5b61f5;
+  stroke: rgba(236, 237, 253, 1);
+  &:hover {
+    box-shadow: 0px 6px 7px 1px #7b7ede;
+  }
+}
+
+.icon-plus {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  fill: #bedbb0;
+  stroke: #121212;
+  top: 27px;
+  left: 10px;
+}
+
+.avatar-img {
+  display: block;
+  width: 100%;
+  &:hover {
+    box-shadow: 0px 6px 7px 1px #7b7ede;
+  }
+}
+
+.user-name {
+  font-family: "CamingoMonoBold", monospace;
+}

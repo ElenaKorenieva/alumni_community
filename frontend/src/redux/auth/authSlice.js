@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { register, login, logout } from "./authOperations";
+import { register, login, logout, updateUser } from "./authOperations";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -54,12 +54,26 @@ export const authSlice = createSlice({
         state.user.email = "";
         state.user.name = "";
         state.user.avatarURL = "";
-        state.user.theme = "";
-        state.user.boards = [];
+        state.user.gitHub = "";
         state.token = "";
         state.isLoggedIn = false;
         state.isRefreshing = false;
         state.error = null;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        state.user.name = payload.name;
+        state.user.email = payload.email;
+        state.user.gitHub = payload.gitHub;
+        state.user.avatarURL = payload.avatarURL;
+        state.isRefreshing = false;
+        state.error = null;
+      })
+      .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isRefreshing = false;
+        state.error = payload;
       }),
 });
 
