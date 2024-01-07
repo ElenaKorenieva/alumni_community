@@ -31,12 +31,12 @@ const SideBarMenu = () => {
                             </Link>
                         </li>
                         <li className="list-group-item">
-                            <Link to="/road/linkedin">
+                            <Link to="/posts/road-linkedin">
                                 LinkedIn
                             </Link>
                         </li>
                         <li className="list-group-item">
-                            <Link to="/road/reflections">
+                            <Link to="/posts/road-reflections">
                                 Reflections
                             </Link>
                         </li>
@@ -55,7 +55,8 @@ const SideBarMenu = () => {
                             <Link to="/road/random-programming">
                                 Back-end
                             </Link>
-                        </li><li className="list-group-item">
+                        </li>
+                        <li className="list-group-item">
                             <Link to="/road/back-end">
                                 Random Programming
                             </Link>
@@ -95,23 +96,23 @@ const SideBarMenu = () => {
                         Random Topics
                     </Link>
                 </li>
+                <li className="list-group-item">
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    Account
+                    <ul>
+                        <li className="list-group-item">
+                            <Link to="/account-profile">
+                                Profile
+                            </Link>
+                        </li>
+                        <li className="list-group-item">
+                            <Link to="/account-signout">
+                                Sign out
+                            </Link>
+                        </li>
+                    </ul>
+                </li>
             </ul>
-            <li className="list-group-item">
-                <FontAwesomeIcon icon={faUser} className="mr-2" />
-                Account
-                <ul>
-                    <li className="list-group-item">
-                        <Link to="/account-profile">
-                            Profile
-                        </Link>
-                    </li>
-                    <li className="list-group-item">
-                        <Link to="/account-signout">
-                            Sign out
-                        </Link>
-                    </li>
-                </ul>
-            </li>
         </div>
     );
 };

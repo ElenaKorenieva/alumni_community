@@ -16,12 +16,20 @@ const postSchema = new Schema({
         minLength: 1,
     },
 
+    title: {
+        type: String,
+        require: true,
+        maxLength: 60,
+        minLength: 1,
+    },
+
     message: {
         type: String,
         require: true,
-        maxLength: 40,
+        maxLength: 4000,
         minLength: 1,
     },
+
     create_at: {
         type: Date,
         default: Date.now,

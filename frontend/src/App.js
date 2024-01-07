@@ -10,11 +10,6 @@ import SignUpPage from "./pages/signup/SignUpPage";
 function App() {
   const isAuth = useSelector(isLogin);
   return (
-    // <div className="App">
-    //   <header className="App-header"></header>
-    //   <LoginPage />
-    // </div>
-
     <>
       <Routes>
         <Route
@@ -28,6 +23,7 @@ function App() {
           path="/home"
           element={<PrivateRoute component={Home} redirectTo="/" />}
         />
+        <Route path="/posts" element={<PostsPage />} />
         <Route path="/posts/:topic" element={<PostsPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />

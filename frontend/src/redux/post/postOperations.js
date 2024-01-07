@@ -23,6 +23,31 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk(
+  "posts/",
+  async (id, thunkAPI) => {
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.delete(`/posts/${id}`);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+export const editPost = createAsyncThunk(
+  "posts/",
+  async (post, thunkAPI) => {
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.put(`/posts/${post._id}`, post);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
 export const findPostsByTopic = createAsyncThunk(
   "posts/",
   async (topic, thunkAPI) => {
