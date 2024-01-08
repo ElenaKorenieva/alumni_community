@@ -1,15 +1,25 @@
 import React from "react";
 import "./HomePage.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "../../components/Home/Home";
-import Header from "../../shared/Header/Header";
+import SideBarMenu from "../../components/side-bar-menu/SideBarMenu";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const HomePage = () => {
   return (
-    <>
-      <Header />
-      <Home />
-    </>
+    <div>
+      <div className="row">
+        <div className="col-md-3">
+          <SideBarMenu />
+        </div>
+        <div className="col-md-9">
+          <div className="row">
+            <div className="col-13 pb-5">
+              <Home />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

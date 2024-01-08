@@ -7,13 +7,6 @@ import homeImgRetina from "./images/homeimg2x.png";
 import "./Home.css";
 
 const Home = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  //   navigate("/");
-  // };
   return (
     <div className="home-container">
       <h3 className="home-title">Alumni Community</h3>
@@ -52,7 +45,6 @@ const Home = () => {
           grow together! The strength of our community is in each one of you.
         </p>
       </div>
-      {/* <button onClick={handleLogout}>Logout</button> */}
     </div>
   );
 };
