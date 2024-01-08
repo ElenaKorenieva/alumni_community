@@ -48,6 +48,32 @@ export const editPost = createAsyncThunk(
     }
   }
 );
+
+export const sendComment = createAsyncThunk(
+  "posts/sendComment",
+  async ({ post, commentText }, thunkAPI) => {
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.put(`/posts/${post._id}/comment`, { message: commentText });
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+export const deleteComment = createAsyncThunk(
+  "posts/deleteComment",
+  async (postAndComment, thunkAPI) => {
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.delete(`/posts/${postAndComment.postId}/comment/${postAndComment.commentId}`);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
 export const findPostsByTopic = createAsyncThunk(
   "posts/",
   async (topic, thunkAPI) => {

@@ -1,43 +1,57 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const commentSchema = new Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: mongoose.Types.ObjectId,
+    },
+    text: {
+        type: String,
+        maxLength: 4000,
+        required: true,
+    },
+    user: {
+        type: String,
+        maxLength: 40,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
 
 const postSchema = new Schema({
     topic: {
         type: String,
-        require: true,
+        required: true,
         maxLength: 40,
         minLength: 1,
     },
-
     user: {
         type: String,
-        require: true,
+        required: true,
         maxLength: 40,
         minLength: 1,
     },
-
     title: {
         type: String,
-        require: true,
+        required: true,
         maxLength: 60,
         minLength: 1,
     },
-
     message: {
         type: String,
-        require: true,
+        required: true,
         maxLength: 4000,
         minLength: 1,
     },
-
     create_at: {
         type: Date,
         default: Date.now,
-        get: function (createAt) {
-            moment().format('MMMM Do YYYY, h:mm:ss')
-        }
-    }
+    },
+    comments: [commentSchema],
+}, { timestamps: true });
 
-}, { timestamps: true })
-
-module.exports = mongoose.model('Post', postSchema)
+module.exports = mongoose.model('Post', postSchema);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, findPostsByTopic, deletePost, editPost } from '../../redux/post/postOperations';
+import { createPost, findPostsByTopic, deletePost, editPost, sendComment, deleteComment } from '../../redux/post/postOperations';
 import SideBarMenu from '../../components/side-bar-menu/SideBarMenu';
 import { useParams } from "react-router-dom";
 import './PostsPage.css';
@@ -34,14 +34,21 @@ const PostsPage = () => {
         setShowDeleteModal(true)
     };
 
+    const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+    const handleCloseDeleteCommentModal = () => setShowDeleteCommentModal(false);
+    const handleShowDeleteCommentModal = (post, comment) => {
+        setPostToChange(post);
+        setCommentToChange(comment)
+        setShowDeleteCommentModal(true)
+    };
+
     const [posts, setPosts] = useState([]);
     const [pageInfos, setPageInfos] = useState([]);
     const dispatch = useDispatch();
     const { topic } = useParams();
     const [postToChange, setPostToChange] = useState(null);
+    const [commentToChange, setCommentToChange] = useState(null);
     const loggedInUser = useSelector((state) => state.auth.user);
-
-    // const [loggedInUser, setLoggedInUser] = useState(null);
 
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
@@ -86,6 +93,47 @@ const PostsPage = () => {
         }
     };
 
+    const handleSubmitComment = async (e, post) => {
+        e.preventDefault();
+        const commentText = e.target.elements.comment.value;
+        const response = await dispatch(sendComment({ post, commentText }));
+        if (response.error) {
+            console.error(response.error.message);
+        } else {
+            window.location.reload();
+        }
+    };
+
+    // const handleDeleteComment = async (post) => {
+    //     const response = await dispatch(deleteComment({ postToChange, commentToChange }));
+
+    //     if (!response || !response.error) {
+    //         console.error("Unexpected response format");
+    //         return;
+    //     }
+
+    //     if (response.error) {
+    //         console.error(response.error.message);
+    //     } else {
+    //         window.location.reload();
+    //     }
+    // };
+
+    const handleDeleteComment = async (postToChange, commentToChange) => {
+        const postId = postToChange._id
+        const commentId = commentToChange._id
+        const postAndComment = {
+            postId: postToChange._id,
+            commentId: commentToChange._id
+        }
+        const response = await dispatch(deleteComment(postAndComment));
+        if (response.error) {
+            console.error(response.error.message);
+        } else {
+            window.location.reload();
+        }
+    };
+
     const fetchData = async () => {
         try {
             const topicSelected = topic || 'home';
@@ -109,8 +157,6 @@ const PostsPage = () => {
     };
 
     useEffect(() => {
-        // console.log(useSelector((state) => state.user));
-        // setLoggedInUser();
         console.log(loggedInUser);
 
 
@@ -125,31 +171,32 @@ const PostsPage = () => {
                     <SideBarMenu />
                 </div>
                 <div className="col-md-9 px-5 py-4">
-                    <h1>About this topic:</h1>
-                    {pageInfos && (
-                        <h3>{pageInfos.title}</h3>
-                    )}
+
                     <div className="row">
                         <div className="col-8">
+                            <h2>About this topic:</h2>
                             {pageInfos && (
-                                <p>{pageInfos.info}</p>
+                                <h3>{pageInfos.title}</h3>
+                            )}
+                            {pageInfos && (
+                                <p className="text-justify">{pageInfos.info}</p>
                             )}
                         </div>
-                        <div className="col img-fluid">
+                        <div className="col img-fluid img-post">
                             {pageInfos && (
                                 <img src={"/images/" + pageInfos.imageUrl} alt="" />
                             )}
 
                         </div>
                     </div>
-                    <h3>Write a new post:</h3>
+                    <h2>Write a new post:</h2>
                     <Form onSubmit={(e) => handleSendMessage(e)}>
                         <Form.Group className="mb-3" controlId="title">
                             <Form.Label>Title</Form.Label>
                             <Form.Control type="text" placeholder="Insert a title" minLength="1" maxLength="60" />
                         </Form.Group>
                         <Form.Group controlId="formFile" className="mb-3" name="file">
-                            <Form.Label>Image</Form.Label>
+                            <Form.Label>Image - optional</Form.Label>
                             <Form.Control type="file" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="message">
@@ -223,19 +270,38 @@ const PostsPage = () => {
                                 </Modal.Footer>
                             </div>
                         )}
-
                     </Modal>
+
+                    <Modal show={showDeleteCommentModal} onHide={handleCloseDeleteCommentModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Delete comment</Modal.Title>
+                        </Modal.Header>
+                        {postToChange && (
+                            <div>
+                                <Modal.Body>Are you sure you want to delete the comment on the <b>{postToChange.title}</b> post?</Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={handleCloseDeleteCommentModal}>
+                                        Close
+                                    </Button>
+                                    <Button variant="primary" onClick={() => handleDeleteComment(postToChange, commentToChange)}>
+                                        Delete
+                                    </Button>
+                                </Modal.Footer>
+                            </div>
+                        )}
+                    </Modal>
+
                     <div className="other-posts">
                         {posts && posts.length > 0 && (
                             <>
                                 <h3>Other posts about this topic:</h3>
                                 {posts && posts.map((post) => (
-                                    <Card style={{ width: '50rem' }} key={post._id} className="mx-auto my-4">
+                                    <Card style={{ width: '50rem', backgroundColor: '#F5F5F5' }} key={post._id} className="mx-auto my-4">
                                         {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
                                         <Card.Body>
-                                            <Card.Title className="text-end">{post.title}</Card.Title>
-                                            <Card.Body className="text-end">
-                                                <small className="text-end">Author: {post.user}</small>
+                                            <Card.Title className="">{post.title}</Card.Title>
+                                            <Card.Body className="text-start">
+                                                <small className="text-start">Author: {post.user}</small>
                                             </Card.Body>
                                         </Card.Body>
                                         <Card.Body>
@@ -243,18 +309,54 @@ const PostsPage = () => {
                                                 {post.message}
                                             </Card.Text>
                                         </Card.Body>
-                                        <ListGroup className="list-group-flush">
-                                            <ListGroup.Item>Create at: {formatDate(post.create_at)}</ListGroup.Item>
-                                        </ListGroup>
                                         <Card.Body className="text-end">
                                             {post.user === loggedInUser.name && (
                                                 <>
-                                                    <Card.Link onClick={() => handleShowEditModal(post)} className="clickable">Edit</Card.Link>
-                                                    <Card.Link onClick={() => handleShowDeleteModal(post)} className="clickable">Delete</Card.Link>
+                                                    <div className="button-container">
+                                                        <Button variant="secondary" onClick={() => handleShowEditModal(post)} className="clickable mb-2">
+                                                            Edit
+                                                        </Button>{' '}
+
+                                                        <Button variant="danger" onClick={() => handleShowDeleteModal(post)} className="clickable mb-2">
+                                                            Delete
+                                                        </Button>
+                                                    </div>
                                                 </>
                                             )}
-                                            <Card.Link href="#" className="clickable">See comments</Card.Link>
+                                            <ListGroup className="list-group-flush">
+                                                <ListGroup.Item>Create at: {formatDate(post.create_at)}</ListGroup.Item>
+                                            </ListGroup>
+
+                                            <Form onSubmit={(e) => handleSubmitComment(e, post)}>
+                                                <Form.Group controlId="comment">
+                                                    <Form.Control type="text" placeholder="Type your comment" minLength="1" maxLength="4000" style={{ marginTop: '2em' }} />
+                                                </Form.Group>
+                                                <Button variant="primary" type="submit" size="sm"> Add comments </Button>
+                                            </Form>
                                         </Card.Body>
+
+                                        {post.comments && post.comments.length > 0 ? (
+                                            post.comments.map((comment) => (
+                                                <div className="text-start border-comment" key={comment._id}>
+                                                    <b>{comment.user === loggedInUser.name ? 'You' : comment.user}</b><small> at {formatDate(comment.createdAt)} commented:</small>
+                                                    <br />
+                                                    <p className="ms-3 mb-0">{comment.text}</p>
+                                                    {comment.user === loggedInUser.name && (
+                                                        <>
+                                                            <div className="button-container text-end">
+
+                                                                <Button variant="secondary" size="sm" className="me-2" onClick={() => handleShowEditModal(post, comment)}>Edit</Button>
+                                                                <Button variant="danger" size="sm" onClick={() => handleShowDeleteCommentModal(post, comment)}>Delete</Button>
+                                                            </div>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="text-start ms-3 mb-3">
+                                                No comments available.
+                                            </div>
+                                        )}
                                     </Card>
                                 ))}
                             </>

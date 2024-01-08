@@ -14,3 +14,25 @@
 .clickable {
     cursor: pointer
 }
+
+.text-justify {
+    text-align: justify;
+}
+
+.img-post {
+    align-items: center;
+    display: flex;
+    margin: 0 auto;
+}
+
+.border-comment {
+    border-radius: 10px;
+    border: 1px solid #a3a3a3;
+    background-color: #e3e1e1;
+    padding: .5em 1em;
+    margin: 1em .5em;
+}
+
+.menu .list-group-item {
+    font-size: 18px;
+}

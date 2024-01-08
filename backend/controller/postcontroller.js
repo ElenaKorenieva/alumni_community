@@ -43,7 +43,7 @@ const deletePost = async (req, res) => {
         }
         console.log(post.user);
 
-        await post.remove();
+        await post.deleteOne();
         return res.status(204).json({ success: true, message: "Post deleted successfully" });
     } catch (err) {
         console.error(err);
@@ -87,11 +87,75 @@ const editMessage = async (req, res) => {
     }
 };
 
+const addComment = async (req, res) => {
+    const messageId = req.params.id;
+    const postId = new mongoose.Types.ObjectId(messageId);
+    const user = req.user.name;
+    const { message } = req.body;
+
+    if (!message) {
+        return res.status(400).json({ success: false, message: "Message is mandatory" });
+    }
+
+    try {
+        const post = await Post.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({ success: false, message: "Post not found" });
+        }
+
+        const commentId = new mongoose.Types.ObjectId();
+
+        post.comments.push({
+            _id: commentId,
+            text: message,
+            user: user,
+            createdAt: new Date(),
+        });
+
+        const updatedPost = await post.save();
+
+        res.status(200).json({ success: true, message: "Comment added successfully", post: updatedPost });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+const removeComment = async (req, res) => {
+    const postId = req.params.id;
+    const commentId = req.params.idComment;
+
+    try {
+        const post = await Post.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({ success: false, message: 'Post not found' });
+        }
+
+        const updatedPost = await Post.findByIdAndUpdate(
+            postId,
+            { $pull: { comments: { _id: commentId } } },
+            { new: true }
+        );
+
+        if (!updatedPost) {
+            return res.status(404).json({ success: false, message: 'Comment not found' });
+        }
+
+        res.status(200).json({ success: true, message: 'Comment removed successfully', post: updatedPost });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
 
 
 module.exports = {
     getPostsByTopic: ctrlWrapper(getPostsByTopic),
     createNewPost: ctrlWrapper(createNewPost),
     deletePost: ctrlWrapper(deletePost),
-    editMessage: ctrlWrapper(editMessage)
+    editMessage: ctrlWrapper(editMessage),
+    addComment: ctrlWrapper(addComment),
+    removeComment: ctrlWrapper(removeComment),
 }

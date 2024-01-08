@@ -10,7 +10,7 @@ const SideBarMenu = () => {
         <div className='menu'>
             <ul className="list-group">
                 <li className="list-group-item">
-                    <Link to="/posts/home">
+                    <Link to="/home">
                         <FontAwesomeIcon icon={faHome} className="mr-2" />
                         Home
                     </Link>
@@ -31,11 +31,6 @@ const SideBarMenu = () => {
                             </Link>
                         </li>
                         <li className="list-group-item">
-                            <Link to="/posts/road-linkedin">
-                                LinkedIn
-                            </Link>
-                        </li>
-                        <li className="list-group-item">
                             <Link to="/posts/road-reflections">
                                 Reflections
                             </Link>
@@ -47,17 +42,17 @@ const SideBarMenu = () => {
                     Programming
                     <ul>
                         <li className="list-group-item">
-                            <Link to="/road/front-end">
+                            <Link to="/posts/programming-front-end">
                                 Front-end
                             </Link>
                         </li>
                         <li className="list-group-item">
-                            <Link to="/road/random-programming">
+                            <Link to="/posts/programming-back-end">
                                 Back-end
                             </Link>
                         </li>
                         <li className="list-group-item">
-                            <Link to="/road/back-end">
+                            <Link to="/posts/programming-random">
                                 Random Programming
                             </Link>
                         </li>
@@ -68,49 +63,28 @@ const SideBarMenu = () => {
                     Job Opportunities
                     <ul>
                         <li className="list-group-item">
-                            <Link to="/road/internships">
-                                Internships
-                            </Link>
-                        </li>
-                        <li className="list-group-item">
-                            <Link to="/road/showcase">
+                            <Link to="/posts/job-opportunities">
                                 Opportunities
                             </Link>
                         </li>
                         <li className="list-group-item">
-                            <Link to="/road/showcase">
+                            <Link to="/posts/job-showcase">
                                 Showcase
                             </Link>
                         </li>
                     </ul>
                 </li>
                 <li className="list-group-item">
-                    <Link to="/github-projects">
-                        <FontAwesomeIcon icon={faLaptopCode} className="mr-2" />
-                        GitHub Projects
-                    </Link>
-                </li>
-                <li className="list-group-item">
-                    <Link to="/random-topics">
+                    <Link to="/posts/random-topics">
                         <FontAwesomeIcon icon={faRandom} className="mr-2" />
                         Random Topics
                     </Link>
                 </li>
                 <li className="list-group-item">
-                    <FontAwesomeIcon icon={faUser} className="mr-2" />
-                    Account
-                    <ul>
-                        <li className="list-group-item">
-                            <Link to="/account-profile">
-                                Profile
-                            </Link>
-                        </li>
-                        <li className="list-group-item">
-                            <Link to="/account-signout">
-                                Sign out
-                            </Link>
-                        </li>
-                    </ul>
+                    <Link to="/profile">
+                        <FontAwesomeIcon icon={faUser} className="mr-2" />
+                        Profile
+                    </Link>
                 </li>
             </ul>
         </div>

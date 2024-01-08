@@ -2,13 +2,49 @@
     {
         "topic": "road-presentation",
         "title": "Presentation",
-        "info": "Road so far 2",
+        "info": "Hello, amazing Alumni of Matrix Master! This space is dedicated to you, a place to showcase your skills, experiences, and connect with fellow graduates. We believe in the power of networking and community, and this topic aims for you to introduce yourself and meet other alumni. Introduce yourself to get to know each other! You can also share your Linkedin profile and expand your connection.",
         "imageUrl": "posts_img.png"
     },
     {
-        "topic": "road-linkedin",
-        "title": "Linkedin",
-        "info": "Linkedin info",
+        "topic": "road-reflections",
+        "title": "Reflections - A Journey Beyond Bootcamp",
+        "info": "Dear Matrix Master alumni, this is your space to delve into the essence of your transformative journey. Share with the community the pinnacle of your Bootcamp experience—the moment that crystallized your passion for coding, the challenges that shaped your resilience, and the breakthroughs that defined your path. Reflect on how you improved yourself in the world of programming, illuminating new possibilities and horizons. In this topic, you can share doubts, experiences, and reflections during and after the Bootcamp.",
+        "imageUrl": "posts_img.png"
+    },
+    {
+        "topic": "programming-front-end",
+        "title": "Welcome to the Front-End Hub!",
+        "info": "Here's your go-to space for all things front-end development. Whether you've stumbled upon a challenging CSS issue, want to discuss the latest JavaScript frameworks, or simply wish to share some fantastic front-end resources, this page is your collaborative haven. Dive into the vibrant world of HTML, CSS, and JavaScript, and share your insights, ask questions, and let the community be your support system. Let's build, design, and innovate together on the Front-End Hub!",
+        "imageUrl": "posts_img.png"
+    },
+    {
+        "topic": "programming-back-end",
+        "title": "Welcome to the Back-End Hub",
+        "info": "This dedicated space is your go-to hub for all things related to back-end development. Whether you're wrestling with databases, exploring server-side scripting, or eager to share the latest back-end innovations, this page is the perfect spot. Feel free to seek assistance, share valuable resources, or spark insightful discussions that delve into the complexities and wonders of back-end programming. Let's collaborate to elevate our skills on the back-end side!",
+        "imageUrl": "posts_img.png"
+    },
+    {
+        "topic": "programming-random",
+        "title": "Random Programming",
+        "info": "Hello, extraordinary alumni! Welcome to Random Programming space, where the possibilities are as vast as the digital universe. This topic is for all subjects regarding programming and technology that don't neatly fit into the Front-End or Back-End. Share intriguing tech news, discuss emerging trends, or seek advice on general programming challenges.",
+        "imageUrl": "posts_img.png"
+    },
+    {
+        "topic": "job-opportunities",
+        "title": "Job Opportunities",
+        "info": "Alumni, welcome to the Job Opportunities page: your gateway to professional growth and collaboration. This space is designed for you to share and discover exciting career prospects within our community. Whether you're seeking the perfect Full Stack Developer, Front-End Developer, or any other specialized position, this page is your platform to showcase opportunities.",
+        "imageUrl": "posts_img.png"
+    },
+    {
+        "topic": "job-showcase",
+        "title": "Showcase",
+        "info": "Alumni, welcome to the Showcase topic: a stage crafted exclusively for you to shine and present your skills to potential. If you are seeking a new job opportunity, this page is your personal exhibit space to share your expertise. Highlight your skills, experiences, and career aspirations for the community! ",
+        "imageUrl": "posts_img.png"
+    },
+    {
+        "topic": "random-topics",
+        "title": "Random Topics",
+        "info": "Welcome to the Random Topic page: a place for you to share your latest GitHub project, or simply have random important content about the tech world to discuss. Engage and explore, this page is your canvas.",
         "imageUrl": "posts_img.png"
     }
 ]
