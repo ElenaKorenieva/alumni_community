@@ -74,6 +74,20 @@ export const deleteComment = createAsyncThunk(
     }
   }
 );
+
+export const editComment = createAsyncThunk(
+  "posts/editComment",
+  async (postAndComment, thunkAPI) => {
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.put(`/posts/${postAndComment.postId}/comment/${postAndComment.commentId}`, { message: postAndComment.message });
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 export const findPostsByTopic = createAsyncThunk(
   "posts/",
   async (topic, thunkAPI) => {

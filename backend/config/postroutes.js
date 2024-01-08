@@ -9,4 +9,5 @@ router.delete("/:id", authenticate, controller.deletePost);
 router.put("/:id", authenticate, controller.editMessage);
 router.put("/:id/comment", authenticate, controller.addComment);
 router.delete("/:id/comment/:idComment", authenticate, controller.removeComment);
+router.put("/:id/comment/:idComment", authenticate, controller.editComment);
 module.exports = router;

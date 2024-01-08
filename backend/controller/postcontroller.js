@@ -125,12 +125,22 @@ const addComment = async (req, res) => {
 const removeComment = async (req, res) => {
     const postId = req.params.id;
     const commentId = req.params.idComment;
+    const user = req.user.name;
 
     try {
         const post = await Post.findById(postId);
 
         if (!post) {
             return res.status(404).json({ success: false, message: 'Post not found' });
+        }
+
+        const commentToRemove = post.comments.find(comment => comment._id == commentId);
+        if (!commentToRemove) {
+            return res.status(404).json({ success: false, message: 'Comment not found' });
+        }
+
+        if (commentToRemove.user !== user) {
+            return res.status(403).json({ success: false, message: "You can not remove this comment" });
         }
 
         const updatedPost = await Post.findByIdAndUpdate(
@@ -150,6 +160,40 @@ const removeComment = async (req, res) => {
     }
 };
 
+const editComment = async (req, res) => {
+    const postId = req.params.id;
+    const commentId = req.params.idComment;
+    const { message } = req.body;
+    const user = req.user.name;
+
+    try {
+        const post = await Post.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({ success: false, message: 'Post not found' });
+        }
+
+        const commentToUpdate = post.comments.find(comment => comment._id == commentId);
+
+        if (!commentToUpdate) {
+            return res.status(404).json({ success: false, message: 'Comment not found' });
+        }
+
+        if (commentToUpdate.user !== user) {
+            return res.status(403).json({ success: false, message: "You can not edit this comment" });
+        }
+
+        commentToUpdate.text = message;
+
+        const updatedPost = await post.save();
+
+        res.status(200).json({ success: true, message: 'Comment updated successfully', post: updatedPost });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
+
 
 module.exports = {
     getPostsByTopic: ctrlWrapper(getPostsByTopic),
@@ -158,4 +202,5 @@ module.exports = {
     editMessage: ctrlWrapper(editMessage),
     addComment: ctrlWrapper(addComment),
     removeComment: ctrlWrapper(removeComment),
+    editComment: ctrlWrapper(editComment),
 }
