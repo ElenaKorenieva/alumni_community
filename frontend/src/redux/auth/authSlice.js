@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { register, login, logout, updateUser } from "./authOperations";
+import {
+  register,
+  login,
+  logout,
+  updateUser,
+  getImageFromGitHub,
+} from "./authOperations";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -72,6 +78,18 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isRefreshing = false;
+        state.error = payload;
+      })
+      .addCase(getImageFromGitHub.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(getImageFromGitHub.fulfilled, (state, { payload }) => {
+        state.user.avatarURL = payload;
+        state.isRefreshing = false;
+        state.error = null;
+      })
+      .addCase(getImageFromGitHub.rejected, (state, { payload }) => {
         state.isRefreshing = false;
         state.error = payload;
       }),

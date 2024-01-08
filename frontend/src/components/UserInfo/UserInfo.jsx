@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import icons from "../../shared/images/sprite.svg";
-import { useSelector } from "react-redux";
-import { avatarURL, setName } from "../../redux/auth/authSelectors";
+import { useDispatch, useSelector } from "react-redux";
+import { avatarURL, gitHubURL, setName } from "../../redux/auth/authSelectors";
 import ModalEditProfile from "../ModalEditProfile/ModalEditProfile";
 import "./UserInfo.css";
+// import { getImageFromGitHub } from "../../redux/auth/authOperations";
 
 const UserInfo = () => {
+  // const dispatch = useDispatch();
+
   const name = useSelector(setName);
   const avatar = useSelector(avatarURL);
+  // const gitHubLink = useSelector(gitHubURL) || "";
   const [showModal, setShowModal] = useState(false);
+
+  // useEffect(() => {
+  //   // Dispatch the fetchData thunk only on the first render
+  //   dispatch(getImageFromGitHub(gitHubLink));
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const onOpen = () => {
     setShowModal(true);
