@@ -4,13 +4,16 @@ import PostsPage from "./pages/posts/PostsPage";
 import { useSelector } from "react-redux";
 import { isLogin } from "./redux/auth/authSelectors";
 import { PrivateRoute } from "./components/AuthRoutes";
-import Home from "./components/Home/Home";
 import SignUpPage from "./pages/signup/SignUpPage";
+import HomePage from "./pages/home/HomePage";
+import About from "./pages/about/About";
+import Header from "./shared/Header/Header";
 
 function App() {
   const isAuth = useSelector(isLogin);
   return (
     <>
+      <Header />
       <Routes>
         <Route
           path="/"
@@ -21,8 +24,9 @@ function App() {
 
         <Route
           path="/home"
-          element={<PrivateRoute component={Home} redirectTo="/" />}
+          element={<PrivateRoute component={HomePage} redirectTo="/" />}
         />
+        <Route path="/about" element={<About />} />
         <Route path="/posts" element={<PostsPage />} />
         <Route path="/posts/:topic" element={<PostsPage />} />
         <Route path="/signup" element={<SignUpPage />} />

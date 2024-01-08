@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "CamingoMonoBold";
+  src: url("../../components/fonts/CamingoMono-Regular.ttf") format("truetype");
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem 1rem 28%;
+}
