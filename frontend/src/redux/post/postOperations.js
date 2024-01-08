@@ -11,10 +11,10 @@ const setAuthHeader = (thunkAPI) => {
 
 export const createPost = createAsyncThunk(
   "posts/",
-  async (credentials, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
       setAuthHeader(thunkAPI);
-      const response = await axios.post("/posts", credentials);
+      const response = await axios.post("/posts", formData);
       console.log(response);
       return response.data;
     } catch (err) {
@@ -22,6 +22,7 @@ export const createPost = createAsyncThunk(
     }
   }
 );
+
 
 export const deletePost = createAsyncThunk(
   "posts/",

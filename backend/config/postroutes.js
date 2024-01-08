@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router()
 const controller = require('../controller/postcontroller')
-const { validateBody, authenticate, upload } = require("../middleware");
+const multer = require('multer');
+const { validateBody, authenticate } = require("../middleware");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 router.get("/", authenticate, controller.getPostsByTopic);
-router.post("/", authenticate, controller.createNewPost);
+router.post("/", authenticate, upload.single('file'), controller.createNewPost);
 router.delete("/:id", authenticate, controller.deletePost);
 router.put("/:id", authenticate, controller.editMessage);
 router.put("/:id/comment", authenticate, controller.addComment);

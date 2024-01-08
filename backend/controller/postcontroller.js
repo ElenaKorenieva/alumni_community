@@ -1,11 +1,14 @@
 const { default: mongoose } = require("mongoose");
 const { ctrlWrapper } = require("../helper");
+const multer = require('multer');
+const path = require('path');
 
 const Post = require('../model/Post')
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const getPostsByTopic = async (req, res) => {
     try {
-        console.log(req.user);
         const posts = await Post.find({ topic: req.query.topic });
         res.status(200).json(posts);
     } catch (err) {
@@ -16,7 +19,21 @@ const getPostsByTopic = async (req, res) => {
 
 const createNewPost = async (req, res) => {
     try {
-        const post = new Post({ topic: req.body.topic, user: req.user.name, title: req.body.title, message: req.body.message });
+        const post = new Post({
+            topic: req.body.topic,
+            user: req.user.name,
+            title: req.body.title,
+            message: req.body.message
+        });
+
+        if (req.file) {
+            const imageBuffer = req.file.buffer;
+
+            post.image = {
+                data: imageBuffer,
+                contentType: req.file.mimetype
+            };
+        }
         await post.save();
 
         res.status(201).json({ success: true, message: 'Post created successfully' });
@@ -25,6 +42,18 @@ const createNewPost = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+
+// const createNewPost = async (req, res) => {
+//     try {
+//         const post = new Post({ topic: req.body.topic, user: req.user.name, title: req.body.title, message: req.body.message });
+//         await post.save();
+
+//         res.status(201).json({ success: true, message: 'Post created successfully' });
+//     } catch (error) {
+//         console.error('Error creating post:', error);
+//         res.status(500).json({ success: false, message: 'Internal server error' });
+//     }
+// };
 
 const deletePost = async (req, res) => {
     const messageId = req.params.id;
@@ -41,7 +70,6 @@ const deletePost = async (req, res) => {
         if (post.user !== user) {
             return res.status(403).json({ success: false, message: "You can not delete this post" });
         }
-        console.log(post.user);
 
         await post.deleteOne();
         return res.status(204).json({ success: true, message: "Post deleted successfully" });

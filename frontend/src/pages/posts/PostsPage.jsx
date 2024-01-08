@@ -80,6 +80,16 @@ const PostsPage = () => {
         return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
     };
 
+    function arrayBufferToBase64(buffer) {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+    }
+
+
     const showToastMessage = (message, isError = false) => {
         setToastMessage(message);
         setShowToastError(isError);
@@ -92,13 +102,13 @@ const PostsPage = () => {
         e.preventDefault();
         const topicSelected = topic || 'road-presentation';
 
-        const body = {
-            title: e.target.elements.title.value,
-            message: e.target.elements.message.value,
-            topic: topicSelected
-        };
+        const formData = new FormData();
+        formData.append('title', e.target.elements.title.value);
+        formData.append('message', e.target.elements.message.value);
+        formData.append('topic', topicSelected);
+        formData.append('file', e.target.elements.file.files[0]);
 
-        const response = await dispatch(createPost(body));
+        const response = await dispatch(createPost(formData));
         if (response.error) {
             console.error(response.error.message);
             showToastMessage("Post creation failed", true);
@@ -253,10 +263,11 @@ const PostsPage = () => {
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                 />
                             </Form.Group>
-                            <Form.Group controlId="formFile" className="mb-3" name="file">
+                            <Form.Group controlId="file" className="mb-3" name="file">
                                 <Form.Label>Image - optional</Form.Label>
                                 <Form.Control
                                     type="file"
+                                    accept=".jpg, .jpeg, .png"
                                     onChange={(e) => setFormData({ ...formData, file: e.target.files[0] })}
                                 />
                             </Form.Group>
@@ -318,23 +329,32 @@ const PostsPage = () => {
                                 <h5 className="border-bottom font-weight-bold">Other posts about this topic:</h5>
                                 {posts && posts.map((post) => (
                                     <Card style={{ width: '50rem', backgroundColor: '#F5F5F5' }} key={post._id} className="mx-auto my-4">
-                                        {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
-                                        <Card.Body>
-                                            <Card.Title className="">{post.title}</Card.Title>
-                                            <Card.Body className="text-start">
-                                                <small className="text-start">Author: {post.user}</small>
-                                                <p>Create at: {formatDate(post.create_at)}</p>
-                                            </Card.Body>
-                                        </Card.Body>
-
-                                        <ListGroup className="list-group-flush">
-                                            <ListGroup.Item>Create at: {formatDate(post.create_at)}</ListGroup.Item>
-                                        </ListGroup>
+                                        <Card.Img
+                                            variant="top"
+                                            src={post.image ? `data:${post.image.contentType};base64,${arrayBufferToBase64(post.image.data.data)}` : ''}
+                                            style={{
+                                                maxHeight: '300px',
+                                                width: '100%',
+                                                objectFit: 'cover',
+                                                margin: 'auto',
+                                            }}
+                                        />
 
                                         <Card.Body>
+                                            <small className="text-end">Author: {post.user}</small><br />
+                                            <small className="text-end">Create at: {formatDate(post.create_at)}</small>
+
+                                            <Card.Title className="">
+                                                {post.title}</Card.Title>
+
+                                            <ListGroup className="list-group-flush">
+
+                                            </ListGroup>
+
                                             <Card.Text>
                                                 {post.message}
                                             </Card.Text>
+
                                         </Card.Body>
                                         <Card.Body className="text-end">
                                             {post.user === loggedInUser.name && (
@@ -351,7 +371,6 @@ const PostsPage = () => {
 
                                                 </>
                                             )}
-
                                             <Form onSubmit={(e) => handleSubmitComment(e, post)}>
                                                 <hr />
                                                 <Form.Group controlId="comment">
