@@ -12,7 +12,7 @@ const EditPostModal = ({ show, handleClose, handleEditPost, postToChange, handle
             {postToChange && (
                 <div>
                     <Modal.Body>
-                        <Form onSubmit={() => handleEditPost(postToChange)}>
+                        <Form onSubmit={(e) => handleEditPost(e, postToChange)}>
                             <Form.Group className="mb-3" controlId="title">
                                 <Form.Label>Title</Form.Label>
                                 <Form.Control

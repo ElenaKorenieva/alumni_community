@@ -12,10 +12,15 @@ import Button from 'react-bootstrap/Button';
 import jsonData from './pageContent.json'
 import DeleteCommentModal from "../../components/modals/DeleteCommentModal";
 import DeletePostModal from "../../components/modals/DeletePostModal";
-import EditCommentModal from "../../components/modals/EditCommentModal";
 import EditPostModal from "../../components/modals/EditPostModal";
+import EditCommentModal from "../../components/modals/EditCommentModal";
+import Toast from 'react-bootstrap/Toast';
 
 const PostsPage = () => {
+    const [showToast, setShowToast] = useState(false);
+    const [showToastError, setShowToastError] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+
     const [formData, setFormData] = useState({
         title: "",
         message: "",
@@ -75,6 +80,14 @@ const PostsPage = () => {
         return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
     };
 
+    const showToastMessage = (message, isError = false) => {
+        setToastMessage(message);
+        setShowToastError(isError);
+
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
+    };
+
     const handleSendMessage = async (e) => {
         e.preventDefault();
         const topicSelected = topic || 'road-presentation';
@@ -88,9 +101,11 @@ const PostsPage = () => {
         const response = await dispatch(createPost(body));
         if (response.error) {
             console.error(response.error.message);
+            showToastMessage("Post creation failed", true);
         } else {
             fetchData();
             setFormData({ title: "", message: "", file: null });
+            showToastMessage("Post created successfully", false);
         }
     };
 
@@ -98,19 +113,24 @@ const PostsPage = () => {
         const response = await dispatch(deletePost(post._id));
         if (response.error) {
             console.error(response.error.message);
+            showToastMessage("Post deletion failed", true);
         } else {
             setPosts((prevPosts) => prevPosts.filter(p => p._id !== post._id));
             handleCloseDeleteModal()
+            showToastMessage("Post deleted successfully");
         }
     };
 
-    const handleEditPost = async (post) => {
+    const handleEditPost = async (e, post) => {
+        e.preventDefault();
         const response = await dispatch(editPost(post));
         if (response.error) {
             console.error(response.error.message);
+            showToastMessage("Post deletion failed", true);
         } else {
             setPosts((prevPosts) => prevPosts.map(p => (p._id === post._id ? post : p)));
             handleCloseEditModal()
+            showToastMessage("Post edited successfully");
         }
     };
 
@@ -120,9 +140,11 @@ const PostsPage = () => {
         const response = await dispatch(sendComment({ post, commentText }));
         if (response.error) {
             console.error(response.error.message);
+            showToastMessage("Comment creation failed", true);
         } else {
             fetchData();
             e.target.elements.comment.value = ''
+            showToastMessage("Comment created successfully");
         }
     };
 
@@ -134,9 +156,11 @@ const PostsPage = () => {
         const response = await dispatch(deleteComment(postAndComment));
         if (response.error) {
             console.error(response.error.message);
+            showToastMessage("Comment deletion failed", true);
         } else {
             fetchData();
             setShowDeleteCommentModal(false)
+            showToastMessage("Comment deleted successfully");
         }
     };
 
@@ -150,9 +174,11 @@ const PostsPage = () => {
         const response = await dispatch(editComment(postAndComment));
         if (response.error) {
             console.error(response.error.message);
+            showToastMessage("Comment edition failed", true);
         } else {
             fetchData();
             setShowEditCommentModal(false)
+            showToastMessage("Comment edited successfully");
         }
     };
 
@@ -252,15 +278,6 @@ const PostsPage = () => {
                         </Form>
                     </div>
 
-                    <EditPostModal
-                        show={showEditModal}
-                        handleClose={handleCloseEditModal}
-                        handleEditPost={handleEditPost}
-                        postToChange={postToChange}
-                        handleEditTitle={handleEditTitle}
-                        handleEditMessage={handleEditMessage}
-                    />
-
                     <EditCommentModal
                         show={showEditCommentModal}
                         handleClose={handleCloseEditCommentModal}
@@ -268,6 +285,15 @@ const PostsPage = () => {
                         postToChange={postToChange}
                         commentToChange={commentToChange}
                         handleEditCommentMessage={handleEditCommentMessage}
+                    />
+
+                    <EditPostModal
+                        show={showEditModal}
+                        handleClose={handleCloseEditModal}
+                        handleEditPost={handleEditPost}
+                        postToChange={postToChange}
+                        handleEditTitle={handleEditTitle}
+                        handleEditMessage={handleEditMessage}
                     />
 
                     <DeletePostModal
@@ -365,7 +391,25 @@ const PostsPage = () => {
 
                 </div>
             </div>
+            <Toast
+                show={showToast}
+                onClose={() => setShowToast(false)}
+                delay={5000}
+                autohide
+                style={{
+                    position: 'fixed',
+                    top: 20,
+                    right: 20,
+                    minWidth: 200,
+                    backgroundColor: showToastError ? '#dc3545' : '#28a745',
+                    color: '#fff',
+                }}
+            >
+                <Toast.Body>{toastMessage}</Toast.Body>
+            </Toast>
+
         </div >
+
     );
 };
 

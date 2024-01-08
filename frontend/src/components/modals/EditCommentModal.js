@@ -21,7 +21,7 @@ const EditCommentModal = ({ show, handleClose, handleEditComment, postToChange, 
                                     placeholder="Insert a message for your post"
                                     minLength="1"
                                     maxLength="4000"
-                                    value={commentToChange.text}
+                                    value={commentToChange ? commentToChange.text : ""}
                                     onChange={(e) => handleEditCommentMessage(e.target.value)}
                                 />
                             </Form.Group>
