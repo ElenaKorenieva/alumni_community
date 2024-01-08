@@ -9,7 +9,6 @@ export const authSlice = createSlice({
       email: "",
       name: "",
       avatarURL: "",
-      gitHub: "",
     },
     token: "",
     isLoggedIn: false,
