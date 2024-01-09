@@ -4,7 +4,7 @@ import SideBarMenu from "../../components/side-bar-menu/SideBarMenu";
 import { findPostsByUser } from "../../redux/post/postOperations";
 import { useDispatch, useSelector } from "react-redux";
 import { setName } from "../../redux/auth/authSelectors";
-import { Card, CardBody } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 const Profile = () => {
   const dispatch = useDispatch();
