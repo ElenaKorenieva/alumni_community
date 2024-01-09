@@ -67,7 +67,7 @@ label {
 }
 
 .custom-input::placeholder {
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 input {
@@ -80,8 +80,8 @@ input {
 }
 
 button {
-    background-color: #5B61F5;
-    color: #fff;
+    background-color: #F5F5F5;
+    color: #001529;
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 16px;

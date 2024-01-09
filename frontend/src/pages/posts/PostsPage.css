@@ -1,6 +1,12 @@
+@font-face {
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
 .page-body {
-    margin-top: 50px;
-    padding: 10px;
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
 }
 
 .page-body h3 {
@@ -9,6 +15,10 @@
 
 .other-posts {
     margin-top: 3em;
+}
+
+.content-page {
+    margin-top: 5em;
 }
 
 .clickable {
@@ -35,4 +45,38 @@
 
 .menu .list-group-item {
     font-size: 18px;
+}
+
+.post-image {
+    max-width: 250px;
+    border-radius: 10px;
+}
+
+.title-container {
+    margin-top: 30px;
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+.sub-title-container {
+    margin-top: 30px;
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-size: medium;
+}
+
+.post-title-container {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+.custom-border {
+    border: 2px solid #ced4da;
+    border-radius: 10px;
+    background-color: #D8D8D8;
 }

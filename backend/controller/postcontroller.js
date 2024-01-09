@@ -1,16 +1,19 @@
 const { default: mongoose } = require("mongoose");
 const { ctrlWrapper } = require("../helper");
+const multer = require('multer');
+const path = require('path');
 
-const Post = require("../model/Post");
+const Post = require('../model/Post')
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const getPostsByTopic = async (req, res) => {
   try {
-    console.log(req.user);
     const posts = await Post.find({ topic: req.query.topic });
     res.status(200).json(posts);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -20,8 +23,17 @@ const createNewPost = async (req, res) => {
       topic: req.body.topic,
       user: req.user.name,
       title: req.body.title,
-      message: req.body.message,
+      message: req.body.message
     });
+
+    if (req.file) {
+      const imageBuffer = req.file.buffer;
+
+      post.image = {
+        data: imageBuffer,
+        contentType: req.file.mimetype
+      };
+    }
     await post.save();
 
     res
@@ -42,22 +54,15 @@ const deletePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Post not found" });
+      return res.status(404).json({ success: false, message: "Post not found" });
     }
 
     if (post.user !== user) {
-      return res
-        .status(403)
-        .json({ success: false, message: "You can not delete this post" });
+      return res.status(403).json({ success: false, message: "You can not delete this post" });
     }
-    console.log(post.user);
 
     await post.deleteOne();
-    return res
-      .status(204)
-      .json({ success: true, message: "Post deleted successfully" });
+    return res.status(204).json({ success: true, message: "Post deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -155,14 +160,22 @@ const addComment = async (req, res) => {
 const removeComment = async (req, res) => {
   const postId = req.params.id;
   const commentId = req.params.idComment;
+  const user = req.user.name;
 
   try {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Post not found" });
+      return res.status(404).json({ success: false, message: 'Post not found' });
+    }
+
+    const commentToRemove = post.comments.find(comment => comment._id == commentId);
+    if (!commentToRemove) {
+      return res.status(404).json({ success: false, message: 'Comment not found' });
+    }
+
+    if (commentToRemove.user !== user) {
+      return res.status(403).json({ success: false, message: "You can not remove this comment" });
     }
 
     const updatedPost = await Post.findByIdAndUpdate(
@@ -172,19 +185,47 @@ const removeComment = async (req, res) => {
     );
 
     if (!updatedPost) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Comment not found" });
+      return res.status(404).json({ success: false, message: 'Comment not found' });
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Comment removed successfully",
-      post: updatedPost,
-    });
+    res.status(200).json({ success: true, message: 'Comment removed successfully', post: updatedPost });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+const editComment = async (req, res) => {
+  const postId = req.params.id;
+  const commentId = req.params.idComment;
+  const { message } = req.body;
+  const user = req.user.name;
+
+  try {
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'Post not found' });
+    }
+
+    const commentToUpdate = post.comments.find(comment => comment._id == commentId);
+
+    if (!commentToUpdate) {
+      return res.status(404).json({ success: false, message: 'Comment not found' });
+    }
+
+    if (commentToUpdate.user !== user) {
+      return res.status(403).json({ success: false, message: "You can not edit this comment" });
+    }
+
+    commentToUpdate.text = message;
+
+    const updatedPost = await post.save();
+
+    res.status(200).json({ success: true, message: 'Comment updated successfully', post: updatedPost });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -205,5 +246,6 @@ module.exports = {
   editMessage: ctrlWrapper(editMessage),
   addComment: ctrlWrapper(addComment),
   removeComment: ctrlWrapper(removeComment),
+  editComment: ctrlWrapper(editComment),
   getUsersPosts: ctrlWrapper(getUsersPosts),
 };

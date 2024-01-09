@@ -7,24 +7,38 @@ import {
   editPost,
   sendComment,
   deleteComment,
+  editComment,
 } from "../../redux/post/postOperations";
 import SideBarMenu from "../../components/side-bar-menu/SideBarMenu";
 import { useParams } from "react-router-dom";
 import "./PostsPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import jsonData from "./pageContent.json";
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import jsonData from './pageContent.json'
+import DeleteCommentModal from "../../components/modals/DeleteCommentModal";
+import DeletePostModal from "../../components/modals/DeletePostModal";
+import EditPostModal from "../../components/modals/EditPostModal";
+import EditCommentModal from "../../components/modals/EditCommentModal";
+import Toast from 'react-bootstrap/Toast';
 
 const PostsPage = () => {
+  const [showToast, setShowToast] = useState(false);
+  const [showToastError, setShowToastError] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  const [formData, setFormData] = useState({
+    title: "",
+    message: "",
+    file: null,
+  });
   const [showEditModal, setShowEditModal] = useState(false);
   const handleCloseEditModal = () => setShowEditModal(false);
   const handleShowEditModal = (post) => {
     setPostToChange(post);
-    setShowEditModal(true);
+    setShowEditModal(true)
   };
   const handleEditTitle = (newTitle) => {
     setPostToChange({ ...postToChange, title: newTitle });
@@ -34,19 +48,31 @@ const PostsPage = () => {
     setPostToChange({ ...postToChange, message: newMessage });
   };
 
+  const [showEditCommentModal, setShowEditCommentModal] = useState(false);
+  const handleCloseEditCommentModal = () => setShowEditCommentModal(false);
+  const handleShowEditCommentModal = (post, comment) => {
+    setPostToChange(post);
+    setCommentToChange(comment)
+    setShowEditCommentModal(true)
+  };
+
+  const handleEditCommentMessage = (newMessage) => {
+    setCommentToChange({ ...commentToChange, text: newMessage });
+  };
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleCloseDeleteModal = () => setShowDeleteModal(false);
   const handleShowDeleteModal = (post) => {
     setPostToChange(post);
-    setShowDeleteModal(true);
+    setShowDeleteModal(true)
   };
 
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
   const handleCloseDeleteCommentModal = () => setShowDeleteCommentModal(false);
   const handleShowDeleteCommentModal = (post, comment) => {
     setPostToChange(post);
-    setCommentToChange(comment);
-    setShowDeleteCommentModal(true);
+    setCommentToChange(comment)
+    setShowDeleteCommentModal(true)
   };
 
   const [posts, setPosts] = useState([]);
@@ -58,34 +84,46 @@ const PostsPage = () => {
   const loggedInUser = useSelector((state) => state.auth.user);
 
   const formatDate = (dateString) => {
-    const options = {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-    };
-    return new Intl.DateTimeFormat("en-US", options).format(
-      new Date(dateString)
-    );
+    const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+  };
+
+  function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
+
+
+  const showToastMessage = (message, isError = false) => {
+    setToastMessage(message);
+    setShowToastError(isError);
+
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 5000);
   };
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    const topicSelected = topic || "home";
+    const topicSelected = topic || 'road-presentation';
 
-    const body = {
-      title: e.target.elements.title.value,
-      message: e.target.elements.message.value,
-      topic: topicSelected,
-    };
+    const formData = new FormData();
+    formData.append('title', e.target.elements.title.value);
+    formData.append('message', e.target.elements.message.value);
+    formData.append('topic', topicSelected);
+    formData.append('file', e.target.elements.file.files[0]);
 
-    const response = await dispatch(createPost(body));
+    const response = await dispatch(createPost(formData));
     if (response.error) {
       console.error(response.error.message);
+      showToastMessage("Post creation failed", true);
     } else {
-      window.location.reload();
+      fetchData();
+      setFormData({ title: "", message: "", file: null });
+      showToastMessage("Post created successfully", false);
     }
   };
 
@@ -93,21 +131,24 @@ const PostsPage = () => {
     const response = await dispatch(deletePost(post._id));
     if (response.error) {
       console.error(response.error.message);
+      showToastMessage("Post deletion failed", true);
     } else {
-      setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id));
-      handleCloseDeleteModal();
+      setPosts((prevPosts) => prevPosts.filter(p => p._id !== post._id));
+      handleCloseDeleteModal()
+      showToastMessage("Post deleted successfully");
     }
   };
 
-  const handleEditPost = async (post) => {
+  const handleEditPost = async (e, post) => {
+    e.preventDefault();
     const response = await dispatch(editPost(post));
     if (response.error) {
       console.error(response.error.message);
+      showToastMessage("Post deletion failed", true);
     } else {
-      setPosts((prevPosts) =>
-        prevPosts.map((p) => (p._id === post._id ? post : p))
-      );
-      handleCloseEditModal();
+      setPosts((prevPosts) => prevPosts.map(p => (p._id === post._id ? post : p)));
+      handleCloseEditModal()
+      showToastMessage("Post edited successfully");
     }
   };
 
@@ -117,52 +158,55 @@ const PostsPage = () => {
     const response = await dispatch(sendComment({ post, commentText }));
     if (response.error) {
       console.error(response.error.message);
+      showToastMessage("Comment creation failed", true);
     } else {
-      window.location.reload();
+      fetchData();
+      e.target.elements.comment.value = ''
+      showToastMessage("Comment created successfully");
     }
   };
 
-  // const handleDeleteComment = async (post) => {
-  //     const response = await dispatch(deleteComment({ postToChange, commentToChange }));
-
-  //     if (!response || !response.error) {
-  //         console.error("Unexpected response format");
-  //         return;
-  //     }
-
-  //     if (response.error) {
-  //         console.error(response.error.message);
-  //     } else {
-  //         window.location.reload();
-  //     }
-  // };
-
   const handleDeleteComment = async (postToChange, commentToChange) => {
-    const postId = postToChange._id;
-    const commentId = commentToChange._id;
     const postAndComment = {
       postId: postToChange._id,
-      commentId: commentToChange._id,
-    };
+      commentId: commentToChange._id
+    }
     const response = await dispatch(deleteComment(postAndComment));
     if (response.error) {
       console.error(response.error.message);
+      showToastMessage("Comment deletion failed", true);
     } else {
-      window.location.reload();
+      fetchData();
+      setShowDeleteCommentModal(false)
+      showToastMessage("Comment deleted successfully");
+    }
+  };
+
+  const handleEditComment = async (e, postToChange, commentToChange) => {
+    e.preventDefault();
+    const postAndComment = {
+      postId: postToChange._id,
+      commentId: commentToChange._id,
+      message: commentToChange.text
+    }
+    const response = await dispatch(editComment(postAndComment));
+    if (response.error) {
+      console.error(response.error.message);
+      showToastMessage("Comment edition failed", true);
+    } else {
+      fetchData();
+      setShowEditCommentModal(false)
+      showToastMessage("Comment edited successfully");
     }
   };
 
   const fetchData = async () => {
     try {
-      const topicSelected = topic || "home";
-      const response = await dispatch(
-        findPostsByTopic({ topic: topicSelected })
-      );
+      const topicSelected = topic || 'road-presentation';
+      const response = await dispatch(findPostsByTopic({ topic: topicSelected }));
       if (!response.error) {
         const sortedPosts = response.payload ? response.payload : [];
-        sortedPosts.sort(
-          (a, b) => new Date(b.create_at) - new Date(a.create_at)
-        );
+        sortedPosts.sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
         setPosts(sortedPosts);
         console.log("Success");
       } else {
@@ -174,15 +218,13 @@ const PostsPage = () => {
   };
 
   const findPageInfo = () => {
-    const topicSelected = topic || "home";
-    setPageInfos(jsonData.find((item) => item.topic === topicSelected));
+    const topicSelected = topic || 'home';
+    setPageInfos(jsonData.find(item => item.topic === topicSelected));
   };
 
   useEffect(() => {
-    console.log(loggedInUser);
-
     fetchData();
-    findPageInfo();
+    findPageInfo()
   }, [dispatch, topic, loggedInUser]);
 
   return (
@@ -191,273 +233,172 @@ const PostsPage = () => {
         <div className="col-md-3">
           <SideBarMenu />
         </div>
-        <div className="col-md-9 px-5 py-4">
+        <div className="col-md-9 py-4 content-page">
+
           <div className="row">
             <div className="col-8">
-              <h2>About this topic:</h2>
-              {pageInfos && <h3>{pageInfos.title}</h3>}
-              {pageInfos && <p className="text-justify">{pageInfos.info}</p>}
+              <h2 className="topic-title border-bottom">About this topic:</h2>
+              {pageInfos && (
+                <div className="title-container">
+                  <h3>{pageInfos.title}</h3>
+                </div>
+              )}
+              {pageInfos && (
+                <div className="sub-title-container">
+                  <p className="text-justify">{pageInfos.info}</p>
+                </div>
+              )}
             </div>
             <div className="col img-fluid img-post">
               {pageInfos && (
-                <img src={"/images/" + pageInfos.imageUrl} alt="" />
+                <img className="post-image" src={"/images/" + pageInfos.imageUrl} alt="" />
               )}
             </div>
           </div>
-          <h2>Write a new post:</h2>
-          <Form onSubmit={(e) => handleSendMessage(e)}>
-            <Form.Group className="mb-3" controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Insert a title"
-                minLength="1"
-                maxLength="60"
-              />
-            </Form.Group>
-            <Form.Group controlId="formFile" className="mb-3" name="file">
-              <Form.Label>Image - optional</Form.Label>
-              <Form.Control type="file" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="message">
-              <Form.Label>Message</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Insert a message for your post"
-                minLength="1"
-                maxLength="4000"
-              />
-            </Form.Group>
-            <Button type="submit" variant="primary">
-              Submit
-            </Button>
-          </Form>
+          <div className="post-title-container">
+            <h5>Write a new post:</h5>
+          </div>
+          <div className="custom-border border p-2">
+            <Form onSubmit={(e) => handleSendMessage(e)}>
+              <Form.Group className="mb-3" controlId="title">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Insert a title"
+                  minLength="1"
+                  maxLength="60"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group controlId="file" className="mb-3" name="file">
+                <Form.Label>Image - optional</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept=".jpg, .jpeg, .png"
+                  onChange={(e) => setFormData({ ...formData, file: e.target.files[0] })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="message">
+                <Form.Label>Message</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Insert a message for your post"
+                  minLength="1"
+                  maxLength="4000"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                />
+              </Form.Group>
+              <Button type="submit" variant="primary">
+                Submit
+              </Button>
+            </Form>
+          </div>
 
-          <Modal show={showEditModal} onHide={handleCloseEditModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Post</Modal.Title>
-            </Modal.Header>
-            {postToChange && (
-              <div>
-                <Modal.Body>
-                  <Form onSubmit={() => handleEditPost(postToChange)}>
-                    <Form.Group className="mb-3" controlId="title">
-                      <Form.Label>Title</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Insert a title"
-                        minLength="1"
-                        maxLength="60"
-                        value={postToChange.title || ""}
-                        onChange={(e) => handleEditTitle(e.target.value)}
-                      />
-                    </Form.Group>
-                    <Form.Group
-                      controlId="formFile"
-                      className="mb-3"
-                      name="file"
-                    >
-                      <Form.Label>Image</Form.Label>
-                      <Form.Control type="file" />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="message">
-                      <Form.Label>Message</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        placeholder="Insert a message for your post"
-                        minLength="1"
-                        maxLength="4000"
-                        value={postToChange.message}
-                        onChange={(e) => handleEditMessage(e.target.value)}
-                      />
-                    </Form.Group>
+          <EditCommentModal
+            show={showEditCommentModal}
+            handleClose={handleCloseEditCommentModal}
+            handleEditComment={handleEditComment}
+            postToChange={postToChange}
+            commentToChange={commentToChange}
+            handleEditCommentMessage={handleEditCommentMessage}
+          />
 
-                    <Modal.Footer>
-                      <Button
-                        variant="secondary"
-                        onClick={handleCloseEditModal}
-                      >
-                        Close
-                      </Button>
-                      <Button variant="primary" type="submit">
-                        Save Changes
-                      </Button>
-                    </Modal.Footer>
-                  </Form>
-                </Modal.Body>
-              </div>
-            )}
-          </Modal>
+          <EditPostModal
+            show={showEditModal}
+            handleClose={handleCloseEditModal}
+            handleEditPost={handleEditPost}
+            postToChange={postToChange}
+            handleEditTitle={handleEditTitle}
+            handleEditMessage={handleEditMessage}
+          />
 
-          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Delete post</Modal.Title>
-            </Modal.Header>
-            {postToChange && (
-              <div>
-                <Modal.Body>
-                  Are you sure you want to delete the{" "}
-                  <b>{postToChange.title}</b> post?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseDeleteModal}>
-                    Close
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleDeletePost(postToChange)}
-                  >
-                    Delete
-                  </Button>
-                </Modal.Footer>
-              </div>
-            )}
-          </Modal>
+          <DeletePostModal
+            show={showDeleteModal}
+            handleClose={handleCloseDeleteModal}
+            handleDeletePost={handleDeletePost}
+            postToChange={postToChange}
+          />
 
-          <Modal
+          <DeleteCommentModal
             show={showDeleteCommentModal}
-            onHide={handleCloseDeleteCommentModal}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Delete comment</Modal.Title>
-            </Modal.Header>
-            {postToChange && (
-              <div>
-                <Modal.Body>
-                  Are you sure you want to delete the comment on the{" "}
-                  <b>{postToChange.title}</b> post?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    onClick={handleCloseDeleteCommentModal}
-                  >
-                    Close
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      handleDeleteComment(postToChange, commentToChange)
-                    }
-                  >
-                    Delete
-                  </Button>
-                </Modal.Footer>
-              </div>
-            )}
-          </Modal>
+            handleClose={handleCloseDeleteCommentModal}
+            handleDeleteComment={handleDeleteComment}
+            postToChange={postToChange}
+            commentToChange={commentToChange}
+          />
+
 
           <div className="other-posts">
             {posts && posts.length > 0 && (
               <>
-                <h3>Other posts about this topic:</h3>
-                {posts &&
-                  posts.map((post) => (
-                    <Card
-                      style={{ width: "50rem", backgroundColor: "#F5F5F5" }}
-                      key={post._id}
-                      className="mx-auto my-4"
-                    >
-                      {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
-                      <Card.Body>
-                        <Card.Title className="">{post.title}</Card.Title>
-                        <Card.Body className="text-start">
-                          <small className="text-start">
-                            Author: {post.user}
-                          </small>
-                        </Card.Body>
-                      </Card.Body>
-                      <Card.Body>
-                        <Card.Text>{post.message}</Card.Text>
-                      </Card.Body>
-                      <Card.Body className="text-end">
-                        {post.user === loggedInUser.name && (
-                          <>
-                            <div className="button-container">
-                              <Button
-                                variant="secondary"
-                                onClick={() => handleShowEditModal(post)}
-                                className="clickable mb-2"
-                              >
-                                Edit
-                              </Button>{" "}
-                              <Button
-                                variant="danger"
-                                onClick={() => handleShowDeleteModal(post)}
-                                className="clickable mb-2"
-                              >
-                                Delete
-                              </Button>
-                            </div>
-                          </>
-                        )}
-                        <ListGroup className="list-group-flush">
-                          <ListGroup.Item>
-                            Create at: {formatDate(post.create_at)}
-                          </ListGroup.Item>
-                        </ListGroup>
+                <h5 className="border-bottom font-weight-bold">Other posts about this topic:</h5>
+                {posts && posts.map((post) => (
+                  <Card style={{ width: '50rem', backgroundColor: '#F5F5F5' }} key={post._id} className="mx-auto my-4">
+                    <Card.Img
+                      variant="top"
+                      src={post.image ? `data:${post.image.contentType};base64,${arrayBufferToBase64(post.image.data.data)}` : ''}
+                      style={{
+                        maxHeight: '300px',
+                        width: '100%',
+                        objectFit: 'cover',
+                        margin: 'auto',
+                      }}
+                    />
 
-                        <Form onSubmit={(e) => handleSubmitComment(e, post)}>
-                          <Form.Group controlId="comment">
-                            <Form.Control
-                              type="text"
-                              placeholder="Type your comment"
-                              minLength="1"
-                              maxLength="4000"
-                              style={{ marginTop: "2em" }}
-                            />
-                          </Form.Group>
-                          <Button variant="primary" type="submit" size="sm">
-                            {" "}
-                            Add comments{" "}
-                          </Button>
-                        </Form>
-                      </Card.Body>
+                    <Card.Body>
+                      <small className="text-end">Author: {post.user}</small><br />
+                      <small className="text-end">Create at: {formatDate(post.create_at)}</small>
+
+                      <Card.Title className="">
+                        {post.title}</Card.Title>
+
+                      <ListGroup className="list-group-flush">
+
+                      </ListGroup>
+
+                      <Card.Text>
+                        {post.message}
+                      </Card.Text>
+
+                    </Card.Body>
+                    <Card.Body className="text-end">
+                      {post.user === loggedInUser.name && (
+                        <>
+                          <div className="button-container">
+                            <Button variant="secondary" size="sm" onClick={() => handleShowEditModal(post)} className="clickable mb-2 mx-1">
+                              Edit
+                            </Button>
+
+                            <Button variant="danger" size="sm" onClick={() => handleShowDeleteModal(post)} className="clickable mb-2 mx-1">
+                              Delete
+                            </Button>
+                          </div>
+
+                        </>
+                      )}
+                      <Form onSubmit={(e) => handleSubmitComment(e, post)}>
+                        <hr />
+                        <Form.Group controlId="comment">
+                          <Form.Control type="text" placeholder="Type your comment" minLength="1" maxLength="4000" style={{ marginTop: '2em' }} />
+                        </Form.Group>
+                        <Button variant="primary" type="submit" size="sm"> Add comments </Button>
+                      </Form>
 
                       {post.comments && post.comments.length > 0 ? (
                         post.comments.map((comment) => (
-                          <div
-                            className="text-start border-comment"
-                            key={comment._id}
-                          >
-                            <b>
-                              {comment.user === loggedInUser.name
-                                ? "You"
-                                : comment.user}
-                            </b>
-                            <small>
-                              {" "}
-                              at {formatDate(comment.createdAt)} commented:
-                            </small>
+                          <div className="text-start border-comment" key={comment._id}>
+                            <b>{comment.user === loggedInUser.name ? 'You' : comment.user}</b><small> at {formatDate(comment.createdAt)} commented:</small>
                             <br />
                             <p className="ms-3 mb-0">{comment.text}</p>
                             {comment.user === loggedInUser.name && (
                               <>
                                 <div className="button-container text-end">
-                                  <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    className="me-2"
-                                    onClick={() =>
-                                      handleShowEditModal(post, comment)
-                                    }
-                                  >
-                                    Edit
-                                  </Button>
-                                  <Button
-                                    variant="danger"
-                                    size="sm"
-                                    onClick={() =>
-                                      handleShowDeleteCommentModal(
-                                        post,
-                                        comment
-                                      )
-                                    }
-                                  >
-                                    Delete
-                                  </Button>
+
+                                  <Button variant="secondary" size="sm" className="me-2" onClick={() => handleShowEditCommentModal(post, comment)}>Edit</Button>
+                                  <Button variant="danger" size="sm" onClick={() => handleShowDeleteCommentModal(post, comment)}>Delete</Button>
                                 </div>
                               </>
                             )}
@@ -468,14 +409,34 @@ const PostsPage = () => {
                           No comments available.
                         </div>
                       )}
-                    </Card>
-                  ))}
+                    </Card.Body>
+                  </Card>
+                ))}
               </>
             )}
           </div>
+
         </div>
       </div>
-    </div>
+      <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        delay={5000}
+        autohide
+        style={{
+          position: 'fixed',
+          top: 20,
+          right: 20,
+          minWidth: 200,
+          backgroundColor: showToastError ? '#dc3545' : '#28a745',
+          color: '#fff',
+        }}
+      >
+        <Toast.Body>{toastMessage}</Toast.Body>
+      </Toast>
+
+    </div >
+
   );
 };
 

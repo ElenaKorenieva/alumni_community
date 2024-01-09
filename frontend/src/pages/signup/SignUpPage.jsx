@@ -39,7 +39,7 @@ const SignUpPage = () => {
       name: e.target.elements.fullName.value,
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
-      gitHub: gitHubLink,
+      // gitHub: gitHubLink,
     };
 
     const newUserForValidation = {
