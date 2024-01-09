@@ -109,8 +109,21 @@ export const findPostsByUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       setAuthHeader(thunkAPI);
-      const response = await axios.get(`/posts/user-posts?user=${user.user}`);
-      console.log(response);
+      const response = await axios.get(`/posts?user=${user.user}`);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+export const findFeed = createAsyncThunk(
+  "posts/feed",
+  async (_, thunkAPI) => {
+
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.get(`/posts?order=DESC&limit=10`);
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data.message);

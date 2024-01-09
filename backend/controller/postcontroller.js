@@ -9,7 +9,32 @@ const upload = multer({ storage: storage });
 
 const getPostsByTopic = async (req, res) => {
   try {
-    const posts = await Post.find({ topic: req.query.topic });
+    let query = {};
+
+    if (req.params.topic) {
+      query.topic = req.query.topic;
+    }
+    if (req.query.user) {
+      query.user = req.query.user;
+    }
+
+    let sortOrder = 1;
+
+    if (req.query.order && req.query.order.toUpperCase() === 'DESC') {
+      sortOrder = -1;
+    }
+
+    let limitValue = parseInt(req.query.limit, 10) || 0;
+
+    limitValue = Math.max(limitValue, 0);
+
+    const options = {
+      sort: { create_at: sortOrder },
+      limit: limitValue,
+    };
+
+    const posts = await Post.find(query, null, options);
+
     res.status(200).json(posts);
   } catch (err) {
     console.error(err);
@@ -225,16 +250,6 @@ const editComment = async (req, res) => {
   }
 };
 
-const getUsersPosts = async (req, res) => {
-  try {
-    const posts = await Post.find({ user: req.query.user });
-    res.status(200).json(posts);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 module.exports = {
   getPostsByTopic: ctrlWrapper(getPostsByTopic),
   createNewPost: ctrlWrapper(createNewPost),
@@ -243,5 +258,4 @@ module.exports = {
   addComment: ctrlWrapper(addComment),
   removeComment: ctrlWrapper(removeComment),
   editComment: ctrlWrapper(editComment),
-  getUsersPosts: ctrlWrapper(getUsersPosts),
 };
