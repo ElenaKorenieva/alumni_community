@@ -2,16 +2,17 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import sprite from "../../shared/images/sprite.svg";
 import eyeHide from "../../shared/images/eye-hide.svg";
-import { getUserData } from "../../redux/auth/authSelectors";
+import { avatarURL, getUserData } from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
-import "./EditUser.css";
+import "./EditProfileUser.css";
 import validation from "./Validation";
 
-function EditUser({ onClose }) {
+function EditProfileUser() {
   const dispatch = useDispatch();
+  const imgURL = useSelector(avatarURL);
   const userData = useSelector(getUserData);
 
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(imgURL || null);
   const [imageFile, setImageFile] = useState(null);
   const [userName, setUserName] = useState(userData.name);
   const [userEmail, setUserEmail] = useState(userData.email);
@@ -78,22 +79,21 @@ function EditUser({ onClose }) {
       }
 
       dispatch(updateUser(newUserData));
-      onClose();
     }
   };
 
   return (
     <>
-      <form onSubmit={formSubmit}>
+      <form onSubmit={formSubmit} className="user-form">
         <div className="wrapper">
-          <div className="avatar-wrapper">
+          <div className="avatar-user-wrapper">
             {!imageUrl && !userData.avatarURL ? (
-              <svg className="icon-user">
+              <svg className="icon-user-svg">
                 <use href={`${sprite}#icon-user`}></use>
               </svg>
             ) : (
               <img
-                className="avatar-img"
+                className="avatar-user-img"
                 src={imageUrl || userData.avatarURL}
                 alt="avatar"
                 width={68}
@@ -101,7 +101,7 @@ function EditUser({ onClose }) {
               />
             )}
 
-            <label className="file-wrapper">
+            <label className="file-user-wrapper">
               <input
                 className="file-input"
                 type="file"
@@ -183,7 +183,7 @@ function EditUser({ onClose }) {
           {errorAPI && Object.values(errors).length === 0 && (
             <p className="errorText">{errorAPI}</p>
           )}
-          <button className="send-btn" type="submit">
+          <button className="send-user-btn" type="submit">
             Send
           </button>
         </div>
@@ -192,4 +192,4 @@ function EditUser({ onClose }) {
   );
 }
 
-export default EditUser;
+export default EditProfileUser;
