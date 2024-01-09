@@ -8,6 +8,7 @@ import SignUpPage from "./pages/signup/SignUpPage";
 import HomePage from "./pages/home/HomePage";
 import About from "./pages/about/About";
 import Header from "./shared/Header/Header";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   const isAuth = useSelector(isLogin);
@@ -31,6 +32,7 @@ function App() {
         <Route path="/posts/:topic" element={<PostsPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
