@@ -5,8 +5,6 @@
 }
 
 .page-body {
-    margin-top: 50px;
-    padding: 10px;
     font-family: 'CamingoMonoBold';
     src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
 }
@@ -17,6 +15,10 @@
 
 .other-posts {
     margin-top: 3em;
+}
+
+.content-page {
+    margin-top: 5em;
 }
 
 .clickable {
@@ -76,4 +78,5 @@
 .custom-border {
     border: 2px solid #ced4da;
     border-radius: 10px;
+    background-color: #D8D8D8;
 }

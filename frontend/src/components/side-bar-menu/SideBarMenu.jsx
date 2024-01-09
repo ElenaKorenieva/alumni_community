@@ -1,7 +1,8 @@
 import React from "react";
 import "./SideBarMenu.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../redux/auth/authOperations";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -13,10 +14,22 @@ import {
   faRandom,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
 
 const SideBarMenu = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <div className="menu">
+      <button onClick={handleLogout}>Logout</button>
+
+      <img className="w-100 logo-menu" src="/images/logo-b.png" />
       <ul className="list-group">
         <li className="list-group-item">
           <Link to="/home">

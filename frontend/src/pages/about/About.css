@@ -1,1 +1,36 @@
+@font-face {
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+}
 
+.about-title {
+    margin-top: 2em;
+    font-family: 'CamingoMonoBold';
+    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.aboutArticle-wrapper {
+    text-align: justify;
+    padding: 2rem 2rem 0;
+}
+
+.aboutArticle-desc {
+    font-family: "CamingoMonoBold", monospace;
+    padding: 0 10px;
+    font-size: 20px;
+}
+
+.aboutImg-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.aboutArticle-title {
+    padding: 0 10px;
+    margin-bottom: 18px;
+    font-weight: bold;
+}

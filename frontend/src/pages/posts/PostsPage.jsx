@@ -233,7 +233,7 @@ const PostsPage = () => {
         <div className="col-md-3">
           <SideBarMenu />
         </div>
-        <div className="col-md-9 py-4">
+        <div className="col-md-9 py-4 content-page">
 
           <div className="row">
             <div className="col-8">
@@ -258,7 +258,7 @@ const PostsPage = () => {
           <div className="post-title-container">
             <h5>Write a new post:</h5>
           </div>
-          <div className="custom-border border p-4">
+          <div className="custom-border border p-2">
             <Form onSubmit={(e) => handleSendMessage(e)}>
               <Form.Group className="mb-3" controlId="title">
                 <Form.Label>Title</Form.Label>
