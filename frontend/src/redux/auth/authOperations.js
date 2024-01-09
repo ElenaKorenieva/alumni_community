@@ -87,12 +87,32 @@ export const getImageFromGitHub = createAsyncThunk(
       const client_id = process.env.REACT_APP_CLIENT_ID;
       const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
+      // try {
+      //   const response = await axios.get(
+      //     `http://api.github.com/users/${userName}?client_id=${client_id}&client_secret=${client_secret}&sort=created`
+      //   );
+      //   const { data } = response;
+      //   return data.avatar_url;
+      // } catch (e) {
+      //   return thunkAPI.rejectWithValue(e.message);
+      // }
+
       try {
         const response = await axios.get(
-          `http://api.github.com/users/${userName}?client_id=${client_id}&client_secret=${client_secret}&sort=created`,
-          null,
-          null
+          `https://api.github.com/users/${userName}`,
+          {
+            params: {
+              client_id,
+              client_secret,
+              sort: "created",
+            },
+            // Ensure there is no Authorization header
+            headers: {
+              Authorization: undefined,
+            },
+          }
         );
+
         const { data } = response;
         return data.avatar_url;
       } catch (e) {

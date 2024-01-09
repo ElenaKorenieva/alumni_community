@@ -9,6 +9,7 @@ import HomePage from "./pages/home/HomePage";
 import About from "./pages/about/About";
 import Header from "./shared/Header/Header";
 import Profile from "./pages/profile/Profile";
+import Footer from "./shared/Footer/Footer";
 
 function App() {
   const isAuth = useSelector(isLogin);
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+      <Footer />
     </>
   );
 }

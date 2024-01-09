@@ -16,9 +16,7 @@ function EditProfileUser() {
   const [imageFile, setImageFile] = useState(null);
   const [userName, setUserName] = useState(userData.name);
   const [userEmail, setUserEmail] = useState(userData.email);
-  const [gitHub, setGitHub] = useState(
-    userData.gitHub || "Add your GitHub link"
-  );
+  const [gitHub, setGitHub] = useState(userData.gitHub || "none");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
