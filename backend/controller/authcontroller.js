@@ -7,7 +7,8 @@ require("dotenv").config();
 const { SECRET_KEY } = process.env;
 
 const registerUser = async (req, res) => {
-  const { email, password } = req.body;
+  console.log(req.body);
+  const { email, password, name, gitHub } = req.body;
 
   const user = await User.findOne({ email });
   if (user) {
@@ -26,19 +27,17 @@ const registerUser = async (req, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1d" });
 
-  await User.findByIdAndUpdate(id, { token }, { new: true })
-    // .populate("boards", {
-    // })
-    .then((user) => {
-      res.json({
-        token: token,
-        user: {
-          name: user.name,
-          email: user.email,
-          avatarURL: user.avatarURL,
-        },
-      });
+  await User.findByIdAndUpdate(id, { token }, { new: true }).then((user) => {
+    res.json({
+      token: token,
+      user: {
+        name: user.name,
+        email: user.email,
+        avatarURL: user.avatarURL,
+        gitHub: user.gitHub,
+      },
     });
+  });
 };
 
 const loginUser = async (req, res) => {
@@ -61,30 +60,11 @@ const loginUser = async (req, res) => {
           name: user.name,
           email: user.email,
           avatarURL: user.avatarURL,
+          gitHub: user.gitHub,
         },
       });
     }
   );
-};
-
-const getCurrentUser = async (req, res) => {
-  const { _id, name, email, avatarURL } = req.user;
-  await User.findById(_id, { new: true })
-    .populate("boards", {
-      _id: 1,
-      title: 1,
-      icon: 1,
-      updatedAt: 1,
-    })
-    .then((user) => {
-      res.json({
-        user: {
-          name,
-          email,
-          avatarURL,
-        },
-      });
-    });
 };
 
 const logoutUser = async (req, res) => {
@@ -98,7 +78,12 @@ const logoutUser = async (req, res) => {
 
 const updateProfileUser = async (req, res) => {
   const { _id: id, email } = req.user;
-  const { email: newEmail, name: newName, password: newPassword } = req.body;
+  const {
+    email: newEmail,
+    name: newName,
+    password: newPassword,
+    gitHub: newGitHub,
+  } = req.body;
 
   const isEmailInUse = await User.findOne({ email: newEmail });
   if (email !== newEmail && isEmailInUse) throw HttpError(409, "Email in use");
@@ -106,6 +91,7 @@ const updateProfileUser = async (req, res) => {
   const userNewData = {
     email: newEmail,
     name: newName,
+    gitHub: newGitHub,
   };
 
   if (newPassword) {
@@ -125,13 +111,13 @@ const updateProfileUser = async (req, res) => {
     name: result.name,
     email: result.email,
     avatarURL: result.avatarURL,
+    gitHub: result.gitHub,
   });
 };
 
 module.exports = {
   registerUser: ctrlWrapper(registerUser),
   loginUser: ctrlWrapper(loginUser),
-  getCurrentUser: ctrlWrapper(getCurrentUser),
   logoutUser: ctrlWrapper(logoutUser),
   updateProfileUser: ctrlWrapper(updateProfileUser),
 };

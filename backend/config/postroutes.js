@@ -14,4 +14,6 @@ router.put("/:id", authenticate, controller.editMessage);
 router.put("/:id/comment", authenticate, controller.addComment);
 router.delete("/:id/comment/:idComment", authenticate, controller.removeComment);
 router.put("/:id/comment/:idComment", authenticate, controller.editComment);
+router.get("/user-posts", authenticate, controller.getUsersPosts);
+
 module.exports = router;

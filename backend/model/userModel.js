@@ -26,6 +26,10 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    gitHub: {
+      type: String,
+      default: "",
+    },
     token: {
       type: String,
       default: "",
@@ -52,6 +56,9 @@ const registerUserSchema = Joi.object({
     "string.min": "Password must be at least {#limit} characters long",
     "string.max": "Password must not exceed {#limit} characters",
     "any.required": "Password is required",
+  }),
+  gitHub: Joi.string().required().messages({
+    "string.pattern.base": "Add your GitHub please",
   }),
 });
 
@@ -81,6 +88,7 @@ const updateProfileSchema = Joi.object({
     "string.max": "Password must not exceed {#limit} characters",
   }),
   avatar: Joi.binary(),
+  gitHub: Joi.string(),
 });
 
 const schemas = {

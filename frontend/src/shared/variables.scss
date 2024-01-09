@@ -1,0 +1,346 @@
+:root {
+  // --121212: #121212;
+  // --BEDBB0: #bedbb0;
+  // --FFFFFF: #ffffff;
+  // --8FA1D0: #8fa1d0;
+  // --E09CB5: #e09cb5;
+  // --1F1F1F: #1f1f1f;
+  // --9DC888: #9dc888;
+  // --161616: #161616;
+  // --F6F6F7: #f6f6f7;
+  // --8FA1D0: #8fa1d0;
+  // --5255BC: #5255bc;
+  // --B8BCFD: #b8bcfd;
+  // --979CEA: #979cea;
+  // --7B7EDE: #7b7ede;
+  // --ECEDFD: #ecedfd;
+  --radio-label-background-color: #8fa1d0;
+  --radio-label-color: #8fa1d0;
+
+  --radio-label-pink-color: #e09cb5;
+  --radio-label-green-color: #bedbb0;
+
+  --welcome-title-color: #161616;
+  --welcome-background-color: #161616;
+  --welcome-hover-text-color: #ffffff;
+  --user-icon-fill-color: #1f1f1f;
+  --user-icon-stroke-color: #ffffff;
+  --user-icon-plus-fill-color: #bedbb0;
+  --user-icon-plus-stroke-color: #121212;
+  --welcomeBgColor: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffffff 25%,
+    #bedbb0 92.19%
+  );
+}
+
+// dark theme
+html[data-theme='dark'] {
+  --primary-background-color: #121212;
+  --secondary-background-color: #1f1f1f;
+  --header-background-color: #161616;
+  --sidebar-help-backgound-color: #1f1f1f;
+  --needhelp-backdrop-background-color: rgba(0, 0, 0, 0.7);
+  --primary-button-color: #bedbb0;
+  --secondary-button-color: #9dc888;
+  --plus-button-color: #bedbb0;
+  --plus-button-hover-color: #9dc888;
+  --logout-button-color: #bedbb0;
+  --logout-hover-button-color: #9dc888;
+  --scrollbar-color: #bedbb0;
+  --add-column-button-color: #121212;
+  --primary-card-background-color: #121212;
+  --primary-background-sidebar-color: #121212;
+  --secondary-text-sidebar-color: #ffffff;
+  --line-border-sidebar-color: #ffffff1a;
+  --board-item-sidebar-background-color: #161616;
+  --board-item-sidebar-color: #ffffff;
+  --screens-page-tutorial-text-color: rgba(255, 255, 255, 0.5);
+
+  --modal-backdrop-background-color: rgba(137, 137, 137, 0.2);
+  --modal-window-color: #161616;
+  --modal-window-shadow: rgba(22, 22, 22, 0.05);
+  --modal-board-text: #ffffff;
+  --primary-modal-card-color: #bedbb0;
+  --datepicker-background-color: #1f1f1f;
+  --datepicker-hover-background-color: #bedbb0;
+  --datepicker-current-month: #ffffff;
+  --datepicker-current-day: #ffffff;
+  --datepicker-disabled-day: rgba(255, 255, 255, 0.2);
+  --datepicker-hover-disabled-day: rgba(255, 255, 255, 0.2);
+  --textarea-border-color: rgba(190, 219, 176, 0.4);
+  --datepicker-dayname-color: rgba(255, 255, 255, 0.5);
+  --modal-filters-text: #ffffff;
+  --modal-need-help-text: #ffffff;
+  --modal-title-color: #ffffff;
+  --modal-close-icon-color: #ffffff;
+  --modal-filter-form-line: rgba(255, 255, 255, 0.1);
+  --theme-switcher-dropdown-border-color: #bedbb0;
+  --theme-switcher-dropdown-hover-color: #8ee560;
+  --theme-switcher-dropdown-text-color: rgba(255, 255, 255, 0.5);
+
+  --primary-heading-color: #ffffff;
+  --secondary-heading-color: #ffffff;
+  --primary-text-color: #b7b7b7;
+  --secondary-deadline-color: #999999;
+  --secondary-line-color: #232323;
+  --primary-priority-color: #8fa1d0;
+  --secondary-priority-color: #e09cb5;
+  --tertiary-priority-color: #999999;
+  --primary-icon-stroke-color: #ffffff;
+  --secondary-icon-stroke-color: #121212;
+  --sidebar-icon-fill-color: transparent;
+  --sidebar-icon-stroke-color: #ffffff80;
+  --sidebar-icon-edit-stroke-color: #ffffff80;
+  --sidebar-icon-active-stroke-color: #fff;
+
+  --shared-button-text-color: #161616;
+  --shared-input-border-color: rgba(190, 219, 176, 0.4);
+  --shared-input-border-hover-color: #bedbb0;
+  --shared-input-text-color: #ffffff;
+  --shared-input-placeholder-color: #ffffff;
+  --shared-plus-icon-dark-big: #121212;
+  --shared-plus-icon-dark-small: #121212;
+  --shared-plus-icon-color: #ffffff;
+  --shared-add-column-button: #ffffff;
+  --shared-add-column-button-border: #121212;
+  --shared-black-plus-button: #161616;
+
+  --radio-label-checked-background-color: #151512;
+  --radio-label-grey-color: rgba(255, 255, 255, 0.3);
+
+  --radio-icons-color: rgba(255, 255, 255, 0.5);
+  --radio-icons-checked: #fff;
+
+  --user-icon-fill-color: 1f1f1f;
+  --user-icon-stroke-color: rgba(21, 21, 21, 1);
+
+  --column-background-color: #121212;
+  --column-text-color: #fff;
+  --column-icon-edit-stroke-color: #999999;
+  --column-icon-plus-color: #fff;
+  --column-icon-plus-stroke-color: rgba(18, 18, 18, 1);
+
+  --scrollbar-background-color: #444;
+  --scrollbar-base-color: #222;
+
+  --input-need-help-background-focus: #1f1f1f;
+  --radio-button-text-color: rgba(255, 255, 255, 0.5);
+  --avatar-border-color: #bedbb0;
+  --user-edit-icon-plus-fill-color: #bedbb0;
+  --user-edit-icon-plus-hover-color: #9dc888;
+  --modal-progress-text-color: rgba(255, 255, 255, 0.5);
+  --modal-progress-icon-stroke-color: rgba(255, 255, 255, 0.5);
+  --modal-progress-text-hover-color: #bedbb0;
+  --modal-progress-icon--hover-stroke-color: #bedbb0;
+  --modal-progress-background-color: #1f1f1f;
+  --modal-progress-boxshadow-color: rgba(17, 17, 17, 0.1);
+}
+
+// light theme
+html[data-theme='light'] {
+  --primary-background-color: #fdfdfd;
+  --secondary-background-color: #f6f6f7;
+  --header-background-color: #fcfcfc;
+  --sidebar-help-backgound-color: #f6f6f7;
+  --needhelp-backdrop-background-color: #ffffff;
+  --primary-button-color: #bedbb0;
+  --secondary-button-color: #9dc888;
+  --plus-button-color: #bedbb0;
+  --plus-button-hover-color: #9dc888;
+  --logout-button-color: #bedbb0;
+  --logout-hover-button-color: #9dc888;
+  --scrollbar-color: #bedbb0;
+  --add-column-button-color: #ffffff;
+  --primary-card-background-color: #fdfdfd;
+  --primary-background-sidebar-color: #fdfdfd;
+  --secondary-text-sidebar-color: #161616;
+  --line-border-sidebar-color: #d6d2d2;
+  --board-item-sidebar-background-color: #f6f6f7;
+  --board-item-sidebar-color: #b7b7b7;
+  --screens-page-tutorial-text-color: rgba(22, 22, 22, 0.7);
+
+  --modal-backdrop-background-color: rgba(137, 137, 137, 0.2);
+  --modal-window-color: #fdfdfd;
+  --modal-board-text: #161616;
+  --primary-modal-card-color: #bedbb0;
+  --datepicker-background-color: #ffffff;
+  --datepicker-current-month: #161616;
+  --datepicker-current-day: #161616;
+  --datepicker-hover-background-color: #bedbb0;
+  --datepicker-disabled-day: rgba(22, 22, 22, 0.2);
+  --datepicker-hover-disabled-day: rgba(22, 22, 22, 0.2);
+  --textarea-border-color: rgba(190, 219, 176, 0.4);
+  --datepicker-dayname-color: rgba(22, 22, 22, 0.5);
+  --modal-filters-text: #161616;
+  --modal-need-help-text: #161616;
+  --modal-title-color: #161616;
+  --modal-close-icon-color: #161616;
+  --modal-filter-form-line: rgba(22, 22, 22, 0.2);
+  --theme-switcher-dropdown-border-color: #bedbb0;
+  --theme-switcher-dropdown-hover-color: #8ee560;
+  --theme-switcher-dropdown-text-color: #161616;
+
+  --primary-heading-color: #161616;
+  --secondary-heading-color: #161616;
+  --primary-text-color: #b7b7b7;
+  --secondary-deadline-color: #999999;
+  --secondary-line-color: #999999;
+  --primary-priority-color: #8fa1d0;
+  --secondary-priority-color: #e09cb5;
+  --tertiary-priority-color: #999999;
+  --primary-icon-stroke-color: #161616;
+  --secondary-icon-stroke-color: #121212;
+  --sidebar-icon-fill-color: transparent;
+  --sidebar-icon-stroke-color: #ffffff80;
+  --sidebar-icon-edit-stroke-color: #b7b7b7;
+  --sidebar-icon-active-stroke-color: #161616;
+
+  --shared-button-text-color: #161616;
+  --shared-input-border-color: rgba(190, 219, 176, 0.4);
+  --shared-input-border-hover-color: #bedbb0;
+  --shared-input-text-color: #161616;
+  --shared-input-placeholder-color: #161616;
+  --shared-plus-icon-dark-big: #121212;
+  --shared-plus-icon-dark-small: #121212;
+  --shared-plus-icon-color: #ffffff;
+  --shared-add-column-button: #ffffff;
+  --shared-add-column-button-border: #121212;
+  --shared-black-plus-button: #161616;
+
+  --radio-label-checked-background-color: #ffffff;
+  --radio-label-grey-color: rgba(22, 22, 22, 0.3);
+
+  --radio-icons-color: rgba(22, 22, 22, 0.6);
+  --radio-icons-checked: #161616;
+
+  --user-icon-fill-color: #f6f6f7;
+  --user-icon-stroke-color: rgba(246, 246, 247, 1);
+
+  --column-background-color: #fff;
+  --column-text-color: #161616;
+  --column-icon-edit-stroke-color: #b7b7b7;
+  --column-icon-plus-color: #161616;
+  --column-icon-plus-stroke-color: rgba(255, 255, 255, 1);
+
+  --scrollbar-background-color: #b6b4b4;
+  --scrollbar-base-color: #dddbdb;
+
+  --input-need-help-background-focus: #fff;
+  --radio-button-text-color: rgba(22, 22, 22, 0.5);
+  --avatar-border-color: #bedbb0;
+  --user-edit-icon-plus-fill-color: #bedbb0;
+  --user-edit-icon-plus-hover-color: #9dc888;
+
+  --modal-progress-text-color: rgba(22, 22, 22, 1);
+  --modal-progress-icon-stroke-color: rgba(22, 22, 22, 1);
+  --modal-progress-text-hover-color: #bedbb0;
+  --modal-progress-icon--hover-stroke-color: #bedbb0;
+  --modal-progress-background-color: #fcfcfc;
+  --modal-progress-boxshadow-color: rgba(17, 17, 17, 0.1);
+}
+
+// purple theme
+html[data-theme='violet'] {
+  --primary-background-color: #ecedfd;
+  --secondary-background-color: #ecedfd;
+  --header-background-color: #ffffff;
+  --sidebar-help-backgound-color: rgba(236, 237, 253, 0.4);
+  --needhelp-backdrop-background-color: #ffffff;
+  --primary-button-color: #5255bc;
+  --secondary-button-color: #7b7ede;
+  --plus-button-color: #7b7ede;
+  --plus-button-hover-color: #979cea;
+  --logout-button-color: #ffffff;
+  --logout-hover-button-color: #161616;
+  --scrollbar-color: #ffffff;
+  --primary-card-background-color: #fdfdfd;
+  --primary-background-card-color: #ecedfd;
+  --primary-background-sidebar-color: #5255bc;
+  --add-column-button-color: #ffffff;
+  --secondary-text-sidebar-color: #ffffff;
+  --line-border-sidebar-color: #ffffff1a;
+  --board-item-sidebar-background-color: #979cea;
+  --board-item-sidebar-color: #ffffff;
+  --screens-page-tutorial-text-color: rgba(22, 22, 22, 0.7);
+
+  --modal-backdrop-background-color: rgba(137, 137, 137, 0.2);
+  --modal-window-color: #fdfdfd;
+  --modal-board-text: #161616;
+  --primary-modal-card-color: #7b7ede;
+  --datepicker-background-color: #ffffff;
+  --datepicker-current-month: #161616;
+  --datepicker-current-day: #161616;
+  --datepicker-hover-background-color: #5255bc;
+  --datepicker-disabled-day: rgba(22, 22, 22, 0.2);
+  --datepicker-hover-disabled-day: rgba(22, 22, 22, 0.2);
+  --textarea-border-color: rgb(172, 192, 241);
+  --datepicker-dayname-color: rgba(22, 22, 22, 0.5);
+  --modal-filters-text: #161616;
+  --modal-need-help-text: #161616;
+  --modal-title-color: #161616;
+  --modal-close-icon-color: #161616;
+  --modal-filter-form-line: rgba(22, 22, 22, 0.2);
+  --theme-switcher-dropdown-border-color: #ecedfd;
+  --theme-switcher-dropdown-hover-color: #2e35fe;
+  --theme-switcher-dropdown-text-color: #161616;
+
+  --primary-heading-color: #161616;
+  --secondary-heading-color: #ffffff;
+  --primary-text-color: #b7b7b7;
+  --secondary-deadline-color: #999999;
+  --secondary-line-color: #999999;
+  --primary-priority-color: #8fa1d0;
+  --secondary-priority-color: #e09cb5;
+  --tertiary-priority-color: #999999;
+  --primary-icon-stroke-color: #161616;
+  --secondary-icon-stroke-color: #ffffff;
+  --sidebar-icon-fill-color: transparent;
+  --sidebar-icon-stroke-color: #ffffff80;
+  --sidebar-icon-edit-stroke-color: #ffffff80;
+  --sidebar-icon-active-stroke-color: #fff;
+
+  --shared-button-text-color: #ffffff;
+  --shared-input-border-color: rgb(172, 192, 241);
+  --shared-input-border-hover-color: #5255bc;
+  --shared-input-text-color: #161616;
+  --shared-input-placeholder-color: #161616;
+  --shared-plus-icon-dark-big: #ffffff;
+  --shared-plus-icon-dark-small: #ffffff;
+  --shared-plus-icon-color: #161616;
+  --shared-add-column-button: #121212;
+  --shared-add-column-button-border: #ffffff;
+  --shared-black-plus-button: #ffffff;
+
+  --radio-label-checked-background-color: #ffffff;
+  --radio-label-grey-color: rgba(22, 22, 22, 0.3);
+
+  --radio-icons-color: rgba(22, 22, 22, 0.6);
+  --radio-icons-checked: #161616;
+
+  --user-icon-fill-color: #ecedfd;
+  --user-icon-stroke-color: rgba(236, 237, 253, 1);
+
+  --column-background-color: #fff;
+  --column-text-color: #161616;
+  --column-icon-edit-stroke-color: #b7b7b7;
+  --column-icon-plus-color: #5255bc;
+  --column-icon-plus-stroke-color: rgba(255, 255, 255, 1);
+
+  --scrollbar-background-color: #b8bcfd;
+  --scrollbar-base-color: #ffffff;
+
+  --input-need-help-background-focus: #fff;
+  --radio-button-text-color: rgba(22, 22, 22, 0.5);
+  --avatar-border-color: #7b7ede;
+  --user-edit-icon-plus-fill-color: #ecedfd;
+  --user-edit-icon-plus-hover-color: #7b7ede;
+
+  --modal-progress-text-color: rgba(22, 22, 22, 1);
+  --modal-progress-icon-stroke-color: rgba(22, 22, 22, 1);
+  --modal-progress-text-hover-color: rgba(82, 85, 188, 1);
+  --modal-progress-icon--hover-stroke-color: rgba(82, 85, 188, 1);
+  --modal-progress-background-color: #fcfcfc;
+  --modal-progress-boxshadow-color: rgba(17, 17, 17, 0.1);
+}
