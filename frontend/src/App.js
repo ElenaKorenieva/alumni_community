@@ -9,7 +9,7 @@ import HomePage from "./pages/home/HomePage";
 import About from "./pages/about/About";
 import Header from "./shared/Header/Header";
 import Profile from "./pages/profile/Profile";
-import Footer from "./shared/Footer/Footer";
+import Footer from "../src/shared/Footer/Footer";
 
 function App() {
   const isAuth = useSelector(isLogin);

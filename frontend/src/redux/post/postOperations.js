@@ -35,8 +35,12 @@ export const deletePost = createAsyncThunk("posts/", async (id, thunkAPI) => {
 
 export const editPost = createAsyncThunk("posts/", async (post, thunkAPI) => {
   try {
+    const postToSend = {
+      title: post.title,
+      message: post.message
+    }
     setAuthHeader(thunkAPI);
-    const response = await axios.put(`/posts/${post._id}`, post);
+    const response = await axios.put(`/posts/${post._id}`, postToSend);
     return response.data;
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response.data.message);

@@ -20,6 +20,7 @@
   border-radius: 10px;
   fill: #5b61f5;
   stroke: #5b61f5;
+
   &:hover {
     box-shadow: 0px 6px 7px 1px #7b7ede;
   }
@@ -30,6 +31,7 @@
   height: 68px;
   cursor: pointer;
   border-radius: 10px;
+
   &:hover {
     box-shadow: 0px 6px 7px 1px #7b7ede;
   }
@@ -52,6 +54,7 @@
   background-color: #7a7b84;
   font-size: 18px;
   font-size: 14px;
+
   &:hover {
     background-color: #7b7ede;
   }
@@ -67,20 +70,6 @@
   width: 100%;
   margin-top: 24px;
   gap: 14px;
-}
-
-input {
-  top: 107px;
-  left: 40px;
-  height: 49px;
-  padding-left: 18px;
-  opacity: 0.4;
-  color: #ffffff;
-  border: 1px solid #fff;
-  border-radius: 8px;
-  outline: none;
-  background: #1f1f1f;
-  box-shadow: 0px 4px 16px rgba(22, 22, 22, 0.08);
 }
 
 .password-input {
@@ -151,4 +140,18 @@ input {
 
 .password-input-field::placeholder {
   color: #ffffff;
+}
+
+.edit-input {
+  top: 107px;
+  left: 40px;
+  height: 49px;
+  padding-left: 18px;
+  opacity: 0.4;
+  color: #ffffff;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  outline: none;
+  background: #1f1f1f;
+  box-shadow: 0px 4px 16px rgba(22, 22, 22, 0.08);
 }

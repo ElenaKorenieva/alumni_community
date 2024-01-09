@@ -70,6 +70,8 @@ const deletePost = async (req, res) => {
 };
 
 const editMessage = async (req, res) => {
+
+  console.log('aqui');
   const messageId = req.params.id;
   const postId = new mongoose.Types.ObjectId(messageId);
   const user = req.user.name;
@@ -88,25 +90,19 @@ const editMessage = async (req, res) => {
     if (post.user !== user) {
       return res
         .status(403)
-        .json({ success: false, message: "You can not edit this post" });
+        .json({ success: false, message: "You cannot edit this post" });
     }
 
-    const updatedPost = await Post.findByIdAndUpdate(
-      postId,
-      { $set: { title, message } },
-      { new: true }
-    );
+    post.title = title
+    post.message = message
 
-    if (!updatedPost) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Message not found after update" });
-    }
+    const updatedPost = await post.save();
+
 
     res.status(200).json({
       success: true,
       message: "Message updated successfully",
-      post: updatedPost,
+      post: post,
     });
   } catch (error) {
     console.error(error);

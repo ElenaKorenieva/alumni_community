@@ -146,7 +146,12 @@ const PostsPage = () => {
       console.error(response.error.message);
       showToastMessage("Post deletion failed", true);
     } else {
-      setPosts((prevPosts) => prevPosts.map(p => (p._id === post._id ? post : p)));
+      const updatedPost = {
+        ...post,
+        title: response.payload.post.title,
+        message: response.payload.post.message,
+      };
+      setPosts((prevPosts) => prevPosts.map(p => (p._id === post._id ? updatedPost : p)));
       handleCloseEditModal()
       showToastMessage("Post edited successfully");
     }
@@ -258,7 +263,7 @@ const PostsPage = () => {
           <div className="post-title-container">
             <h5>Write a new post:</h5>
           </div>
-          <div className="custom-border border p-2">
+          <div className="custom-border border p-3 w-75 mx-auto">
             <Form onSubmit={(e) => handleSendMessage(e)}>
               <Form.Group className="mb-3" controlId="title">
                 <Form.Label>Title</Form.Label>
@@ -291,9 +296,11 @@ const PostsPage = () => {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 />
               </Form.Group>
-              <Button type="submit" variant="primary">
-                Submit
-              </Button>
+              <div className="text-end">
+                <Button type="submit" variant="primary">
+                  Submit
+                </Button>
+              </div>
             </Form>
           </div>
 

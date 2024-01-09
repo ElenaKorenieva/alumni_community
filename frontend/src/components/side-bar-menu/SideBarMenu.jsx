@@ -13,6 +13,7 @@ import {
   faLaptopCode,
   faRandom,
   faUser,
+  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 
@@ -27,8 +28,6 @@ const SideBarMenu = () => {
 
   return (
     <div className="menu">
-      <button onClick={handleLogout}>Logout</button>
-
       <img className="w-100 logo-menu" src="/images/logo-b.png" />
       <ul className="list-group">
         <li className="list-group-item">
@@ -93,6 +92,13 @@ const SideBarMenu = () => {
             <FontAwesomeIcon icon={faUser} className="mr-2" />
             Profile
           </Link>
+        </li>
+        <li className="list-group-item">
+          <Link onClick={handleLogout}>
+            <FontAwesomeIcon icon={faSignOut} className="mr-2" />
+            Logout
+          </Link>
+
         </li>
       </ul>
     </div>

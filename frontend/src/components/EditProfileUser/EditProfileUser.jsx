@@ -82,8 +82,8 @@ function EditProfileUser() {
 
   return (
     <>
-      <form onSubmit={formSubmit} className="user-form">
-        <div className="wrapper">
+      <form onSubmit={formSubmit} className="user-form mx-auto">
+        <div className="wrapper mt-5 ">
           <div className="avatar-user-wrapper">
             {!imageUrl && !userData.avatarURL ? (
               <svg className="icon-user-svg">

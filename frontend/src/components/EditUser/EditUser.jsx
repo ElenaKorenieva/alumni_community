@@ -85,7 +85,7 @@ function EditUser({ onClose }) {
   return (
     <>
       <form onSubmit={formSubmit}>
-        <div className="wrapper">
+        <div className="wrapper mt-5 mx-auto">
           <div className="avatar-wrapper">
             {!imageUrl && !userData.avatarURL ? (
               <svg className="icon-user">
@@ -103,7 +103,7 @@ function EditUser({ onClose }) {
 
             <label className="file-wrapper">
               <input
-                className="file-input"
+                className="file-input edit-input"
                 type="file"
                 onChange={handleFileChange}
                 accept="image/jpeg, image/png, image/gif"
@@ -112,7 +112,7 @@ function EditUser({ onClose }) {
             </label>
           </div>
 
-          <div className="inputs">
+          <div className="inputs edit-input">
             <div>
               <input
                 autoFocus
