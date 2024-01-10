@@ -5,6 +5,8 @@ import { register } from "../../redux/auth/authOperations";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import validation from "./Validation";
+import sprite from "../..//shared/images/sprite.svg";
+import eyeHide from "../../shared/images/eye-hide.svg";
 
 const SignUpPage = () => {
   const [fullName, setFullName] = useState("");
@@ -14,6 +16,16 @@ const SignUpPage = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [errorAPI, setErrorAPI] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+  const onPasswordVisible = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const onRepeatPasswordVisible = () => {
+    setShowRepeatPassword(!showRepeatPassword);
+  };
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +51,7 @@ const SignUpPage = () => {
       name: e.target.elements.fullName.value,
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
-      // gitHub: gitHubLink,
+      gitHub: gitHubLink,
     };
 
     const newUserForValidation = {
@@ -139,12 +151,12 @@ const SignUpPage = () => {
               }}
             />
           </div>
-          <div className="form-group mb-3">
+          <div className="form-group mb-3 password-signup-wrapper">
             <label htmlFor="password" className="form-label">
               Password:
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               className="form-control custom-input"
               id="password"
               name="password"
@@ -155,16 +167,29 @@ const SignUpPage = () => {
                 setErrorAPI("");
               }}
             />
+            <span className="password-signup-view" onClick={onPasswordVisible}>
+              {showPassword ? (
+                <img
+                  className="password-signup-icon"
+                  src={eyeHide}
+                  alt="eye-icon"
+                />
+              ) : (
+                <svg className="svg-signup-icon">
+                  <use stroke="white" href={`${sprite}#icon-eye`} />
+                </svg>
+              )}
+            </span>
             {errors.password && password === "" && (
               <p className="error">{errors.password}</p>
             )}
           </div>
-          <div className="form-group mb-3">
+          <div className="form-group mb-3 password-signup-wrapper">
             <label htmlFor="repeatPassword" className="form-label">
               Repeat Password:
             </label>
             <input
-              type="password"
+              type={showRepeatPassword ? "text" : "password"}
               className="form-control custom-input"
               id="repeatPassword"
               name="repeatPassword"
@@ -175,6 +200,22 @@ const SignUpPage = () => {
                 setErrorAPI("");
               }}
             />
+            <span
+              className="password-signup-view"
+              onClick={onRepeatPasswordVisible}
+            >
+              {showRepeatPassword ? (
+                <img
+                  className="password-signup-icon"
+                  src={eyeHide}
+                  alt="eye-icon"
+                />
+              ) : (
+                <svg className="svg-signup-icon">
+                  <use stroke="white" href={`${sprite}#icon-eye`} />
+                </svg>
+              )}
+            </span>
             {errors.repeatPassword && repeatPassword === "" && (
               <p className="error">{errors.repeatPassword}</p>
             )}
@@ -182,7 +223,7 @@ const SignUpPage = () => {
           {errorAPI && Object.values(errors).length === 0 && (
             <p className="error">{errorAPI}</p>
           )}
-          <button type="submit" className="w-100">
+          <button type="submit" className="w-100 btn btn-primary">
             Sign Up
           </button>
         </form>

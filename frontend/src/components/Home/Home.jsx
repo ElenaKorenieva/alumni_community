@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 // import { useDispatch } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 // import { logout } from "../../redux/auth/authOperations";
@@ -24,7 +24,9 @@ const Home = () => {
       </div>
 
       <div className="menu-container pt-2">
-        <h2 className="menu-title topic-title border-bottom">How to use this community:</h2>
+        <h2 className="menu-title topic-title border-bottom">
+          How to use this community:
+        </h2>
         <div className="aboutImg-wrapper">
           <img
             src="/images/home_img_howto.png"
@@ -36,7 +38,9 @@ const Home = () => {
       </div>
 
       <div className="menu-container pt-2">
-        <h2 className="menu-title topic-title border-bottom">Check out the latest community posts:</h2>
+        <h2 className="menu-title topic-title border-bottom">
+          Check out the latest community posts:
+        </h2>
       </div>
     </div>
   );
