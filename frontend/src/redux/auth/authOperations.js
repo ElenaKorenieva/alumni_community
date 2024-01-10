@@ -79,48 +79,31 @@ export const updateUser = createAsyncThunk(
 
 export const getImageFromGitHub = createAsyncThunk(
   "users/getImageFromGitHub",
-  async (links, thunkAPI) => {
-    // console.log(
-    //   (links.gitHubURL !== "none" ||
-    //     links.gitHubURL !== "" ||
-    //     links.gitHubURL !== undefined) &&
-    //     links.avatar_url === undefined
-    // );
-    if (
-      (links.gitHubURL !== "none" ||
-        links.gitHubURL !== "" ||
-        links.gitHubURL !== undefined) &&
-      links.avatar_url === undefined
-    ) {
-      const gitHubName = links.gitHubURL;
-      const splittedUserName = gitHubName.split("/");
-      const userName = splittedUserName[3];
-      console.log(userName);
+  async (gitHub, thunkAPI) => {
+    const client_id = process.env.REACT_APP_CLIENT_ID;
+    const client_secret = process.env.REACT_APP_CLIENT_SECRET;
+    console.log(`https://api.github.com/users/${gitHub}`);
+    try {
+      const response = await axios.get(
+        `https://api.github.com/users/${gitHub}`,
+        {
+          params: {
+            client_id,
+            client_secret,
+            sort: "created",
+          },
+          // Ensure there is no Authorization header
+          headers: {
+            Authorization: undefined,
+          },
+        }
+      );
 
-      const client_id = process.env.REACT_APP_CLIENT_ID;
-      const client_secret = process.env.REACT_APP_CLIENT_SECRET;
-
-      try {
-        const response = await axios.get(
-          `https://api.github.com/users/${userName}`,
-          {
-            params: {
-              client_id,
-              client_secret,
-              sort: "created",
-            },
-            // Ensure there is no Authorization header
-            headers: {
-              Authorization: undefined,
-            },
-          }
-        );
-
-        const { data } = response;
-        return data.avatar_url;
-      } catch (e) {
-        return thunkAPI.rejectWithValue(e.message);
-      }
+      const { data } = response;
+      console.log(response);
+      return data.avatar_url;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
     }
   }
 );

@@ -5,25 +5,28 @@ import SideBarMenu from "../../components/side-bar-menu/SideBarMenu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getImageFromGitHub } from "../../redux/auth/authOperations";
-import { avatarURL, gitHubURL } from "../../redux/auth/authSelectors";
+import { avatarURL, gitHubURL, isLogin } from "../../redux/auth/authSelectors";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const gitHubUserLink = useSelector(gitHubURL) || "";
   const avatarUserLink = useSelector(avatarURL);
+  const isAuth = useSelector(isLogin);
+  let userName = "";
+  if (
+    gitHubUserLink !== "none" ||
+    gitHubUserLink !== "" ||
+    gitHubUserLink !== undefined
+  ) {
+    const splittedUserName = gitHubUserLink.split("/");
+    userName = splittedUserName[3];
+  }
 
-  const links = {
-    gitHubURL: gitHubUserLink,
-    avatar_url: avatarUserLink,
-  };
-  console.log(gitHubUserLink);
-  console.log(avatarUserLink);
-
+  console.log(!avatarUserLink && isAuth && userName && isAuth);
   useEffect(() => {
-    // Dispatch the fetchData thunk only on the first render
-    dispatch(getImageFromGitHub(links));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!avatarUserLink && isAuth && userName && isAuth)
+      dispatch(getImageFromGitHub(userName));
+  }, [avatarUserLink, dispatch, gitHubUserLink, isAuth, userName]);
 
   return (
     <div>
