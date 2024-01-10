@@ -17,9 +17,10 @@ function App() {
   const isAuth = useSelector(isLogin);
   let isRefresh = useSelector(isRefreshing);
 
-  return isRefresh ? (
-    <Loader />
-  ) : (
+  // return isRefresh ? (
+  //   <Loader />
+  // ) : (
+  return (
     <>
       {isAuth ? <Header style={{ display: "block" }} /> : null}
       <Routes>
