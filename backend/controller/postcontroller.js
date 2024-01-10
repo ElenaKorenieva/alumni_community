@@ -9,7 +9,32 @@ const upload = multer({ storage: storage });
 
 const getPostsByTopic = async (req, res) => {
   try {
-    const posts = await Post.find({ topic: req.query.topic });
+    let query = {};
+
+    if (req.query.topic) {
+      query.topic = req.query.topic;
+    }
+    if (req.query.user) {
+      query.user = req.query.user;
+    }
+
+    let sortOrder = 1;
+
+    if (req.query.order && req.query.order.toUpperCase() === 'DESC') {
+      sortOrder = -1;
+    }
+
+    let limitValue = parseInt(req.query.limit, 10) || 0;
+
+    limitValue = Math.max(limitValue, 0);
+
+    const options = {
+      sort: { create_at: sortOrder },
+      limit: limitValue,
+    };
+
+    const posts = await Post.find(query, null, options);
+
     res.status(200).json(posts);
   } catch (err) {
     console.error(err);
@@ -70,6 +95,8 @@ const deletePost = async (req, res) => {
 };
 
 const editMessage = async (req, res) => {
+
+  console.log('aqui');
   const messageId = req.params.id;
   const postId = new mongoose.Types.ObjectId(messageId);
   const user = req.user.name;
@@ -88,25 +115,19 @@ const editMessage = async (req, res) => {
     if (post.user !== user) {
       return res
         .status(403)
-        .json({ success: false, message: "You can not edit this post" });
+        .json({ success: false, message: "You cannot edit this post" });
     }
 
-    const updatedPost = await Post.findByIdAndUpdate(
-      postId,
-      { $set: { title, message } },
-      { new: true }
-    );
+    post.title = title
+    post.message = message
 
-    if (!updatedPost) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Message not found after update" });
-    }
+    const updatedPost = await post.save();
+
 
     res.status(200).json({
       success: true,
       message: "Message updated successfully",
-      post: updatedPost,
+      post: post,
     });
   } catch (error) {
     console.error(error);
@@ -229,16 +250,6 @@ const editComment = async (req, res) => {
   }
 };
 
-const getUsersPosts = async (req, res) => {
-  try {
-    const posts = await Post.find({ user: req.query.user });
-    res.status(200).json(posts);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 module.exports = {
   getPostsByTopic: ctrlWrapper(getPostsByTopic),
   createNewPost: ctrlWrapper(createNewPost),
@@ -247,5 +258,4 @@ module.exports = {
   addComment: ctrlWrapper(addComment),
   removeComment: ctrlWrapper(removeComment),
   editComment: ctrlWrapper(editComment),
-  getUsersPosts: ctrlWrapper(getUsersPosts),
 };

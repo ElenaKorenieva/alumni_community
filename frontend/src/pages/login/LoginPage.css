@@ -72,6 +72,11 @@ label {
   color: red;
 }
 
+.asterisk {
+  color: red;
+  margin-right: 0;
+}
+
 .password-login-wrapper {
   position: relative;
 }

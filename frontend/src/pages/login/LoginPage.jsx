@@ -82,14 +82,14 @@ const LoginPage = () => {
                   <form onSubmit={(e) => handleLogin(e)}>
                     <div className="mb-3">
                       <label htmlFor="email" className="form-label">
-                        Email Address:
+                        <span className="asterisk">*</span>Email Address:
                       </label>
                       <input
                         name="email"
                         type="email"
                         className="form-control"
                         id="email"
-                        placeholder="Type Email Address"
+                        placeholder="Type email address"
                         value={email}
                         onChange={handleOnEmailChange}
                       />
@@ -99,14 +99,14 @@ const LoginPage = () => {
                     </div>
                     <div className="mb-3 password-login-wrapper">
                       <label htmlFor="password" className="form-label">
-                        Password:
+                        <span className="asterisk">*</span>Password:
                       </label>
                       <input
                         name="password"
                         type={showPassword ? "text" : "password"}
                         className="form-control"
                         id="password"
-                        placeholder="Type Password"
+                        placeholder="Type password"
                         value={password}
                         onChange={handleOnPasswordChange}
                       />

@@ -80,7 +80,7 @@ input {
 }
 
 button {
-  background-color: #f5f5f5;
+  background-color: #F5F5F5;
   color: #001529;
   margin-top: 10px;
   padding: 10px 20px;
@@ -89,7 +89,12 @@ button {
   border-radius: 4px;
   cursor: pointer;
   border-radius: 20px;
-  font-family: "CamingoMonoBold", monospace;
+  font-family: 'CamingoMonoBold', monospace;
+}
+
+.asterisk {
+  color: red;
+  margin-right: 0;
 }
 
 .password-signup-wrapper {

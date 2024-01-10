@@ -2,13 +2,15 @@
   padding-top: 3rem;
   padding-left: 7rem;
   display: flex;
+  background-color: #001529;
+  color: white;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .footer-link {
-  color: black;
+  color: white;
   font-size: 17px;
 }
 
@@ -39,12 +41,13 @@
 }
 
 .dev-link {
-  color: black;
+  color: white;
   font-size: 14px;
 }
 
 .image-wrapper {
   width: 50px;
+  height: 54px;
 }
 
 .image-wrapper img {

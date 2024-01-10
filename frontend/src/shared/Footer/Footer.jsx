@@ -6,7 +6,7 @@ import devImg2 from "../images/olena.jpg";
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer pb-4">
       <div>
         <p>
           <a
@@ -27,7 +27,7 @@ const Footer = () => {
             <div className="image-wrapper">
               <img src={devImg1} alt="developer" />
             </div>
-            <h6 className="dev-name">Francielle Abreu da Silva</h6>
+            <h6 className="dev-name">Francielle Abreu</h6>
             <a
               className="dev-link"
               href="https://github.com/francielleabreu"

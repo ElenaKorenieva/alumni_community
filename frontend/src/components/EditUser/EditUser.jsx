@@ -6,6 +6,8 @@ import { getUserData } from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
 import "./EditUser.css";
 import validation from "./Validation";
+import Form from 'react-bootstrap/Form';
+import { Button } from "react-bootstrap";
 
 function EditUser({ onClose }) {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ function EditUser({ onClose }) {
   const [userName, setUserName] = useState(userData.name);
   const [userEmail, setUserEmail] = useState(userData.email);
   const [gitHub, setGitHub] = useState(
-    userData.gitHub || "Add your GitHub link"
+    userData.gitHub
   );
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -62,13 +64,11 @@ function EditUser({ onClose }) {
       setErrors(validation(userForValidation));
     } else {
       const { name, email, password, gitHub } = e.target.elements;
-      // console.log(name, email, password, gitHub);
       const newUserData = {
         name: name.value || userData.name,
         email: email.value || userData.email,
         gitHub: gitHub.value || userData.gitHub,
       };
-      // console.log(newUserData);
 
       if (password.value) {
         newUserData.password = password.value;
@@ -85,8 +85,9 @@ function EditUser({ onClose }) {
 
   return (
     <>
-      <form onSubmit={formSubmit}>
-        <div className="wrapper">
+
+      <Form onSubmit={formSubmit}>
+        <div className="wrapper mt-5 mx-auto">
           <div className="avatar-wrapper">
             {!imageUrl && !userData.avatarURL ? (
               <svg className="icon-user">
@@ -102,23 +103,24 @@ function EditUser({ onClose }) {
               />
             )}
 
-            <label className="file-wrapper">
-              <input
-                className="file-input"
+            <Form.Group controlId="file" className="file-wrapper">
+              <Form.Label className="file-input-label">+</Form.Label>
+              <Form.Control
+                className="file-input edit-input"
                 type="file"
                 onChange={handleFileChange}
                 accept="image/jpeg, image/png, image/gif"
               />
-              +
-            </label>
+            </Form.Group>
           </div>
 
-          <div className="inputs">
-            <div>
-              <input
+          <div className="inputs edit-input">
+            <Form.Group controlId="name">
+              <Form.Control
                 autoFocus
                 name="name"
                 type="text"
+                placeholder="Enter your name"
                 value={userName}
                 onChange={(e) => {
                   setUserName(e.target.value);
@@ -128,12 +130,13 @@ function EditUser({ onClose }) {
               {errors.name && userName === "" && (
                 <p className="errorText">{errors.name}</p>
               )}
-            </div>
+            </Form.Group>
 
-            <div>
-              <input
+            <Form.Group controlId="email">
+              <Form.Control
                 name="email"
                 type="email"
+                placeholder="Enter your email"
                 value={userEmail}
                 onChange={(e) => {
                   setUserEmail(e.target.value);
@@ -143,20 +146,23 @@ function EditUser({ onClose }) {
               {errors.email && userEmail === "" && (
                 <p className="errorText">{errors.email}</p>
               )}
-            </div>
-            <div>
-              <input
+            </Form.Group>
+
+            <Form.Group controlId="gitHub">
+              <Form.Control
                 name="gitHub"
                 type="text"
+                placeholder="Enter your GitHub username"
                 value={gitHub}
                 onChange={(e) => {
                   setGitHub(e.target.value);
                   setErrorAPI("");
                 }}
               />
-            </div>
-            <div className="password-input">
-              <input
+            </Form.Group>
+
+            <Form.Group controlId="password" className="password-input">
+              <Form.Control
                 className="password-input-field"
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -166,10 +172,14 @@ function EditUser({ onClose }) {
                   setErrorAPI("");
                 }}
               />
-              <p className="errorText" name="password" component="div" />
+              <Form.Text className="errorText" name="password" component="div" />
               <span className="password-view" onClick={onPasswordVisible}>
                 {showPassword ? (
-                  <img className="password-icon" src={eyeHide} alt="eye-icon" />
+                  <img
+                    className="password-icon"
+                    src={eyeHide}
+                    alt="eye-icon"
+                  />
                 ) : (
                   <svg className="svg-icon">
                     <use stroke="white" href={`${sprite}#icon-eye`} />
@@ -179,16 +189,18 @@ function EditUser({ onClose }) {
               {errors.password && password === "" && (
                 <p className="errorText">{errors.password}</p>
               )}
-            </div>
+            </Form.Group>
           </div>
+
           {errorAPI && Object.values(errors).length === 0 && (
             <p className="errorText">{errorAPI}</p>
           )}
-          <button className="send-btn" type="submit">
+
+          <Button className="send-btn" type="submit">
             Send
-          </button>
+          </Button>
         </div>
-      </form>
+      </Form>
     </>
   );
 }
