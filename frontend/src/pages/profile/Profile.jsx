@@ -4,6 +4,7 @@ import SideBarMenu from "../../components/side-bar-menu/SideBarMenu";
 import { findPostsByUser } from "../../redux/post/postOperations";
 import { useDispatch, useSelector } from "react-redux";
 import { setName } from "../../redux/auth/authSelectors";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Card } from "react-bootstrap";
 
 const Profile = () => {
@@ -21,6 +22,15 @@ const Profile = () => {
     fetchUserPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function arrayBufferToBase64(buffer) {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
 
   return (
     <>
@@ -48,6 +58,24 @@ const Profile = () => {
                       className="mx-auto my-4"
                     >
                       <Card.Body>
+                        <Card.Img
+                          variant="top"
+                          src={
+                            post.image
+                              ? `data:${
+                                  post.image.contentType
+                                };base64,${arrayBufferToBase64(
+                                  post.image.data.data
+                                )}`
+                              : ""
+                          }
+                          style={{
+                            maxHeight: "300px",
+                            width: "100%",
+                            objectFit: "cover",
+                            margin: "auto",
+                          }}
+                        />
                         <Card.Title className="">{post.title}</Card.Title>
                         <Card.Body>
                           <Card.Text>{post.message}</Card.Text>

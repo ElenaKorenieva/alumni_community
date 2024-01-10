@@ -2,15 +2,21 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import sprite from "../../shared/images/sprite.svg";
 import eyeHide from "../../shared/images/eye-hide.svg";
-import { avatarURL, getUserData } from "../../redux/auth/authSelectors";
+import {
+  avatarURL,
+  getError,
+  getUserData,
+} from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
 import "./EditProfileUser.css";
 import validation from "./Validation";
+import { Toast } from "react-bootstrap";
 
 function EditProfileUser() {
   const dispatch = useDispatch();
   const imgURL = useSelector(avatarURL);
   const userData = useSelector(getUserData);
+  const error = useSelector(getError);
 
   const [imageUrl, setImageUrl] = useState(imgURL || null);
   const [imageFile, setImageFile] = useState(null);
@@ -21,6 +27,10 @@ function EditProfileUser() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [errorAPI, setErrorAPI] = useState("");
+
+  const [showToast, setShowToast] = useState(false);
+  const [showToastError, setShowToastError] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const onPasswordVisible = () => {
     setShowPassword(!showPassword);
@@ -33,8 +43,10 @@ function EditProfileUser() {
         setImageUrl(event.target.result);
       };
       reader.readAsDataURL(imageFile);
+    } else {
+      setImageUrl(imgURL);
     }
-  }, [imageFile]);
+  }, [imageFile, imgURL]);
 
   const handleFileChange = (event) => {
     setImageFile(event.target.files[0]);
@@ -60,13 +72,12 @@ function EditProfileUser() {
       setErrors(validation(userForValidation));
     } else {
       const { name, email, password, gitHub } = e.target.elements;
-      // console.log(name, email, password, gitHub);
+
       const newUserData = {
         name: name.value || userData.name,
         email: email.value || userData.email,
         gitHub: gitHub.value || userData.gitHub,
       };
-      // console.log(newUserData);
 
       if (password.value) {
         newUserData.password = password.value;
@@ -77,6 +88,13 @@ function EditProfileUser() {
       }
 
       dispatch(updateUser(newUserData));
+      if (error) {
+        setShowToastError(true);
+        setToastMessage(error.message);
+      } else {
+        setShowToast(true);
+        setToastMessage("User profile data is updated successfully!");
+      }
     }
   };
 
@@ -186,6 +204,22 @@ function EditProfileUser() {
           </button>
         </div>
       </form>
+      <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        delay={5000}
+        autohide
+        style={{
+          position: "fixed",
+          top: 20,
+          right: 20,
+          minWidth: 200,
+          backgroundColor: showToastError ? "#dc3545" : "#28a745",
+          color: "#fff",
+        }}
+      >
+        <Toast.Body>{toastMessage}</Toast.Body>
+      </Toast>
     </>
   );
 }

@@ -31,7 +31,7 @@ const Modal = ({ children, onClose, custom }) => {
 
   return (
     <div className="backdrop" onClick={onCloseBackdrop}>
-      <div className="modal-window" custom={custom.toString() ? true : false}>
+      <div className="modal-window">
         <div className="close-btn" onClick={handleClose}>
           <svg className="icon-styled" width={18} height={18}>
             <use href={`${sprite}#icon-close`}></use>
