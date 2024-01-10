@@ -6,7 +6,7 @@ import { getUserData } from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
 import "./EditUser.css";
 import validation from "./Validation";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 
 function EditUser({ onClose }) {
@@ -18,9 +18,7 @@ function EditUser({ onClose }) {
   const [imageFile, setImageFile] = useState(null);
   const [userName, setUserName] = useState(userData.name);
   const [userEmail, setUserEmail] = useState(userData.email);
-  const [gitHub, setGitHub] = useState(
-    userData.gitHub
-  );
+  const [gitHub, setGitHub] = useState(userData.gitHub);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -85,7 +83,6 @@ function EditUser({ onClose }) {
 
   return (
     <>
-
       <Form onSubmit={formSubmit}>
         <div className="wrapper mt-5 mx-auto">
           <div className="avatar-wrapper">
@@ -104,7 +101,7 @@ function EditUser({ onClose }) {
             )}
 
             <Form.Group controlId="file" className="file-wrapper">
-              <Form.Label className="file-input-label">+</Form.Label>
+              <Form.Label className="file-input-label plus-sign">+</Form.Label>
               <Form.Control
                 className="file-input edit-input"
                 type="file"
@@ -165,6 +162,7 @@ function EditUser({ onClose }) {
               <Form.Control
                 className="password-input-field"
                 name="password"
+                minLength="8"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter new password"
                 onChange={(e) => {
@@ -172,14 +170,14 @@ function EditUser({ onClose }) {
                   setErrorAPI("");
                 }}
               />
-              <Form.Text className="errorText" name="password" component="div" />
+              <Form.Text
+                className="errorText"
+                name="password"
+                component="div"
+              />
               <span className="password-view" onClick={onPasswordVisible}>
                 {showPassword ? (
-                  <img
-                    className="password-icon"
-                    src={eyeHide}
-                    alt="eye-icon"
-                  />
+                  <img className="password-icon" src={eyeHide} alt="eye-icon" />
                 ) : (
                   <svg className="svg-icon">
                     <use stroke="white" href={`${sprite}#icon-eye`} />

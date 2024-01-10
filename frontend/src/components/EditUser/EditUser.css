@@ -141,3 +141,8 @@
 .password-input-field::placeholder {
   color: #ffffff;
 }
+
+.plus-sign {
+  position: relative;
+  top: 3px;
+}

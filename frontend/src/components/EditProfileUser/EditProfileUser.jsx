@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
+import { Toast } from "react-bootstrap";
+import { FormControl, FormGroup, FormLabel, FormText } from "react-bootstrap";
 import sprite from "../../shared/images/sprite.svg";
 import eyeHide from "../../shared/images/eye-hide.svg";
 import {
@@ -8,12 +11,9 @@ import {
   getUserData,
 } from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
-import "./EditProfileUser.css";
 import validation from "./Validation";
-import { FormControl, FormGroup, FormLabel, FormText } from "react-bootstrap";
-import Form from 'react-bootstrap/Form';
-import { Button } from "react-bootstrap";
-import { Toast } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import "./EditProfileUser.css";
 
 function EditProfileUser() {
   const dispatch = useDispatch();
@@ -69,6 +69,8 @@ function EditProfileUser() {
       password: e.target.elements.password.value,
       gitHub: gitHubLink,
     };
+
+    console.log(userForValidation);
 
     if (Object.values(validation(userForValidation)).length !== 0) {
       setErrorAPI("");
@@ -185,6 +187,7 @@ function EditProfileUser() {
               <FormControl
                 className="password-input-field"
                 name="password"
+                minLength="8"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter new password"
                 onChange={(e) => {
