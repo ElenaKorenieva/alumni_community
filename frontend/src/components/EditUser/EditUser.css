@@ -81,14 +81,14 @@
 
 .password-view {
   position: absolute;
-  right: 18px;
-  top: 19px;
+  right: 1em;
+  top: 1em;
   cursor: pointer;
 }
 
 .password-icon {
-  top: 50%;
-  right: 4px;
+  right: 1em;
+  top: 1em;
   width: 16.5px;
   height: 16px;
 }
@@ -140,18 +140,4 @@
 
 .password-input-field::placeholder {
   color: #ffffff;
-}
-
-.edit-input {
-  top: 107px;
-  left: 40px;
-  height: 49px;
-  padding-left: 18px;
-  opacity: 0.4;
-  color: #ffffff;
-  border: 1px solid #fff;
-  border-radius: 8px;
-  outline: none;
-  background: #1f1f1f;
-  box-shadow: 0px 4px 16px rgba(22, 22, 22, 0.08);
 }

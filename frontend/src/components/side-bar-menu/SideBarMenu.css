@@ -14,8 +14,16 @@
     width: 100%;
 }
 
-.logo-menu {
-    filter: grayscale(1) invert(1);
+.logo-container {
+    background-color: #001529;
+}
+
+.logo-container img {
+    background-color: #001529;
+    width: 80%;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .form-control input {

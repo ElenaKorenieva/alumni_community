@@ -6,6 +6,9 @@ import { avatarURL, getUserData } from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
 import "./EditProfileUser.css";
 import validation from "./Validation";
+import { FormControl, FormGroup, FormLabel, FormText } from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
+import { Button } from "react-bootstrap";
 
 function EditProfileUser() {
   const dispatch = useDispatch();
@@ -82,7 +85,7 @@ function EditProfileUser() {
 
   return (
     <>
-      <form onSubmit={formSubmit} className="user-form mx-auto">
+      <Form onSubmit={formSubmit} className="user-form mx-auto">
         <div className="wrapper mt-5 ">
           <div className="avatar-user-wrapper">
             {!imageUrl && !userData.avatarURL ? (
@@ -99,20 +102,22 @@ function EditProfileUser() {
               />
             )}
 
-            <label className="file-user-wrapper">
-              <input
-                className="file-input"
+            <FormLabel className="file-user-wrapper">
+              <Form.Control
+                className="file-input edit-input"
+                id="custom-file"
+                label="+"
                 type="file"
                 onChange={handleFileChange}
                 accept="image/jpeg, image/png, image/gif"
               />
-              +
-            </label>
+            </FormLabel>
           </div>
 
           <div className="inputs">
-            <div>
-              <input
+            <FormGroup>
+              <FormLabel htmlFor="name">Name</FormLabel>
+              <FormControl
                 autoFocus
                 name="name"
                 type="text"
@@ -125,10 +130,11 @@ function EditProfileUser() {
               {errors.name && userName === "" && (
                 <p className="errorText">{errors.name}</p>
               )}
-            </div>
+            </FormGroup>
 
-            <div>
-              <input
+            <FormGroup>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormControl
                 name="email"
                 type="email"
                 value={userEmail}
@@ -140,20 +146,25 @@ function EditProfileUser() {
               {errors.email && userEmail === "" && (
                 <p className="errorText">{errors.email}</p>
               )}
-            </div>
-            <div>
-              <input
+            </FormGroup>
+
+            <FormGroup>
+              <FormLabel htmlFor="gitHub">GitHub</FormLabel>
+              <FormControl
                 name="gitHub"
                 type="text"
+                placeholder="Add your GitHub link"
                 value={gitHub}
                 onChange={(e) => {
                   setGitHub(e.target.value);
                   setErrorAPI("");
                 }}
               />
-            </div>
-            <div className="password-input">
-              <input
+            </FormGroup>
+
+            <FormGroup className="password-input">
+              <FormLabel htmlFor="password">Enter new password</FormLabel>
+              <FormControl
                 className="password-input-field"
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -164,7 +175,10 @@ function EditProfileUser() {
                 }}
               />
               <p className="errorText" name="password" component="div" />
-              <span className="password-view" onClick={onPasswordVisible}>
+              <FormText
+                className="password-view password-view-edit-profile"
+                onClick={onPasswordVisible}
+              >
                 {showPassword ? (
                   <img className="password-icon" src={eyeHide} alt="eye-icon" />
                 ) : (
@@ -172,20 +186,20 @@ function EditProfileUser() {
                     <use stroke="white" href={`${sprite}#icon-eye`} />
                   </svg>
                 )}
-              </span>
+              </FormText>
               {errors.password && password === "" && (
                 <p className="errorText">{errors.password}</p>
               )}
-            </div>
+            </FormGroup>
           </div>
           {errorAPI && Object.values(errors).length === 0 && (
             <p className="errorText">{errorAPI}</p>
           )}
-          <button className="send-user-btn" type="submit">
+          <Button className="send-btn" type="submit">
             Send
-          </button>
+          </Button>
         </div>
-      </form>
+      </Form>
     </>
   );
 }

@@ -91,3 +91,8 @@ button {
     border-radius: 20px;
     font-family: 'CamingoMonoBold', monospace;
 }
+
+.asterisk {
+    color: red;
+    margin-right: 0;
+}

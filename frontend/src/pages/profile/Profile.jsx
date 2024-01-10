@@ -5,7 +5,6 @@ import { findPostsByUser } from "../../redux/post/postOperations";
 import { useDispatch, useSelector } from "react-redux";
 import { setName } from "../../redux/auth/authSelectors";
 import { Card } from "react-bootstrap";
-
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector(setName);
@@ -37,7 +36,6 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -47,12 +45,14 @@ const Profile = () => {
           <div className="col-md-3">
             <SideBarMenu />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9 pt-5">
+            <h1>Profile</h1>
+
             <div className="row pb-5">
-              <div className="col-13 pb-5">
+              <div className="pb-5">
                 <EditProfileUser />
               </div>
-              <div className="col-13 pb-5">
+              <div className="pb-5">
                 {userPosts &&
                   userPosts.map((post) => (
                     <Card style={{ width: '50rem', backgroundColor: '#F5F5F5' }} key={post._id} className="mx-auto my-4">

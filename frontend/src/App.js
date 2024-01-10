@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import LoginPage from "../src/pages/login/LoginPage";
 import PostsPage from "./pages/posts/PostsPage";
 import { useSelector } from "react-redux";
@@ -13,6 +13,9 @@ import Footer from "../src/shared/Footer/Footer";
 
 function App() {
   const isAuth = useSelector(isLogin);
+  const location = useLocation();
+  const hideFooterOnRoutes = ["/signup", "/login"];
+
   return (
     <>
       <Header />
@@ -35,7 +38,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-      <Footer />
+      {!hideFooterOnRoutes.includes(location.pathname) && <Footer />}
     </>
   );
 }

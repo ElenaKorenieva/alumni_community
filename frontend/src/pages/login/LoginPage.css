@@ -71,3 +71,8 @@ label {
 .error {
   color: red;
 }
+
+.asterisk {
+  color: red;
+  margin-right: 0;
+}

@@ -11,7 +11,7 @@ const getPostsByTopic = async (req, res) => {
   try {
     let query = {};
 
-    if (req.params.topic) {
+    if (req.query.topic) {
       query.topic = req.query.topic;
     }
     if (req.query.user) {

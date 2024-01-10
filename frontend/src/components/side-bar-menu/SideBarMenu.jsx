@@ -28,7 +28,9 @@ const SideBarMenu = () => {
 
   return (
     <div className="menu">
-      <img className="w-100 logo-menu" src="/images/logo-b.png" />
+      <div className="logo-container">
+        <img src="/images/logo-menu.png" />
+      </div>
       <ul className="list-group">
         <li className="list-group-item">
           <Link to="/home">
@@ -98,7 +100,6 @@ const SideBarMenu = () => {
             <FontAwesomeIcon icon={faSignOut} className="mr-2" />
             Logout
           </Link>
-
         </li>
       </ul>
     </div>

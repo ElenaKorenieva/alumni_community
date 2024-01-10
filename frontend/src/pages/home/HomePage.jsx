@@ -47,12 +47,12 @@ const HomePage = () => {
           <div className="row">
             <div className="pb-5">
               <div className="home-container mt-5">
-                <h3 className="home-title">Hello and welcome!</h3>
+                <h3 className="home-title">Alumni, welcome home!</h3>
 
                 <div className="row journey-section">
                   <div className="col-md-8">
                     <h4 className="homeArticle-title text-center">A Journey Beyond Bootcamp</h4>
-                    <h5 className="text-center">Choose the topic in the left side menu and post now!</h5>
+                    <h5 className="text-center">The enriching journey at Matrix Master may have concluded, but the connections and learnings continue</h5>
                   </div>
                   <div className="col-md-4 text-center">
                     <img
@@ -69,7 +69,7 @@ const HomePage = () => {
                   <div className="aboutImg-wrapper">
                     <img
                       src="/images/home_img_howto.png"
-                      width="80%"
+                      width="100%"
                       alt="Programming"
                       className="rounded mx-auto"
                     />

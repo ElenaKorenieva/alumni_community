@@ -84,7 +84,7 @@ const SignUpPage = () => {
         <form onSubmit={handleSignUp}>
           <div className="form-group mb-3">
             <label htmlFor="fullName" className="form-label">
-              Full Name:
+              <span className="asterisk">*</span>Full Name:
             </label>
             <input
               type="text"
@@ -104,7 +104,7 @@ const SignUpPage = () => {
           </div>
           <div className="form-group mb-3">
             <label htmlFor="email" className="form-label">
-              Email Address:
+              <span className="asterisk">*</span>Email Address:
             </label>
             <input
               type="email"
@@ -141,7 +141,7 @@ const SignUpPage = () => {
           </div>
           <div className="form-group mb-3">
             <label htmlFor="password" className="form-label">
-              Password:
+              <span className="asterisk">*</span>Password:
             </label>
             <input
               type="password"
@@ -161,7 +161,7 @@ const SignUpPage = () => {
           </div>
           <div className="form-group mb-3">
             <label htmlFor="repeatPassword" className="form-label">
-              Repeat Password:
+              <span className="asterisk">*</span>Repeat Password:
             </label>
             <input
               type="password"
@@ -182,7 +182,7 @@ const SignUpPage = () => {
           {errorAPI && Object.values(errors).length === 0 && (
             <p className="error">{errorAPI}</p>
           )}
-          <button type="submit" className="w-100">
+          <button type="submit" className="btn btn-primary w-100">
             Sign Up
           </button>
         </form>
