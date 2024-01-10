@@ -46,11 +46,13 @@ const Profile = () => {
             <SideBarMenu />
           </div>
           <div className="col-md-9 pt-5">
-            <h1>Profile</h1>
-
+            <h4 className="title-profile-page topic-title border-bottom">My Profile</h4>
             <div className="row pb-5">
               <div className="pb-5">
                 <EditProfileUser />
+              </div>
+              <div>
+                <h4 className="title-profile-page topic-title border-bottom">My latest community posts:</h4>
               </div>
               <div className="pb-5">
                 {userPosts &&
