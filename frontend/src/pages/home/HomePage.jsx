@@ -4,12 +4,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { findFeed } from "../../redux/post/postOperations";
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getImageFromGitHub } from "../../redux/auth/authOperations";
+import { avatarURL, gitHubURL, isLogin } from "../../redux/auth/authSelectors";
 
 const HomePage = () => {
   const [feed, setFeed] = useState(null);
   const dispatch = useDispatch();
-
+  const gitHubUserLink = useSelector(gitHubURL) || "";
+  const avatarUserLink = useSelector(avatarURL);
+  const isAuth = useSelector(isLogin);
+  let userName = "";
+  if (
+    gitHubUserLink !== "none" ||
+    gitHubUserLink !== "" ||
+    gitHubUserLink !== undefined
+  ) {
+    const splittedUserName = gitHubUserLink.split("/");
+    userName = splittedUserName[3];
+  }
   const fetchFeed = async () => {
     const response = await dispatch(findFeed());
 
@@ -35,7 +48,9 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchFeed();
-  }, []);
+    if (!avatarUserLink && isAuth && userName && isAuth)
+      dispatch(getImageFromGitHub(userName));
+  }, [avatarUserLink, dispatch, gitHubUserLink, isAuth, userName]);
 
   return (
     <div>
@@ -126,9 +141,6 @@ const HomePage = () => {
                         </Card.Body>
                       </Card>
                     ))}
-
-
-
                 </div>
               </div>
             </div>

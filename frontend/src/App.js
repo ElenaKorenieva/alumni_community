@@ -2,23 +2,26 @@ import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import LoginPage from "../src/pages/login/LoginPage";
 import PostsPage from "./pages/posts/PostsPage";
 import { useSelector } from "react-redux";
-import { isLogin } from "./redux/auth/authSelectors";
+import { isLogin, isRefreshing } from "./redux/auth/authSelectors";
 import { PrivateRoute } from "./components/AuthRoutes";
 import SignUpPage from "./pages/signup/SignUpPage";
 import HomePage from "./pages/home/HomePage";
 import About from "./pages/about/About";
 import Header from "./shared/Header/Header";
 import Profile from "./pages/profile/Profile";
-import Footer from "../src/shared/Footer/Footer";
+import Footer from "./shared/Footer/Footer";
+import Loader from "./shared/Loader/Loader";
+
 
 function App() {
   const isAuth = useSelector(isLogin);
-  const location = useLocation();
-  const hideFooterOnRoutes = ["/signup", "/login"];
+  let isRefresh = useSelector(isRefreshing);
 
-  return (
+  return isRefresh ? (
+    <Loader />
+  ) : (
     <>
-      <Header />
+      {isAuth ? <Header style={{ display: "block" }} /> : null}
       <Routes>
         <Route
           path="/"
@@ -38,7 +41,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-      {!hideFooterOnRoutes.includes(location.pathname) && <Footer />}
+      {isAuth ? <Footer style={{ display: "block" }} /> : null}
     </>
   );
 }

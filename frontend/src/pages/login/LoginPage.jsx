@@ -5,15 +5,22 @@ import "./LoginPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { login } from "../../redux/auth/authOperations";
 import validation from "./Validation";
+import sprite from "../..//shared/images/sprite.svg";
+import eyeHide from "../../shared/images/eye-hide.svg";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [errorAPI, setErrorAPI] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const onPasswordVisible = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleOnEmailChange = (e) => {
     setEmail(e.target.value);
@@ -90,19 +97,35 @@ const LoginPage = () => {
                         <p className="error">{errors.email}</p>
                       )}
                     </div>
-                    <div className="mb-3">
+                    <div className="mb-3 password-login-wrapper">
                       <label htmlFor="password" className="form-label">
                         <span className="asterisk">*</span>Password:
                       </label>
                       <input
                         name="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         className="form-control"
                         id="password"
                         placeholder="Type password"
                         value={password}
                         onChange={handleOnPasswordChange}
                       />
+                      <span
+                        className="password-login-view"
+                        onClick={onPasswordVisible}
+                      >
+                        {showPassword ? (
+                          <img
+                            className="password-login-icon"
+                            src={eyeHide}
+                            alt="eye-icon"
+                          />
+                        ) : (
+                          <svg className="svg-login-icon">
+                            <use stroke="white" href={`${sprite}#icon-eye`} />
+                          </svg>
+                        )}
+                      </span>
                       {errors.password && password === "" && (
                         <p className="error">{errors.password}</p>
                       )}

@@ -12,8 +12,9 @@ import { Button } from "react-bootstrap";
 function EditUser({ onClose }) {
   const dispatch = useDispatch();
   const userData = useSelector(getUserData);
+  console.log(userData.avatarURL);
 
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(userData.avatarURL || "");
   const [imageFile, setImageFile] = useState(null);
   const [userName, setUserName] = useState(userData.name);
   const [userEmail, setUserEmail] = useState(userData.email);

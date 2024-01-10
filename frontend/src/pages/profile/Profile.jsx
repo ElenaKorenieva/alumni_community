@@ -4,6 +4,7 @@ import SideBarMenu from "../../components/side-bar-menu/SideBarMenu";
 import { findPostsByUser } from "../../redux/post/postOperations";
 import { useDispatch, useSelector } from "react-redux";
 import { setName } from "../../redux/auth/authSelectors";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Card } from "react-bootstrap";
 const Profile = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,15 @@ const Profile = () => {
   useEffect(() => {
     fetchUserPosts();
   }, []);
+
+  function arrayBufferToBase64(buffer) {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
 
   return (
     <>

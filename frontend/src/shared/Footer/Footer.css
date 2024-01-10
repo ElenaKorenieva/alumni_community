@@ -1,5 +1,5 @@
 .footer {
-  padding-top: 2rem;
+  padding-top: 3rem;
   padding-left: 7rem;
   display: flex;
   background-color: #001529;
@@ -23,7 +23,7 @@
 
 .dev-container {
   display: flex;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 .dev-card {

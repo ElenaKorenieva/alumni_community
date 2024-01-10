@@ -76,3 +76,32 @@ label {
   color: red;
   margin-right: 0;
 }
+
+.password-login-wrapper {
+  position: relative;
+}
+
+.password-login-view {
+  position: absolute;
+  right: 15px;
+  top: 45px;
+  cursor: pointer;
+}
+
+.password-login-icon {
+  position: absolute;
+  top: 65%;
+  right: 1px;
+  width: 16.5px;
+  height: 16px;
+}
+
+.svg-login-icon {
+  top: 50%;
+  right: 4px;
+  width: 16.5px;
+  height: 16px;
+  fill: #5b61f5;
+  stroke: darkgray;
+  vertical-align: baseline;
+}

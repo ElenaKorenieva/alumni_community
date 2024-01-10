@@ -1,98 +1,127 @@
 @font-face {
-    font-family: 'CamingoMonoBold';
-    src: url('../../components/fonts/CamingoMono-Regular.ttf') format('truetype');
-    font-style: normal;
+  font-family: "CamingoMonoBold";
+  src: url("../../components/fonts/CamingoMono-Regular.ttf") format("truetype");
+  font-style: normal;
 }
 
 .signup-container {
-    display: flex;
+  display: flex;
 }
 
 .left-column {
-    flex: 1;
+  flex: 1;
 }
 
 .image-logo {
-    margin: 0;
+  margin: 0;
 }
 
 .right-column {
-    flex: 1;
-    padding: 20px;
+  flex: 1;
+  padding: 20px;
 }
 
 .right-column h1 {
-    font-size: 35px;
-    margin-top: 20px;
-    font-weight: bold;
-    font-family: 'CamingoMonoBold', monospace;
+  font-size: 35px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-family: "CamingoMonoBold", monospace;
 }
 
 .right-column h2 {
-    color: rgb(2, 2, 34);
-    font-size: 20px;
-    margin-top: 0;
-    margin-bottom: 1em;
-    font-family: 'CamingoMonoBold', monospace;
+  color: rgb(2, 2, 34);
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 1em;
+  font-family: "CamingoMonoBold", monospace;
 }
 
 .right-column h3 {
-    color: rgb(2, 2, 34);
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 3em;
-    margin-bottom: 2em;
-    font-family: 'CamingoMonoBold', monospace;
+  color: rgb(2, 2, 34);
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 3em;
+  margin-bottom: 2em;
+  font-family: "CamingoMonoBold", monospace;
 }
 
 .img-fluid {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .left-image {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 label {
-    font-size: larger;
-    margin-bottom: 4px;
-    display: flex !important;
-    font-family: 'CamingoMonoBold', monospace;
+  font-size: larger;
+  margin-bottom: 4px;
+  display: flex !important;
+  font-family: "CamingoMonoBold", monospace;
 }
 
 .form-label {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .custom-input::placeholder {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    font-family: 'CamingoMonoBold', monospace;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-family: "CamingoMonoBold", monospace;
 }
 
 button {
-    background-color: #F5F5F5;
-    color: #001529;
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    border-radius: 20px;
-    font-family: 'CamingoMonoBold', monospace;
+  background-color: #F5F5F5;
+  color: #001529;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border-radius: 20px;
+  font-family: 'CamingoMonoBold', monospace;
 }
 
 .asterisk {
-    color: red;
-    margin-right: 0;
+  color: red;
+  margin-right: 0;
+}
+
+.password-signup-wrapper {
+  position: relative;
+}
+
+.password-signup-view {
+  position: absolute;
+  right: 15px;
+  top: 45px;
+  cursor: pointer;
+}
+
+.password-signup-icon {
+  position: absolute;
+  top: 65%;
+  right: 1px;
+  width: 16.5px;
+  height: 16px;
+}
+
+.svg-signup-icon {
+  top: 50%;
+  right: 4px;
+  width: 16.5px;
+  height: 16px;
+  fill: #5b61f5;
+  stroke: darkgray;
+  vertical-align: baseline;
 }
