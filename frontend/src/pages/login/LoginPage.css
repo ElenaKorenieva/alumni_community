@@ -4,6 +4,13 @@
   font-style: normal;
 }
 
+@media (max-width: 768px) {
+  .login-box {
+    width: 80%;
+    height: auto;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -30,8 +37,9 @@
   color: #001529;
   text-align: center;
   width: 50%;
-  height: 70%;
+  height: 73%;
   border-radius: 25px;
+  margin: auto;
 }
 
 .image-logo {
