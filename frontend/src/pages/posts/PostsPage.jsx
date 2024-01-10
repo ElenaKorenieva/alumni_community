@@ -124,7 +124,6 @@ const PostsPage = () => {
     }
   }
 
-
   const handleSendMessage = async (e) => {
     e.preventDefault();
     const topicSelected = topic || 'road-presentation';

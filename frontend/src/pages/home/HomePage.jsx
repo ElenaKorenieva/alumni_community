@@ -7,6 +7,9 @@ import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getImageFromGitHub } from "../../redux/auth/authOperations";
 import { avatarURL, gitHubURL, isLogin } from "../../redux/auth/authSelectors";
+import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 const HomePage = () => {
   const [feed, setFeed] = useState(null);
@@ -122,7 +125,12 @@ const HomePage = () => {
                         </Card.Body>
                         <Card.Body className="text-end">
 
-
+                          <Button variant="primary" size="sm" className="mx-1 mb-2" disabled>
+                            <FontAwesomeIcon icon={faThumbsUp} className="mr-2" />
+                            <span className="mx-1">
+                              {post.likes ? post.likes.length : 0}
+                            </span>
+                          </Button>
 
                           {post.comments && post.comments.length > 0 ? (
                             post.comments.map((comment) => (
