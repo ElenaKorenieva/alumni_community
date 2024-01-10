@@ -12,7 +12,6 @@ import Profile from "./pages/profile/Profile";
 import Footer from "./shared/Footer/Footer";
 import Loader from "./shared/Loader/Loader";
 
-
 function App() {
   const isAuth = useSelector(isLogin);
   let isRefresh = useSelector(isRefreshing);
@@ -36,7 +35,6 @@ function App() {
           element={<PrivateRoute component={HomePage} redirectTo="/" />}
         />
         <Route path="/about" element={<About />} />
-        <Route path="/posts" element={<PostsPage />} />
         <Route path="/posts/:topic" element={<PostsPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />

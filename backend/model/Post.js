@@ -52,6 +52,12 @@ const postSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    likes: [
+      {
+        type: String,
+        maxLength: 40,
+      },
+    ],
     comments: [commentSchema],
     image: {
       data: Buffer,

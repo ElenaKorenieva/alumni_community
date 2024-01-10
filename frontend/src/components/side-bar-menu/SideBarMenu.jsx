@@ -96,7 +96,7 @@ const SideBarMenu = () => {
           </Link>
         </li>
         <li className="list-group-item">
-          <Link onClick={handleLogout}>
+          <Link onClick={handleLogout} to={'/'}>
             <FontAwesomeIcon icon={faSignOut} className="mr-2" />
             Logout
           </Link>
