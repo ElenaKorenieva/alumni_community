@@ -18,9 +18,10 @@ function App() {
   const location = useLocation();
   let isProfilePage = location.pathname === "/profile";
 
-  return isRefresh && !isProfilePage ? (
-    <Loader />
-  ) : (
+  // return isRefresh && !isProfilePage ? (
+  //   <Loader />
+  // ) : (
+  return (
     <>
       {/* {!hideOnRoutes.includes(location.pathname) && <Header />} */}
       {isAuth ? <Header style={{ display: "block" }} /> : null}
@@ -38,8 +39,8 @@ function App() {
         />
         <Route path="/about" element={<About />} />
         <Route path="/posts/:topic" element={<PostsPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={isAuth ? <Navigate to="/home" /> : <LoginPage />} />
+        <Route path="/signup" element={isAuth ? <Navigate to="/home" /> : <SignUpPage />} />
         <Route path="/logout" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
