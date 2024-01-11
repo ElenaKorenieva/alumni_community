@@ -131,10 +131,10 @@ function EditProfileUser() {
             )}
 
             <FormLabel className="file-user-wrapper">
+              <Form.Label className="file-input-label plus-sign">+</Form.Label>
               <Form.Control
                 className="file-input edit-input"
                 id="custom-file"
-                label="+"
                 type="file"
                 onChange={handleFileChange}
                 accept="image/jpeg, image/png, image/gif"

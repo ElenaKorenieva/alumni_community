@@ -8,6 +8,7 @@ import {
   sendComment,
   deleteComment,
   editComment,
+  likePost,
 } from "../../redux/post/postOperations";
 import SideBarMenu from "../../components/side-bar-menu/SideBarMenu";
 import { useParams } from "react-router-dom";
@@ -23,6 +24,8 @@ import DeletePostModal from "../../components/modals/DeletePostModal";
 import EditPostModal from "../../components/modals/EditPostModal";
 import EditCommentModal from "../../components/modals/EditCommentModal";
 import Toast from 'react-bootstrap/Toast';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 const PostsPage = () => {
   const [showToast, setShowToast] = useState(false);
@@ -36,6 +39,7 @@ const PostsPage = () => {
   });
   const [showEditModal, setShowEditModal] = useState(false);
   const handleCloseEditModal = () => setShowEditModal(false);
+
   const handleShowEditModal = (post) => {
     setPostToChange(post);
     setShowEditModal(true)
@@ -103,8 +107,19 @@ const PostsPage = () => {
     setShowToastError(isError);
 
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 5000);
   };
+
+  const handleLike = async (post) => {
+    const response = await dispatch(likePost(post));
+    if (response.error) {
+      console.error(response.error.message);
+      showToastMessage("Something went wront while trying to like this post", true);
+    } else {
+      setPosts((prevPosts) =>
+        prevPosts.map((p) => (p._id === post._id ? response.payload.post : p))
+      );
+    }
+  }
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -229,7 +244,7 @@ const PostsPage = () => {
 
   useEffect(() => {
     fetchData();
-    findPageInfo()
+    findPageInfo();
   }, [dispatch, topic, loggedInUser]);
 
   return (
@@ -372,9 +387,20 @@ const PostsPage = () => {
 
                     </Card.Body>
                     <Card.Body className="text-end">
-                      {post.user === loggedInUser.name && (
-                        <>
-                          <div className="button-container">
+                      <div className="button-container">
+
+                        <Button variant="primary" size="sm" className="mx-1 mb-2"
+                          onClick={() => handleLike(post)}
+                          title={post.likes ? post.likes.map(user => user).join(', ').slice(0, 20) + (post.likes.length > 10 ? '...' : '') : ''}
+                        >
+                          <FontAwesomeIcon icon={faThumbsUp} className="mr-2" />
+                          <span className="mx-1">
+                            {post.likes ? post.likes.length : 0}
+                          </span>
+                        </Button>
+
+                        {post.user === loggedInUser.name && (
+                          <>
                             <Button variant="secondary" size="sm" onClick={() => handleShowEditModal(post)} className="clickable mb-2 mx-1">
                               Edit
                             </Button>
@@ -382,10 +408,10 @@ const PostsPage = () => {
                             <Button variant="danger" size="sm" onClick={() => handleShowDeleteModal(post)} className="clickable mb-2 mx-1">
                               Delete
                             </Button>
-                          </div>
+                          </>
+                        )}
+                      </div>
 
-                        </>
-                      )}
                       <Form onSubmit={(e) => handleSubmitComment(e, post)}>
                         <hr />
                         <Form.Group controlId="comment">
@@ -403,7 +429,6 @@ const PostsPage = () => {
                             {comment.user === loggedInUser.name && (
                               <>
                                 <div className="button-container text-end">
-
                                   <Button variant="secondary" size="sm" className="me-2" onClick={() => handleShowEditCommentModal(post, comment)}>Edit</Button>
                                   <Button variant="danger" size="sm" onClick={() => handleShowDeleteCommentModal(post, comment)}>Delete</Button>
                                 </div>

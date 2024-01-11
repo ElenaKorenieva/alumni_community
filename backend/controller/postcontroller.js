@@ -94,9 +94,44 @@ const deletePost = async (req, res) => {
   }
 };
 
-const editMessage = async (req, res) => {
+const likePost = async (req, res) => {
+  const postId = req.params.id;
+  const user = req.user.name;
 
-  console.log('aqui');
+  try {
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
+    }
+
+    if (post.likes.includes(user)) {
+      const indexToRemove = post.likes.findIndex(likedUser => likedUser === user);
+      if (indexToRemove !== -1) {
+        post.likes.splice(indexToRemove, 1);
+      }
+    } else {
+      post.likes.push(user);
+    }
+
+
+    const updatedPost = await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Post liked successfully",
+      post: updatedPost,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+
+const editMessage = async (req, res) => {
   const messageId = req.params.id;
   const postId = new mongoose.Types.ObjectId(messageId);
   const user = req.user.name;
@@ -258,4 +293,5 @@ module.exports = {
   addComment: ctrlWrapper(addComment),
   removeComment: ctrlWrapper(removeComment),
   editComment: ctrlWrapper(editComment),
+  likePost: ctrlWrapper(likePost),
 };
