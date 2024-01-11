@@ -1,11 +1,4 @@
-import {
-  Route,
-  Routes,
-  Navigate,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "../src/pages/login/LoginPage";
 import PostsPage from "./pages/posts/PostsPage";
 import { useSelector } from "react-redux";
@@ -22,9 +15,6 @@ import Loader from "./shared/Loader/Loader";
 function App() {
   const isAuth = useSelector(isLogin);
   let isRefresh = useSelector(isRefreshing);
-  const [queryParameters] = useSearchParams();
-
-  console.log(queryParameters);
 
   return isRefresh ? (
     <Loader />
