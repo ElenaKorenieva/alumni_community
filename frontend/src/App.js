@@ -1,11 +1,4 @@
-import {
-  Route,
-  Routes,
-  Navigate,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import LoginPage from "../src/pages/login/LoginPage";
 import PostsPage from "./pages/posts/PostsPage";
 import { useSelector } from "react-redux";
@@ -23,12 +16,9 @@ function App() {
   const isAuth = useSelector(isLogin);
   let isRefresh = useSelector(isRefreshing);
   const location = useLocation();
-  // const hideOnRoutes = ["/signup", "/login"];
-  const [queryParameters] = useSearchParams();
+  let isProfilePage = location.pathname === "/profile";
 
-  console.log(queryParameters);
-
-  return isRefresh ? (
+  return isRefresh && !isProfilePage ? (
     <Loader />
   ) : (
     <>
@@ -58,6 +48,33 @@ function App() {
       {/* {!hideOnRoutes.includes(location.pathname) ? <Footer /> : <Footer />} */}
     </>
   );
+  //   <>
+  //     {/* {!hideOnRoutes.includes(location.pathname) && <Header />} */}
+  //     {isAuth ? <Header style={{ display: "block" }} /> : null}
+  //     <Routes>
+  //       <Route
+  //         path="/"
+  //         element={
+  //           isAuth ? <Navigate to="/home" replace={true} /> : <LoginPage />
+  //         }
+  //       />
+
+  //       <Route
+  //         path="/home"
+  //         element={<PrivateRoute component={HomePage} redirectTo="/" />}
+  //       />
+  //       <Route path="/about" element={<About />} />
+  //       <Route path="/posts/:topic" element={<PostsPage />} />
+  //       <Route path="/signup" element={<SignUpPage />} />
+  //       <Route path="/login" element={<LoginPage />} />
+  //       <Route path="/logout" element={<LoginPage />} />
+  //       <Route path="/profile" element={<Profile />} />
+  //     </Routes>
+  //     <Footer style={{ display: "block" }} />
+  //     {/* {isAuth ? <Footer style={{ display: "block" }} /> : null} */}
+  //     {/* {!hideOnRoutes.includes(location.pathname) ? <Footer /> : <Footer />} */}
+  //   </>
+  // );
 }
 
 export default App;

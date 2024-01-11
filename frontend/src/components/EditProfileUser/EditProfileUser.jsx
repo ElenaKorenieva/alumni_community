@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "react-bootstrap";
-import { Toast } from "react-bootstrap";
 import { FormControl, FormGroup, FormLabel, FormText } from "react-bootstrap";
 import sprite from "../../shared/images/sprite.svg";
 import eyeHide from "../../shared/images/eye-hide.svg";
@@ -9,23 +7,32 @@ import {
   avatarURL,
   getError,
   getUserData,
+  isRefreshing,
 } from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
 import validation from "./Validation";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
+import { Toast } from "react-bootstrap";
 import "./EditProfileUser.css";
 
 function EditProfileUser() {
   const dispatch = useDispatch();
+  let isRefresh = useSelector(isRefreshing);
   const imgURL = useSelector(avatarURL);
   const userData = useSelector(getUserData);
-  const error = useSelector(getError);
+  const errorFromState = useSelector(getError);
+  let emptyGitHubLink = userData.gitHub;
+  if (userData.gitHub === "none") {
+    emptyGitHubLink = "";
+  }
 
   const [imageUrl, setImageUrl] = useState(imgURL || null);
   const [imageFile, setImageFile] = useState(null);
   const [userName, setUserName] = useState(userData.name);
   const [userEmail, setUserEmail] = useState(userData.email);
-  const [gitHub, setGitHub] = useState(userData.gitHub || "none");
+  const [gitHub, setGitHub] = useState(emptyGitHubLink);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -63,6 +70,7 @@ function EditProfileUser() {
     } else {
       gitHubLink = e.target.elements.gitHub.value;
     }
+
     const userForValidation = {
       name: e.target.elements.name.value || userName,
       email: e.target.elements.email.value || userEmail,
@@ -70,22 +78,18 @@ function EditProfileUser() {
       gitHub: gitHubLink,
     };
 
-    console.log(userForValidation);
-
     if (Object.values(validation(userForValidation)).length !== 0) {
       setErrorAPI("");
       setErrors(validation(userForValidation));
     } else {
-      const { name, email, password, gitHub } = e.target.elements;
-
       const newUserData = {
-        name: name.value || userData.name,
-        email: email.value || userData.email,
-        gitHub: gitHub.value || userData.gitHub,
+        name: userName,
+        email: userEmail,
+        gitHub: gitHub || "none",
       };
 
-      if (password.value) {
-        newUserData.password = password.value;
+      if (password) {
+        newUserData.password = password;
       }
 
       if (imageFile) {
@@ -93,15 +97,21 @@ function EditProfileUser() {
       }
 
       dispatch(updateUser(newUserData));
-      if (error) {
+      console.log(errorFromState);
+      if (errorFromState) {
         setShowToastError(true);
-        setToastMessage(error.message);
+        setToastMessage(errorFromState);
+        console.log(toastMessage);
       } else {
         setShowToast(true);
         setToastMessage("User profile data is updated successfully!");
+        console.log(toastMessage);
       }
     }
   };
+
+  console.log(showToast);
+  console.log(toastMessage);
 
   return (
     <>
@@ -122,8 +132,17 @@ function EditProfileUser() {
               />
             )}
 
+            {/* <label className="fw">
+              <input
+                className="file-input"
+                type="file"
+                onChange={handleFileChange}
+                accept="image/jpeg, image/png, image/gif"
+              />
+              +
+            </label> */}
+
             <FormLabel className="file-user-wrapper">
-              <Form.Label className="file-input-label plus-sign">+</Form.Label>
               <Form.Control
                 className="file-input edit-input"
                 id="custom-file"
@@ -131,6 +150,7 @@ function EditProfileUser() {
                 onChange={handleFileChange}
                 accept="image/jpeg, image/png, image/gif"
               />
+              +
             </FormLabel>
           </div>
 
@@ -222,7 +242,7 @@ function EditProfileUser() {
         </div>
       </Form>
       <Toast
-        show={showToast}
+        show={!isRefresh && showToast}
         onClose={() => setShowToast(false)}
         delay={5000}
         autohide
