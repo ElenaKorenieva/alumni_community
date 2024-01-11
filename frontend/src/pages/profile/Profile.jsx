@@ -5,7 +5,9 @@ import { findPostsByUser } from "../../redux/post/postOperations";
 import { useDispatch, useSelector } from "react-redux";
 import { setName } from "../../redux/auth/authSelectors";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector(setName);
@@ -93,7 +95,12 @@ const Profile = () => {
                       </Card.Body>
                       <Card.Body className="text-end">
 
-
+                        <Button variant="primary" size="sm" className="mx-1 mb-2" disabled>
+                          <FontAwesomeIcon icon={faThumbsUp} className="mr-2" />
+                          <span className="mx-1">
+                            {post.likes ? post.likes.length : 0}
+                          </span>
+                        </Button>
 
                         {post.comments && post.comments.length > 0 ? (
                           post.comments.map((comment) => (

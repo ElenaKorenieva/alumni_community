@@ -22,6 +22,8 @@ import Loader from "./shared/Loader/Loader";
 function App() {
   const isAuth = useSelector(isLogin);
   let isRefresh = useSelector(isRefreshing);
+  const location = useLocation();
+  // const hideOnRoutes = ["/signup", "/login"];
   const [queryParameters] = useSearchParams();
 
   console.log(queryParameters);
@@ -30,6 +32,7 @@ function App() {
     <Loader />
   ) : (
     <>
+      {/* {!hideOnRoutes.includes(location.pathname) && <Header />} */}
       {isAuth ? <Header style={{ display: "block" }} /> : null}
       <Routes>
         <Route
@@ -44,14 +47,15 @@ function App() {
           element={<PrivateRoute component={HomePage} redirectTo="/" />}
         />
         <Route path="/about" element={<About />} />
-        <Route path="/posts" element={<PostsPage />} />
         <Route path="/posts/:topic" element={<PostsPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/logout" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-      {isAuth ? <Footer style={{ display: "block" }} /> : null}
+      <Footer style={{ display: "block" }} />
+      {/* {isAuth ? <Footer style={{ display: "block" }} /> : null} */}
+      {/* {!hideOnRoutes.includes(location.pathname) ? <Footer /> : <Footer />} */}
     </>
   );
 }

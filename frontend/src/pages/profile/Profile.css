@@ -2,3 +2,30 @@
     margin-top: 2em;
     font-size: large;
 }
+
+.file-user-wrapper {
+    position: absolute;
+    bottom: -17px;
+    left: 50%;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transform: translateX(-50%);
+    color: #161616;
+    border-radius: 20%;
+    background-color: #7a7b84;
+    font-size: 18px;
+    font-size: 14px;
+
+    &:hover {
+        background-color: #7b7ede;
+    }
+}
+
+.file-input {
+    display: none;
+}

@@ -23,6 +23,19 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async (post, thunkAPI) => {
+    try {
+      setAuthHeader(thunkAPI);
+      const response = await axios.put(`/posts/${post._id}/like`);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 export const deletePost = createAsyncThunk("posts/", async (id, thunkAPI) => {
   try {
     setAuthHeader(thunkAPI);
