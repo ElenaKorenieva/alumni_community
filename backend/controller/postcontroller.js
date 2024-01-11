@@ -108,12 +108,14 @@ const likePost = async (req, res) => {
     }
 
     if (post.likes.includes(user)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "You have already liked this post" });
+      const indexToRemove = post.likes.findIndex(likedUser => likedUser === user);
+      if (indexToRemove !== -1) {
+        post.likes.splice(indexToRemove, 1);
+      }
+    } else {
+      post.likes.push(user);
     }
 
-    post.likes.push(user);
 
     const updatedPost = await post.save();
 

@@ -65,8 +65,7 @@ const HomePage = () => {
           <div className="row">
             <div className="pb-5">
               <div className="home-container mt-5">
-                <h3 className="home-title">Alumni, welcome home!</h3>
-
+                <h2 className="about-title topic-title border-bottom">Alumni, welcome home!</h2>
                 <div className="row journey-section">
                   <div className="col-md-8">
                     <h4 className="homeArticle-title text-center">A Journey Beyond Bootcamp</h4>

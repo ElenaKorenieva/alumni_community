@@ -110,17 +110,14 @@ const PostsPage = () => {
   };
 
   const handleLike = async (post) => {
-    if (!post.likes || !post.likes.includes(loggedInUser.name)) {
-      const response = await dispatch(likePost(post));
-      if (response.error && response.payload !== "You have already liked this post") {
-        console.error(response.error.message);
-        showToastMessage("Something went wront while trying to like this post", true);
-      } else {
-        post.likes.push(loggedInUser.name)
-        setPosts((prevPosts) =>
-          prevPosts.map((p) => (p._id === post._id ? post : p))
-        );
-      }
+    const response = await dispatch(likePost(post));
+    if (response.error) {
+      console.error(response.error.message);
+      showToastMessage("Something went wront while trying to like this post", true);
+    } else {
+      setPosts((prevPosts) =>
+        prevPosts.map((p) => (p._id === post._id ? response.payload.post : p))
+      );
     }
   }
 
@@ -392,7 +389,10 @@ const PostsPage = () => {
                     <Card.Body className="text-end">
                       <div className="button-container">
 
-                        <Button variant="primary" size="sm" className="mx-1 mb-2" onClick={() => handleLike(post)}>
+                        <Button variant="primary" size="sm" className="mx-1 mb-2"
+                          onClick={() => handleLike(post)}
+                          title={post.likes ? post.likes.map(user => user).join(', ').slice(0, 20) + (post.likes.length > 10 ? '...' : '') : ''}
+                        >
                           <FontAwesomeIcon icon={faThumbsUp} className="mr-2" />
                           <span className="mx-1">
                             {post.likes ? post.likes.length : 0}

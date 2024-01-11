@@ -17,14 +17,13 @@ import About from "./pages/about/About";
 import Header from "./shared/Header/Header";
 import Profile from "./pages/profile/Profile";
 import Footer from "./shared/Footer/Footer";
-import FooterWithouAuth from "./shared/Footer/FooterWithouAuth";
 import Loader from "./shared/Loader/Loader";
 
 function App() {
   const isAuth = useSelector(isLogin);
   let isRefresh = useSelector(isRefreshing);
   const location = useLocation();
-  const hideOnRoutes = ["/signup", "/login"];
+  // const hideOnRoutes = ["/signup", "/login"];
   const [queryParameters] = useSearchParams();
 
   console.log(queryParameters);
@@ -54,8 +53,9 @@ function App() {
         <Route path="/logout" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-      {isAuth ? <Footer style={{ display: "block" }} /> : null}
-      {/* {!hideOnRoutes.includes(location.pathname) ? <Footer /> : <FooterWithouAuth />} */}
+      <Footer style={{ display: "block" }} />
+      {/* {isAuth ? <Footer style={{ display: "block" }} /> : null} */}
+      {/* {!hideOnRoutes.includes(location.pathname) ? <Footer /> : <Footer />} */}
     </>
   );
 }
