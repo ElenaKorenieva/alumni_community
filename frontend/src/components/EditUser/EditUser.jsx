@@ -100,7 +100,11 @@ function EditUser({ onClose }) {
               />
             )}
 
-            <Form.Group controlId="file" className="file-wrapper">
+            <Form.Group
+              controlId="file"
+              className="file-wrapper"
+              onChange={handleFileChange}
+            >
               <Form.Label className="file-input-label plus-sign">+</Form.Label>
               <Form.Control
                 className="file-input edit-input"

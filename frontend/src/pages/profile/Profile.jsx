@@ -23,23 +23,18 @@ const Profile = () => {
   };
 
   const formatDate = (dateString) => {
-    const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+    const options = {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    };
+    return new Intl.DateTimeFormat("en-US", options).format(
+      new Date(dateString)
+    );
   };
-
-  function arrayBufferToBase64(buffer) {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  }
-
-
-  useEffect(() => {
-    fetchUserPosts();
-  }, []);
 
   function arrayBufferToBase64(buffer) {
     let binary = "";
@@ -50,6 +45,11 @@ const Profile = () => {
     return btoa(binary);
   }
 
+  useEffect(() => {
+    fetchUserPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <div>
@@ -58,44 +58,63 @@ const Profile = () => {
             <SideBarMenu />
           </div>
           <div className="col-md-9 pt-5">
-            <h4 className="title-profile-page topic-title border-bottom">My Profile</h4>
+            <h4 className="title-profile-page topic-title border-bottom">
+              My Profile
+            </h4>
             <div className="row pb-5">
               <div className="pb-5">
                 <EditProfileUser />
               </div>
               <div>
-                <h4 className="title-profile-page topic-title border-bottom">My latest community posts:</h4>
+                <h4 className="title-profile-page topic-title border-bottom">
+                  My latest community posts:
+                </h4>
               </div>
               <div className="pb-5">
                 {userPosts &&
                   userPosts.map((post) => (
-                    <Card style={{ width: '50rem', backgroundColor: '#F5F5F5' }} key={post._id} className="mx-auto my-4">
+                    <Card
+                      style={{ width: "50rem", backgroundColor: "#F5F5F5" }}
+                      key={post._id}
+                      className="mx-auto my-4"
+                    >
                       <Card.Img
                         variant="top"
-                        src={post.image ? `data:${post.image.contentType};base64,${arrayBufferToBase64(post.image.data.data)}` : ''}
+                        src={
+                          post.image
+                            ? `data:${
+                                post.image.contentType
+                              };base64,${arrayBufferToBase64(
+                                post.image.data.data
+                              )}`
+                            : ""
+                        }
                         style={{
-                          maxHeight: '300px',
-                          width: '100%',
-                          objectFit: 'cover',
-                          margin: 'auto',
+                          maxHeight: "300px",
+                          width: "100%",
+                          objectFit: "cover",
+                          margin: "auto",
                         }}
                       />
 
                       <Card.Body>
-                        <small className="text-end">Author: {post.user}</small><br />
-                        <small className="text-end">Create at: {formatDate(post.create_at)}</small>
+                        <small className="text-end">Author: {post.user}</small>
+                        <br />
+                        <small className="text-end">
+                          Create at: {formatDate(post.create_at)}
+                        </small>
 
-                        <Card.Title className="">
-                          {post.title}</Card.Title>
+                        <Card.Title className="">{post.title}</Card.Title>
 
-                        <Card.Text>
-                          {post.message}
-                        </Card.Text>
-
+                        <Card.Text>{post.message}</Card.Text>
                       </Card.Body>
                       <Card.Body className="text-end">
-
-                        <Button variant="primary" size="sm" className="mx-1 mb-2" disabled>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          className="mx-1 mb-2"
+                          disabled
+                        >
                           <FontAwesomeIcon icon={faThumbsUp} className="mr-2" />
                           <span className="mx-1">
                             {post.likes ? post.likes.length : 0}
@@ -104,11 +123,17 @@ const Profile = () => {
 
                         {post.comments && post.comments.length > 0 ? (
                           post.comments.map((comment) => (
-                            <div className="text-start border-comment" key={comment._id}>
-                              <b>You</b><small> at {formatDate(comment.createdAt)} commented:</small>
+                            <div
+                              className="text-start border-comment"
+                              key={comment._id}
+                            >
+                              <b>You</b>
+                              <small>
+                                {" "}
+                                at {formatDate(comment.createdAt)} commented:
+                              </small>
                               <br />
                               <p className="ms-3 mb-0">{comment.text}</p>
-
                             </div>
                           ))
                         ) : (

@@ -7,6 +7,7 @@ import {
   avatarURL,
   getError,
   getUserData,
+  isRefreshing,
 } from "../../redux/auth/authSelectors";
 import { updateUser } from "../../redux/auth/authOperations";
 import validation from "./Validation";
@@ -18,6 +19,7 @@ import "./EditProfileUser.css";
 
 function EditProfileUser() {
   const dispatch = useDispatch();
+  let isRefresh = useSelector(isRefreshing);
   const imgURL = useSelector(avatarURL);
   const userData = useSelector(getUserData);
   const errorFromState = useSelector(getError);
@@ -130,8 +132,17 @@ function EditProfileUser() {
               />
             )}
 
+            {/* <label className="fw">
+              <input
+                className="file-input"
+                type="file"
+                onChange={handleFileChange}
+                accept="image/jpeg, image/png, image/gif"
+              />
+              +
+            </label> */}
+
             <FormLabel className="file-user-wrapper">
-              <Form.Label className="file-input-label plus-sign">+</Form.Label>
               <Form.Control
                 className="file-input edit-input"
                 id="custom-file"
@@ -139,6 +150,7 @@ function EditProfileUser() {
                 onChange={handleFileChange}
                 accept="image/jpeg, image/png, image/gif"
               />
+              +
             </FormLabel>
           </div>
 
@@ -230,7 +242,7 @@ function EditProfileUser() {
         </div>
       </Form>
       <Toast
-        show={showToast}
+        show={!isRefresh && showToast}
         onClose={() => setShowToast(false)}
         delay={5000}
         autohide
