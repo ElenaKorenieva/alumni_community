@@ -31,9 +31,11 @@ const HomePage = () => {
     const response = await dispatch(findFeed());
 
     const sortedPosts = response.payload ? response.payload : [];
-    sortedPosts.sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
+    if (Array.isArray(sortedPosts)) {
+      sortedPosts.sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
 
-    setFeed(sortedPosts);
+      setFeed(sortedPosts);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -129,11 +131,10 @@ const HomePage = () => {
                           variant="top"
                           src={
                             post.image
-                              ? `data:${
-                                  post.image.contentType
-                                };base64,${arrayBufferToBase64(
-                                  post.image.data.data
-                                )}`
+                              ? `data:${post.image.contentType
+                              };base64,${arrayBufferToBase64(
+                                post.image.data.data
+                              )}`
                               : ""
                           }
                           style={{
